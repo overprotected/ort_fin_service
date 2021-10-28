@@ -6,8 +6,12 @@
 			],
 			"type": "Array"
 		},
-		"files": {
+		"attach_list": {
 			"value": [],
+			"type": "Array"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
 			"type": "String"
 		}
 	},
@@ -18,7 +22,7 @@
 			"withSteps": true
 		},
 		"isFormFullScreen": false,
-		"serviceTitle": "Запрос на предварительные условия получения гарантии",
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
 		"uiSteps": {
 			"count": 6,
 			"current": 5,

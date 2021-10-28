@@ -11,6 +11,10 @@
 		"contractValueCurrency": {
 			"value": "RUR",
 			"type": "String"
+		},
+		"contractCustomerINN": {
+			"value": "",
+			"type": "String"
 		}
 	},
 	"uiSchema": {
@@ -50,17 +54,35 @@
 					}
 				]
 			},
-			"contractValueCurrency": {
+			"contractCurrency": {
+				"id": "contractCurrency",
 				"label": "Валюта экспортного контракта",
-				"id": "contractValueCurrency",
-				"type": "String",
-				"placeholder": "RUR",
-				"readonly": true,
+				"uiType": "reference",
 				"constraints": [
 					{
 						"name": "NotNull"
 					}
-				]
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "caption",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "caption,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/currency/items/search"
+					},
+					"filters": [
+						{
+							"name": "caption_like_ci"
+						}
+					]
+				}
 			},
 			"contractRussianComponentShare": {
 				"label": "Доля российской составляющей в поставляемой продукции, %",
@@ -109,7 +131,41 @@
 				"type": "String",
 				"placeholder": "Введите название",
 				"multiple": true,
-				"maxMultiple": 5
+				"maxMultiple": 5,
+				"uiType": "reference",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "caption",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "caption,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/org/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "description_like_ci"
+								}
+							]
+						}
+					]
+				}
 			},
 			"contractCustomerBlock": {
 				"id": "contractCustomerBlock",
@@ -123,11 +179,54 @@
 				"id": "contractCustomerFullName",
 				"type": "String",
 				"placeholder": "Введите полное наименование компании",
+				"uiType": "reference",
 				"constraints": [
 					{
 						"name": "NotNull"
 					}
-				]
+				],
+				"requestParams": {
+					"additionalFields": {
+						"caption": "caption",
+						"ogrn": "ogrn",
+						"inn": "inn",
+						"regAddress": "extAddresses[0].extRegion",
+						"regCountry": "regCountry.caption"
+					},
+					"resultObjectParams": {
+						"name": "description",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "description,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/org/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "description_like_ci"
+								}
+							]
+						}
+					]
+				},
+				"boundFields": {
+					"contractCustomerShortName": "caption",
+					"contractCustomerOGRN": "ogrn",
+					"contractCustomerINN": "inn",
+					"contractCustomerJurAddress": "regAddress",
+					"contractCustomerRegCountry": "regCountry"
+				}
 			},
 			"contractCustomerJurAddress": {
 				"label": "Юридический адрес",
@@ -296,8 +395,19 @@
 				"conditionals": [
 					{
 						"type": "visible",
-						"equalName": "workedWithCustomerHaveLatePayment",
-						"equalValue": true
+						"equalFields": {
+							"comparisonType": "and",
+							"fields": [
+								{
+									"equalName": "isWorkedWithCustomer",
+									"equalValue": true
+								},
+								{
+									"equalName": "workedWithCustomerHaveLatePayment",
+									"equalValue": true
+								}
+							]
+						}
 					}
 				]
 			},
@@ -386,7 +496,7 @@
 						}
 					},
 					{
-						"id": "contractValueCurrency",
+						"id": "contractCurrency",
 						"gridAttributes": {
 							"lg": 6
 						}
@@ -447,17 +557,6 @@
 				"columns": [
 					{
 						"id": "contractProducerName",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"type": "addButton",
-						"forId": "contractProducerName",
 						"gridAttributes": {
 							"lg": 12
 						}
