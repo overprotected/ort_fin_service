@@ -68,16 +68,6 @@
         {
           "name": "NotNull"
         }
-      ],
-      "conditionals": [
-        {
-          "type": "visible",
-          "parent": true,
-          "equalName": "dateEndCreditLine",
-          "equalValue": [
-
-          ]
-        }
       ]
     },
     "haveExperience":{
@@ -165,7 +155,7 @@
     "creditPercent": {
       "id": "creditPercent",
       "type": "String",
-      "label": "Размер процентной ставки кредита (в годовых)",
+      "label": "Размер процентной ставки кредита (в %)",
       "description": " ",
       "tooltip": "текст подсказки",
       "readonly": true,
