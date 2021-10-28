@@ -1,0 +1,186 @@
+{
+	"variables": {
+		"organizationFullName": {
+			"value": "Публичное Акционерное Общество \"Красногорский Завод им. С.А. Зверева\"",
+			"type": "String"
+		},
+		
+		"organizationAddress": {
+			"value": "143403, Московская область, г. Красногорск, Речная ул., д.8",
+			"type": "String"
+		},
+		
+		"organizationShortName": {
+			"value": "ПАО \"КМЗ\"",
+			"type": "String"
+		},
+		
+		"organizationOGRN": {
+			"value": "1025002863247",
+			"type": "String"
+		},
+		
+		"organizationINN": {
+			"value": "5024022965",
+			"type": "String"
+		},
+		
+		"organizationOKPO": {
+			"value": "12345689",
+			"type": "String"
+		}
+	},
+  
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": true,
+		"serviceTitle": "Запрос на предварительные условия получения гарантии S/2021/37558",
+		"formTitle": "Запрос на предварительные условия получения гарантии S/2021/37558",
+	
+		"uiSteps": {
+			"count": 6,
+			"current": 2,
+			"passed": [1],
+			"names": ["Условия получения услуги",
+					 "Общая информация о Заемщике и его деятельности",
+					 "Основные параметры запрашиваемого финансирования",
+					 "Основные параметры экспортного контракта и информация об участниках экспортной сделки",
+					 "Декларации Заявителя о борьбе с подкупом ",
+					 "Подписание заявки"]
+		},
+		
+		"navigationButtons": {
+			"next": {
+				"hide": false,
+				"label": "Далее"
+			},
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			}
+		},
+
+
+		"fields": {
+				"organizationFullName": { 
+					"id": "organizationFullNameId", 
+					"uiType": "infoField", 
+					"title": "Наименование полное" 
+				},
+				
+				"organizationAddress": { 
+					"id": "organizationAddressId", 
+					"uiType": "infoField", 
+					"title": "Юридический адрес" 
+				},
+				
+				"organizationShortName": { 
+					"id": "organizationShortNameId", 
+					"uiType": "infoField", 
+					"title": "Наименование краткое" 
+				},
+				
+				"organizationOGRN": { 
+					"id": "organizationOGRNId", 
+					"uiType": "infoField", 
+					"title": "ОГРН" 
+				},
+				
+				"organizationINN": { 
+					"id": "organizationINNId", 
+					"uiType": "infoField", 
+					"title": "ИНН" 
+				},
+				
+				"organizationOKPO": { 
+					"id": "organizationOKPOId", 
+					"uiType": "infoField", 
+					"title": "ОКПО" 
+				}
+			},
+		
+		"rows": [
+			
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Общая информация о Заемщике и его деятельности",
+					"status": "default",
+					"expandedByDefault": true,
+					"isDynamicStatus": true,
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				}
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "organizationFullNameId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "organizationAddressId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "organizationShortNameId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					
+					{
+						"id": "organizationOGRNId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "organizationINNId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					
+					{
+						"id": "organizationOKPOId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+					
+				]
+			}
+			
+		]	
+	}
+}

@@ -1,0 +1,677 @@
+{
+	"variables": {
+		"russianComponentShare": {
+			"value": "30",
+			"type": "String"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		},
+		"contractValueCurrency": {
+			"value": "RUR",
+			"type": "String"
+		}
+	},
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
+		"uiSteps": {
+			"count": 6,
+			"current": 4,
+			"passed": [
+				1,
+				2,
+				3
+			],
+			"names": [
+				"Условия получения услуги",
+				"Общая информация о Заемщике и его деятельности",
+				"Основные параметры запрашиваемого финансирования",
+				"Основные параметры экспортного контракта и информация об участниках экспортной сделки",
+				"Декларации Заявителя о борьбе с подкупом",
+				"Подписание заявки"
+			]
+		},
+		"fields": {
+			"contractValue": {
+				"label": "Стоимость экспортного контракта",
+				"id": "contractValue",
+				"type": "String",
+				"placeholder": "Введите стоимость",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractValueCurrency": {
+				"label": "Валюта экспортного контракта",
+				"id": "contractValueCurrency",
+				"type": "String",
+				"placeholder": "RUR",
+				"readonly": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractRussianComponentShare": {
+				"label": "Доля российской составляющей в поставляемой продукции, %",
+				"id": "contractRussianComponentShare",
+				"type": "String",
+				"placeholder": "Введите долю в процентах",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractShipmentPeriod ": {
+				"label": "Период отгрузки продукции по экспортному контракту",
+				"id": "contractShipmentPeriod",
+				"type": "String",
+				"placeholder": "Введите текст",
+				"multiline": true,
+				"maxRows": 4
+			},
+			"contractPaymentTerms": {
+				"label": "Условия оплаты по экспортному контракту",
+				"id": "contractPaymentTerms",
+				"type": "String",
+				"placeholder": "Введите текст",
+				"multiline": true,
+				"maxRows": 4
+			},
+			"contractProducerBlock": {
+				"id": "contractProducerBlock",
+				"uiType": "typography",
+				"html": "<div>Производитель(и) поставляемой продукции</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"borrowerIsProducer": {
+				"label": "Совпадает с Заемщиком",
+				"id": "borrowerIsProducer",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"tooltip": "Подсказка"
+			},
+			"contractProducerName": {
+				"id": "contractProducerName",
+				"type": "String",
+				"placeholder": "Введите название",
+				"multiple": true,
+				"maxMultiple": 5
+			},
+			"contractCustomerBlock": {
+				"id": "contractCustomerBlock",
+				"uiType": "typography",
+				"html": "<div>Покупатель (заказчик) по экспортному контракту</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"contractCustomerFullName": {
+				"label": "Наименование  полное",
+				"id": "contractCustomerFullName",
+				"type": "String",
+				"placeholder": "Введите полное наименование компании",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerJurAddress": {
+				"label": "Юридический адрес",
+				"id": "contractCustomerJurAddress",
+				"type": "String",
+				"placeholder": "Введите юридический адрес",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerShortName": {
+				"label": "Наименование краткое",
+				"id": "contractCustomerShortName",
+				"type": "String",
+				"placeholder": "Введите наименование",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerRegCountry": {
+				"label": "Страна регистрации",
+				"id": "contractCustomerRegCountry",
+				"type": "String",
+				"placeholder": "Введите страну регистрации",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerOGRN": {
+				"label": "ОГРН",
+				"id": "contractCustomerOGRN",
+				"type": "String",
+				"placeholder": "Введите ОГРН",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerINN": {
+				"label": "ИНН",
+				"id": "contractCustomerINN",
+				"type": "String",
+				"placeholder": "Введите ИНН",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerDestinationCountry": {
+				"label": "Страна назначения экспорта",
+				"id": "contractCustomerDestinationCountry",
+				"type": "String",
+				"placeholder": "Введите страну назначения",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractCustomerDestinationCountryEqualsToRegistration": {
+				"label": "Совпадает со страной регистрации",
+				"id": "contractCustomerDestinationCountryEqualsToRegistration",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			"isWorkedWithCustomer": {
+				"label": "Информация об опыте работы с покупателем (заказчиком), плательщиком по экспортному контракту",
+				"id": "isWorkedWithCustomer",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			"workedWithCustomerYears": {
+				"label": "Общее кол-во лет сотрудничества",
+				"id": "workedWithCustomerYears",
+				"type": "String",
+				"placeholder": "Введите количество",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "isWorkedWithCustomer",
+						"equalValue": true
+					}
+				]
+			},
+			"workedWithCustomerContracts": {
+				"label": "Число реализованных экспортных контрактовОбщее кол-во лет сотрудничества",
+				"id": "workedWithCustomerContracts",
+				"type": "String",
+				"placeholder": "Введите количество",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "isWorkedWithCustomer",
+						"equalValue": true
+					}
+				]
+			},
+			"workedWithCustomerSpecialContracts": {
+				"label": "В том числе на условиях отсрочки платежа",
+				"id": "workedWithCustomerSpecialContracts",
+				"type": "String",
+				"placeholder": "Введите количество",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "isWorkedWithCustomer",
+						"equalValue": true
+					}
+				]
+			},
+			"workedWithCustomerHaveLatePayment": {
+				"label": "Описание случаев просрочек платежей",
+				"id": "workedWithCustomerHaveLatePayment",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "isWorkedWithCustomer",
+						"equalValue": true
+					}
+				]
+			},
+			"workedWithCustomerLatePaymentDescription": {
+				"label": "Описание случаев просрочек платежей",
+				"id": "workedWithCustomerLatePaymentDescription",
+				"type": "String",
+				"placeholder": "Опишите все случаи просрочек платежей",
+				"multiline": true,
+				"maxRows": 8,
+				"rows": 6,
+				"tooltip": "Подсказка",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "workedWithCustomerHaveLatePayment",
+						"equalValue": true
+					}
+				]
+			},
+			"contractPayerBlock": {
+				"id": "contractPayerBlock",
+				"uiType": "typography",
+				"html": "<div>Плательщик по экспортному контракту</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"payerIsCustomer": {
+				"label": "Совпадает с Покупателем",
+				"id": "payerIsCustomer",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			"contractPayerFullName": {
+				"label": "Наименование  полное",
+				"id": "contractPayerFullName",
+				"type": "String",
+				"placeholder": "Введите полное наименование компании",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractPayerJurAddress": {
+				"label": "Юридический адрес",
+				"id": "contractPayerJurAddress",
+				"type": "String",
+				"placeholder": "Введите юридический адрес",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractPayerShortName": {
+				"label": "Наименование краткое",
+				"id": "contractPayerShortName",
+				"type": "String",
+				"placeholder": "Введите наименование",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"contractPayerNumder": {
+				"label": "Регистрационный или налоговый номер",
+				"id": "contractPayerNumder",
+				"type": "String",
+				"placeholder": "Введите номер ",
+				"isNumber": true,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			}
+		},
+		"rows": [
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Основные параметры экспортного контракта (его проекта) и информация об участниках экспортной сделки",
+					"description": "",
+					"isDynamicStatus": "true",
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				},
+				"gridAttributes": {
+					"lg": 12
+				}
+			},
+			{
+				"columns": [
+					{
+						"id": "contractValue",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "contractValueCurrency",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractRussianComponentShare",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractShipmentPeriod",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "contractPaymentTerms",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractProducerBlock"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "borrowerIsProducer",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractProducerName",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "addButton",
+						"forId": "contractProducerName",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerBlock"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerFullName",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerJurAddress",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerShortName",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "contractCustomerRegCountry",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerOGRN",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "contractCustomerINN",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerDestinationCountry",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractCustomerDestinationCountryEqualsToRegistration",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "isWorkedWithCustomer",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "workedWithCustomerYears",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "workedWithCustomerContracts",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "workedWithCustomerSpecialContracts",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "workedWithCustomerHaveLatePayment",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "workedWithCustomerLatePaymentDescription",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractPayerBlock",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "payerIsCustomer",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractPayerFullName",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractPayerJurAddress",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractPayerShortName",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "contractPayerNumder",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			}
+		]
+	}
+}

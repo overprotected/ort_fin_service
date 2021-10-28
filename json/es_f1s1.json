@@ -1,0 +1,281 @@
+{
+	"variables": {
+		"organizationRegistrationDate": {
+			"value": "10.05.2021",
+			"type": "String"
+		},
+		"taxationSystem": {
+			"value": null,
+			"type": "String"
+		},
+		"applicableLaw": {
+			"value": null,
+			"type": "String"
+		},
+		"prohibitedActivity": {
+			"value": null,
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения гарантии",
+		"uiSteps": {
+			"count": 6,
+			"current": 1,
+			"passed": [],
+			"names": [ "Условия получения услуги", "Общая информация о Заемщике и его деятельности", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
+		},
+	
+		"fields": {
+		
+			"organizationRegistrationDate": { 
+				"id": "organizationRegistrationDateId", 
+				"uiType": "infoField", 
+				"title": "Дата регистрации вашей компании" 
+			},
+		
+			"earlyRegistrationDate": {
+				"id": "earlyRegistrationDateId",
+				"uiType": "notification",
+				"notificationStatus": "WARNING",
+				"notificationText": "Дата регистрации должна быть не позднее 18 месяцев!"
+			},
+			
+			"taxationSystem": {
+				"id": "taxationSystemId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Применяемая система налогообложения",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Общая система налогообложения",
+						"value": "common",
+						"key": "taxationSystemId-common"
+					},
+					{
+						"label": "Упрощенная система налогообложения",
+						"value": "simplified",
+						"key": "taxationSystemId-simplified"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"applicableLaw": {
+				"id": "applicableLawId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Применимое право по Экспортному контракту",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Право РФ",
+						"value": "ru",
+						"key": "applicableLawId-ru"
+					},
+					{
+						"label": "Иное право",
+						"value": "other",
+						"key": "applicableLawId-other"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"prohibitedActivity": {
+				"id": "prohibitedActivityId",
+				"uiType": "radio",
+				"type": "String",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "prohibitedActivityId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "prohibitedActivityId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"proposePredexport": {
+				"id": "proposePredexportId",
+				"uiType": "notification",
+				"notificationStatus": "WARNING",
+				"notificationText": "Предлагаем воспользоваться кредитным продуктом \"Предэкспортное финансирование\", выбрав в перечне финансовых услуг",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalFields": {
+							"comparisonType": "or",
+							"fields": [
+								{
+									"equalName": "taxationSystem", 
+									"equalValue": "simplified"
+								},
+								{
+									"equalName": "applicableLaw", 
+									"equalValue": "other"
+								},
+								{
+									"equalName": "prohibitedActivity", 
+									"equalValue": "yes"
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+	
+		"rows": [
+			
+			{
+				"columns": [
+					{
+						"id": "organizationRegistrationDateId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "earlyRegistrationDateId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "taxationSystemId-common",
+						"gridAttributes": {
+							"lg": 3
+						}
+					},
+					{
+						"id": "taxationSystemId-simplified",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "applicableLawId-ru",
+						"gridAttributes": {
+							"lg": 3
+						}
+					},
+					{
+						"id": "applicableLawId-other",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"text": "Заемщик имеет отношение к следующим видам деятельности: ",
+							"variant": "p"
+						},
+						"gridAttributes": {
+							"lg": 6,
+							"style": {
+								"margin-bottom": 0
+							}
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"html": "<ul><li>брокерская деятельность</li><li>антикварная деятельность</li><li>ювелирная деятельность</li><li>фармацевтика</li></ul>",
+						"gridAttributes": {
+							"lg": 3,
+							"style": {
+								"margin-top": 0
+							}
+						}
+					},
+					{
+						"html": "<ul><li>производство и/или реализация подакциозной продукции</li><li>игорный бизнес</li><li>черная металлургия</li><li>сельское хозяйство</li></ul>",
+						"gridAttributes": {
+							"lg": 3,
+							"style": {
+								"margin-top": 0
+							}
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityId-yes",
+						"gridAttributes": {
+							"lg": 3
+						}
+					},
+					{
+						"id": "prohibitedActivityId-no",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "proposePredexportId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+		]
+	}
+}
