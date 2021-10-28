@@ -1,0 +1,50 @@
+{
+	"status": 1,
+	"stageNum": 1,
+	"stageCount": 3,
+	"statusName": "Черновик",
+	"stages": [
+		{
+			"stageId": "95dc9bcc-311f-11ec-8d3d-0242ac130003",
+			"sequence": 1,
+			"stageName": "Черновик",
+			"status": 1
+		},
+		{
+			"stageId": "77adbe44-815c-4a6c-9d07-e338528496aa",
+			"sequence": 2,
+			"stageName": "В работе. Проводится проверка",
+			"status": 0
+		},
+		{
+			"stageId": "152746a1-fbcc-45cd-aa59-d2b2ea4f2413",
+			"sequence": 3,
+			"stageName": "В работе. Принято к рассмотрению",
+			"status": 0
+		},
+		{
+			"stageId": "3f318654-0827-40ef-b411-333a42a3329c",
+			"sequence": 4,
+			"stageName": "В работе. Ожидание ответа от Клиента",
+			"status": 0
+		},
+		{
+			"stageId": "1596ae3d-381f-4b24-8d2f-aad0b5215104",
+			"sequence": 5,
+			"stageName": "В работе. Согласование КОД",
+			"status": 0
+		},
+		{
+			"stageId": "14ab03e7-9693-46a1-aaba-754bed22cd5a",
+			"sequence": 6,
+			"stageName": "В работе. Подписание КОД",
+			"status": 0
+		},
+		{
+			"stageId": "279b5a0c-8e37-4668-b5fe-f33ad5505534",
+			"sequence": 7,
+			"stageName": "Завершено",
+			"status": 0
+		}
+	]
+}

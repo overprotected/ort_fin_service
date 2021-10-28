@@ -39,6 +39,23 @@
 			"passed": [],
 			"names": [ "Условия получения услуги", "Общая информация о Заемщике и его деятельности", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
 		},
+		
+		"onChangeHandler": "function({values, fields, errors, getName}) {
+			console.log('values: ' + values); 
+			console.log('fields: ' + fields); 
+			console.log('errors: ' + errors); 
+			console.log('getName: ' + getName); 
+			const updatedValues = { ...values }; 
+			const updatedErrors = { ...errors }; 
+			console.log( updatedValues['hasSite'] ); 
+			
+			
+			return {
+				updatedValues, 
+				updatedFields: [...fields], 
+				updatedErrors: errors
+			};
+		}",
 	
 		"fields": {
 		
@@ -117,6 +134,43 @@
 						"name": "NotNull"
 					}
 				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"prohibitedActivityText1": {
+				"id": "prohibitedActivityText1Id",
+				"uiType": "typography",
+				"html": "<p>Заемщик имеет отношение к следующим видам деятельности: </p>",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			"prohibitedActivityText2": {
+				"id": "prohibitedActivityText2Id",
+				"uiType": "typography",
+				"html": "<ul><li>брокерская деятельность</li><li>антикварная деятельность</li><li>ювелирная деятельность</li><li>фармацевтика</li></ul>",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			"prohibitedActivityText3": {
+				"id": "prohibitedActivityText3Id",
+				"uiType": "typography",
+				"html": "<ul><li>производство и/или реализация подакциозной продукции</li><li>игорный бизнес</li><li>черная металлургия</li><li>сельское хозяйство</li></ul>",
 				"conditionals": [
 					{
 						"type": "visible",
@@ -238,6 +292,33 @@
 					},
 					{
 						"id": "applicableLawId-other",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityText1Id",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityText2Id",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}, 
+					{
+						"id": "prohibitedActivityText3Id",
 						"gridAttributes": {
 							"lg": 3
 						}
