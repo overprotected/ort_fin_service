@@ -17,32 +17,26 @@
 			"status": 0
 		},
 		{
-			"stageId": "152746a1-fbcc-45cd-aa59-d2b2ea4f2413",
-			"sequence": 3,
-			"stageName": "В работе. Принято к рассмотрению",
-			"status": 0
-		},
-		{
 			"stageId": "3f318654-0827-40ef-b411-333a42a3329c",
-			"sequence": 4,
+			"sequence": 3,
 			"stageName": "В работе. Ожидание ответа от Клиента",
 			"status": 0
 		},
 		{
 			"stageId": "1596ae3d-381f-4b24-8d2f-aad0b5215104",
-			"sequence": 5,
+			"sequence": 4,
 			"stageName": "В работе. Согласование КОД",
 			"status": 0
 		},
 		{
 			"stageId": "14ab03e7-9693-46a1-aaba-754bed22cd5a",
-			"sequence": 6,
+			"sequence": 5,
 			"stageName": "В работе. Подписание КОД",
 			"status": 0
 		},
 		{
 			"stageId": "279b5a0c-8e37-4668-b5fe-f33ad5505534",
-			"sequence": 7,
+			"sequence": 6,
 			"stageName": "Завершено",
 			"status": 0
 		}
