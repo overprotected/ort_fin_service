@@ -342,7 +342,7 @@ codesTN_VED.each {
     def codeTnVed = [:];
     codeTnVed.dualPurposeUuid = it.key;
     codeTnVed.kodt = it.value.substring(0, it.value.indexOf(" "));
-codeTnVed.naim = it.value.substring(it.value.indexOf(" "));
+codeTnVed.naim = it.value.substring(it.value.indexOf(" "));
     codesTnVed.add(codeTnVed)
 }
 
