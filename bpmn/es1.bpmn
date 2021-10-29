@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1c6j19m" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
   <bpmn:process id="export_standard" name="Запрос на предварительные условия получения финансирования в рамках кредитного продукта &#34;Экспортный стандарт&#34;" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="StartEvent_1" name="start">
       <bpmn:outgoing>Flow_10et2gi</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:scriptTask id="Activity_0uwhsel" name="Set variables" camunda:asyncAfter="true" scriptFormat="groovy">
@@ -11,12 +11,14 @@
       <bpmn:script>execution.setVariables([
 	"NEXT": "NEXT",
 	
+// form 1
 	"goodRegistrationDate": true,
 	"organizationRegistrationDate": "10.05.2021",
 	"prohibitedActivity": null,
 	"applicableLaw": null,
 	"taxationSystem": null,
 
+// form 2
 	"organizationFullName": "organizationFullName",
 	"organizationShortName": "organizationShortName",
 	"organizationLegalAddress": "organizationLegalAddress",
@@ -24,12 +26,7 @@
 	"organizationInn": "organizationInn",
 	"organizationOkpo": "organizationOkpo",
 	
-	"applicantPromises": [:],
-	"declarationAgreed": false,
-	"creditBureauAgreed": false,
-	"attachList": [],
-	
-
+// form 3
 	"sumCreditLine": null,
     "haveExperience": null,
     "dateEndCreditLine": null,
@@ -42,8 +39,44 @@
     "isDeposit": false,
     "isGuarantee": false,
 
-	"contractValueCurrency":"RUR",
-	"russianComponentShare":"30"
+// form 4
+	"contractCurrency":null,
+	"contractValue": null,
+	"contractCurrency": [:],	
+	"contractRussianComponentShare":null,
+	"contractShipmentPeriod": null,
+	"contractPaymentTerms": null,
+	
+	"borrowerIsProducer": false,
+	"contractProducerName": [],
+	
+	"contractCustomerFullName" : [:],
+	"contractCustomerJurAddress": null,	
+	"contractCustomerShortName": null,
+	"contractCustomerRegCountry": null,
+	"contractCustomerOGRN": null,	
+	"contractCustomerINN": null,	
+	"contractCustomerDestinationCountryEqualsToRegistration": false,
+	"contractCustomerDestinationCountry": [:],	
+	
+	"isWorkedWithCustomer": false,
+	"workedWithCustomerYears": null,
+	"workedWithCustomerContracts": null,
+	"workedWithCustomerLatePaymentDescription": null,
+	"workedWithCustomerHaveLatePayment": false,
+	"workedWithCustomerSpecialContracts": null,
+	
+	"payerIsCustomer": false,
+	"contractPayerFullName" : [:],	
+	"contractPayerJurAddress" : null,	
+	"contractPayerShortName" : null,		
+	"contractPayerNumder" : null,
+	
+// form 5
+	"applicantPromises": [:],
+	"declarationAgreed": false,
+	"creditBureauAgreed": false,
+	"attachList": []
 ])</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:serviceTask id="Activity_0bz09lq" name="Status = Черновик" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
@@ -66,8 +99,7 @@
       <bpmn:incoming>Flow_0fm1tnq</bpmn:incoming>
       <bpmn:outgoing>Flow_0ov5san</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_1ah8fye">
-      <bpmn:incoming>Flow_0fulg96</bpmn:incoming>
+    <bpmn:endEvent id="Event_1ah8fye" name="finished">
       <bpmn:incoming>Flow_12xwwsd</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:userTask id="Activity_0wphhza" name="Fill application, step 1" camunda:formKey="f1s1" camunda:candidateGroups="exporter">
@@ -101,9 +133,9 @@
           <camunda:inputParameter name="organizationFullName">${organizationFullName}</camunda:inputParameter>
           <camunda:inputParameter name="organizationShortName">${organizationShortName}</camunda:inputParameter>
           <camunda:inputParameter name="organizationAddress">${organizationAddress}</camunda:inputParameter>
-          <camunda:inputParameter name="organizationOgrn">${organizationOgrn}</camunda:inputParameter>
-          <camunda:inputParameter name="organizationInn">${organizationInn}</camunda:inputParameter>
-          <camunda:inputParameter name="organizationOkpo">${organizationOkpo}</camunda:inputParameter>
+          <camunda:inputParameter name="organizationOGRN">${organizationOgrn}</camunda:inputParameter>
+          <camunda:inputParameter name="organizationINN">${organizationInn}</camunda:inputParameter>
+          <camunda:inputParameter name="organizationOKPO">${organizationOkpo}</camunda:inputParameter>
           <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
           <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
         </camunda:inputOutput>
@@ -197,20 +229,6 @@ if (orgRegDate != null) {
 }</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0k58v1d" sourceRef="Activity_1gs1qs4" targetRef="Activity_0wphhza" />
-    <bpmn:sequenceFlow id="Flow_09aeayh" sourceRef="Activity_06kc0mx" targetRef="Gateway_0ltg011" />
-    <bpmn:userTask id="Activity_06kc0mx" name="Fill application, step 4" camunda:formKey="f1s4" camunda:candidateGroups="exporter">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
-          <camunda:inputParameter name="contractValueCurrency">${contractValueCurrency}</camunda:inputParameter>
-          <camunda:inputParameter name="russianComponentShare">${russianComponentShare}</camunda:inputParameter>
-          <camunda:inputParameter name="uiSchema">${f1s4}</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0o0o918</bpmn:incoming>
-      <bpmn:incoming>Flow_1sz5wtr</bpmn:incoming>
-      <bpmn:outgoing>Flow_09aeayh</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_1osjid8">
       <bpmn:incoming>Flow_1l3p4c1</bpmn:incoming>
       <bpmn:outgoing>Flow_0wrau73</bpmn:outgoing>
@@ -227,14 +245,14 @@ if (orgRegDate != null) {
       <bpmn:outgoing>Flow_0o0o918</bpmn:outgoing>
       <bpmn:outgoing>Flow_01d5x5l</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0o0o918" sourceRef="Gateway_0nz9g3q" targetRef="Activity_06kc0mx">
+    <bpmn:sequenceFlow id="Flow_0o0o918" sourceRef="Gateway_0nz9g3q" targetRef="Activity_1hcs6y1">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_01d5x5l" sourceRef="Gateway_0nz9g3q" targetRef="Activity_1phzm8z">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0ltg011">
-      <bpmn:incoming>Flow_09aeayh</bpmn:incoming>
+      <bpmn:incoming>Flow_0iaslho</bpmn:incoming>
       <bpmn:outgoing>Flow_0kp9v2s</bpmn:outgoing>
       <bpmn:outgoing>Flow_0lliebj</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -252,7 +270,7 @@ if (orgRegDate != null) {
     <bpmn:sequenceFlow id="Flow_0dvqk8u" sourceRef="Gateway_1wskrl4" targetRef="Activity_1wrtxww">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1sz5wtr" sourceRef="Gateway_1wskrl4" targetRef="Activity_06kc0mx">
+    <bpmn:sequenceFlow id="Flow_1sz5wtr" sourceRef="Gateway_1wskrl4" targetRef="Activity_1hcs6y1">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_10et2gi" sourceRef="StartEvent_1" targetRef="Activity_0uwhsel" />
@@ -289,7 +307,7 @@ if (orgRegDate != null) {
             <camunda:map>
               <camunda:entry key="status">9</camunda:entry>
               <camunda:entry key="stageNum">6</camunda:entry>
-              <camunda:entry key="statusName">авершено. Заявка отклонена</camunda:entry>
+              <camunda:entry key="statusName">Завершено. Заявка отклонена</camunda:entry>
               <camunda:entry key="success">2</camunda:entry>
             </camunda:map>
           </camunda:inputParameter>
@@ -307,7 +325,7 @@ if (orgRegDate != null) {
     <bpmn:sequenceFlow id="Flow_0lcc6fw" sourceRef="Gateway_1y03qgz" targetRef="Activity_11m5obt">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!goodRegistrationDate || taxationSystem == "taxationSystemId-simplified" || applicableLaw == "applicableLawId-other" ||  prohibitedActivity == "prohibitedActivityId-yes"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0fulg96" sourceRef="Activity_11m5obt" targetRef="Event_1ah8fye" />
+    <bpmn:sequenceFlow id="Flow_0fulg96" sourceRef="Activity_11m5obt" targetRef="Event_0j3wloz" />
     <bpmn:scriptTask id="Activity_1wrtxww" name="Prepare order data" camunda:asyncBefore="true" scriptFormat="groovy">
       <bpmn:incoming>Flow_0dvqk8u</bpmn:incoming>
       <bpmn:outgoing>Flow_1o6mbi3</bpmn:outgoing>
@@ -354,7 +372,7 @@ execution.setVariables(
 );</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1ovrpnu" sourceRef="Activity_10tceln" targetRef="Activity_1hamu57" />
-    <bpmn:serviceTask id="Activity_1hamu57" name="Save application in MDM" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+    <bpmn:serviceTask id="Activity_1hamu57" name="Save application in MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="origin">export_standard_app</camunda:inputParameter>
@@ -380,9 +398,88 @@ execution.setVariables(
       <bpmn:outgoing>Flow_12xwwsd</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_12xwwsd" sourceRef="Activity_1hamu57" targetRef="Event_1ah8fye" />
+    <bpmn:userTask id="Activity_1hcs6y1" name="Fill application, step 4" camunda:formKey="f1s4" camunda:candidateGroups="exporter">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="contractPayerNumder">${contractPayerNumder}</camunda:inputParameter>
+          <camunda:inputParameter name="contractPayerShortName">${contractPayerShortName}</camunda:inputParameter>
+          <camunda:inputParameter name="contractPayerJurAddress">${contractPayerJurAddress}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerINN">${contractCustomerINN}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerOGRN">${contractCustomerOGRN}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerRegCountry">${contractCustomerRegCountry}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerShortName">${contractCustomerShortName}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerJurAddress">${contractCustomerJurAddress}</camunda:inputParameter>
+          <camunda:inputParameter name="contractPayerFullName">${contractPayerFullName}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerFullName">${contractCustomerFullName}</camunda:inputParameter>
+          <camunda:inputParameter name="contractProducerName">${contractProducerName}</camunda:inputParameter>
+          <camunda:inputParameter name="payerIsCustomer">${payerIsCustomer}</camunda:inputParameter>
+          <camunda:inputParameter name="workedWithCustomerLatePaymentDescription">${workedWithCustomerLatePaymentDescription}</camunda:inputParameter>
+          <camunda:inputParameter name="workedWithCustomerHaveLatePayment">${workedWithCustomerHaveLatePayment}</camunda:inputParameter>
+          <camunda:inputParameter name="workedWithCustomerSpecialContracts">${workedWithCustomerSpecialContracts}</camunda:inputParameter>
+          <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+          <camunda:inputParameter name="contractValue">${contractValue}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCurrency">${contractCurrency}</camunda:inputParameter>
+          <camunda:inputParameter name="contractRussianComponentShare">${contractRussianComponentShare}</camunda:inputParameter>
+          <camunda:inputParameter name="contractShipmentPeriod">${contractShipmentPeriod}</camunda:inputParameter>
+          <camunda:inputParameter name="borrowerIsProducer">${borrowerIsProducer}</camunda:inputParameter>
+          <camunda:inputParameter name="contractPaymentTerms">${contractPaymentTerms}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerDestinationCountryEqualsToRegistration">${contractCustomerDestinationCountryEqualsToRegistration}</camunda:inputParameter>
+          <camunda:inputParameter name="contractCustomerDestinationCountry">${contractCustomerDestinationCountry}</camunda:inputParameter>
+          <camunda:inputParameter name="isWorkedWithCustomer">${isWorkedWithCustomer}</camunda:inputParameter>
+          <camunda:inputParameter name="workedWithCustomerYears">${workedWithCustomerYears}</camunda:inputParameter>
+          <camunda:inputParameter name="workedWithCustomerContracts">${workedWithCustomerContracts}</camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${f1s4}</camunda:inputParameter>
+          <camunda:outputParameter name="contractPayerNumder">${contractPayerNumder}</camunda:outputParameter>
+          <camunda:outputParameter name="contractPayerShortName">${contractPayerShortName}</camunda:outputParameter>
+          <camunda:outputParameter name="contractPayerJurAddress">${contractPayerJurAddress}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerINN">${contractCustomerINN}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerOGRN">${contractCustomerOGRN}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerRegCountry">${contractCustomerRegCountry}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerShortName">${contractCustomerShortName}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerJurAddress">${contractCustomerJurAddress}</camunda:outputParameter>
+          <camunda:outputParameter name="contractPayerFullName">${contractPayerFullName}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerFullName">${contractCustomerFullName}</camunda:outputParameter>
+          <camunda:outputParameter name="contractProducerName">${contractProducerName}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerDestinationCountry">${contractCustomerDestinationCountry}</camunda:outputParameter>
+          <camunda:outputParameter name="contractRussianComponentShare">${contractRussianComponentShare
+}</camunda:outputParameter>
+          <camunda:outputParameter name="payerIsCustomer">${payerIsCustomer}</camunda:outputParameter>
+          <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+          <camunda:outputParameter name="contractValue">${contractValue}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCurrency">${contractCurrency}</camunda:outputParameter>
+          <camunda:outputParameter name="contractShipmentPeriod">${contractShipmentPeriod}</camunda:outputParameter>
+          <camunda:outputParameter name="contractPaymentTerms">${contractPaymentTerms}</camunda:outputParameter>
+          <camunda:outputParameter name="borrowerIsProducer">${borrowerIsProducer}</camunda:outputParameter>
+          <camunda:outputParameter name="contractCustomerDestinationCountryEqualsToRegistration">${contractCustomerDestinationCountryEqualsToRegistration}</camunda:outputParameter>
+          <camunda:outputParameter name="isWorkedWithCustomer">${isWorkedWithCustomer}</camunda:outputParameter>
+          <camunda:outputParameter name="workedWithCustomerYears">${workedWithCustomerYears}</camunda:outputParameter>
+          <camunda:outputParameter name="workedWithCustomerContracts">${workedWithCustomerContracts}</camunda:outputParameter>
+          <camunda:outputParameter name="workedWithCustomerSpecialContracts">${workedWithCustomerSpecialContracts}</camunda:outputParameter>
+          <camunda:outputParameter name="workedWithCustomerHaveLatePayment">${workedWithCustomerHaveLatePayment}</camunda:outputParameter>
+          <camunda:outputParameter name="workedWithCustomerLatePaymentDescription">${workedWithCustomerLatePaymentDescription}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1sz5wtr</bpmn:incoming>
+      <bpmn:incoming>Flow_0o0o918</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iaslho</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0iaslho" sourceRef="Activity_1hcs6y1" targetRef="Gateway_0ltg011" />
+    <bpmn:endEvent id="Event_0j3wloz" name="canceled">
+      <bpmn:incoming>Flow_0fulg96</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
+  <bpmn:message id="Message_1prisgs" name="killProcessMsg" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="export_standard">
+      <bpmndi:BPMNEdge id="Flow_12xwwsd_di" bpmnElement="Flow_12xwwsd">
+        <di:waypoint x="3480" y="167" />
+        <di:waypoint x="3582" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ovrpnu_di" bpmnElement="Flow_1ovrpnu">
+        <di:waypoint x="3280" y="167" />
+        <di:waypoint x="3380" y="167" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1c258zr_di" bpmnElement="Flow_1c258zr">
         <di:waypoint x="3080" y="167" />
         <di:waypoint x="3180" y="167" />
@@ -392,9 +489,8 @@ execution.setVariables(
         <di:waypoint x="2980" y="167" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fulg96_di" bpmnElement="Flow_0fulg96">
-        <di:waypoint x="1360" y="330" />
-        <di:waypoint x="3600" y="330" />
-        <di:waypoint x="3600" y="185" />
+        <di:waypoint x="1310" y="370" />
+        <di:waypoint x="1310" y="452" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lcc6fw_di" bpmnElement="Flow_0lcc6fw">
         <di:waypoint x="1310" y="192" />
@@ -452,10 +548,6 @@ execution.setVariables(
         <di:waypoint x="1675" y="167" />
         <di:waypoint x="1770" y="167" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09aeayh_di" bpmnElement="Flow_09aeayh">
-        <di:waypoint x="2210" y="167" />
-        <di:waypoint x="2305" y="167" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k58v1d_di" bpmnElement="Flow_0k58v1d">
         <di:waypoint x="990" y="167" />
         <di:waypoint x="1090" y="167" />
@@ -484,22 +576,27 @@ execution.setVariables(
         <di:waypoint x="390" y="167" />
         <di:waypoint x="490" y="167" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ovrpnu_di" bpmnElement="Flow_1ovrpnu">
-        <di:waypoint x="3280" y="167" />
-        <di:waypoint x="3380" y="167" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12xwwsd_di" bpmnElement="Flow_12xwwsd">
-        <di:waypoint x="3480" y="167" />
-        <di:waypoint x="3582" y="167" />
+      <bpmndi:BPMNEdge id="Flow_0iaslho_di" bpmnElement="Flow_0iaslho">
+        <di:waypoint x="2210" y="167" />
+        <di:waypoint x="2305" y="167" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="149" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="192" width="23" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0uwhsel_di" bpmnElement="Activity_0uwhsel">
         <dc:Bounds x="290" y="127" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bz09lq_di" bpmnElement="Activity_0bz09lq">
         <dc:Bounds x="490" y="127" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ah8fye_di" bpmnElement="Event_1ah8fye">
+        <dc:Bounds x="3582" y="149" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3582" y="192" width="37" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0wphhza_di" bpmnElement="Activity_0wphhza">
         <dc:Bounds x="1090" y="127" width="100" height="80" />
@@ -515,9 +612,6 @@ execution.setVariables(
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gs1qs4_di" bpmnElement="Activity_1gs1qs4">
         <dc:Bounds x="890" y="127" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zrn6pq_di" bpmnElement="Activity_06kc0mx">
-        <dc:Bounds x="2110" y="127" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1osjid8_di" bpmnElement="Gateway_1osjid8" isMarkerVisible="true">
         <dc:Bounds x="1625" y="142" width="50" height="50" />
@@ -552,8 +646,14 @@ execution.setVariables(
       <bpmndi:BPMNShape id="Activity_1hamu57_di" bpmnElement="Activity_1hamu57">
         <dc:Bounds x="3380" y="127" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ah8fye_di" bpmnElement="Event_1ah8fye">
-        <dc:Bounds x="3582" y="149" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_1hcs6y1_di" bpmnElement="Activity_1hcs6y1">
+        <dc:Bounds x="2110" y="127" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0j3wloz_di" bpmnElement="Event_0j3wloz">
+        <dc:Bounds x="1292" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1288" y="495" width="45" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
