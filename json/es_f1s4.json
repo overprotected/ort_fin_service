@@ -1,6 +1,4 @@
-{
-	"variables": {},
-	"uiSchema": {
+ {
 		"uiFormType": {
 			"type": "json",
 			"withSteps": true
@@ -833,4 +831,3 @@
 			}
 		]
 	}
-}
