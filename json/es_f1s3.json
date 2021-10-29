@@ -5,7 +5,7 @@
     "withSteps": true
   },
   "isFormFullScreen": false,
-  "serviceTitle": "Запрос {{petitonNumber.value}}",
+  "serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
   "uiSteps": {
     "count": 6,
     "current": 3,
