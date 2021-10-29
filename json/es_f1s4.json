@@ -1,22 +1,5 @@
 {
-	"variables": {
-		"russianComponentShare": {
-			"value": "30",
-			"type": "String"
-		},
-		"petitonNumber": {
-			"value": "S/2021/37558",
-			"type": "String"
-		},
-		"contractValueCurrency": {
-			"value": "RUR",
-			"type": "String"
-		},
-		"contractCustomerINN": {
-			"value": "",
-			"type": "String"
-		}
-	},
+	"variables": {},
 	"uiSchema": {
 		"uiFormType": {
 			"type": "json",
@@ -96,7 +79,7 @@
 					}
 				]
 			},
-			"contractShipmentPeriod ": {
+			"contractShipmentPeriod": {
 				"label": "Период отгрузки продукции по экспортному контракту",
 				"id": "contractShipmentPeriod",
 				"type": "String",
@@ -124,7 +107,8 @@
 				"id": "borrowerIsProducer",
 				"uiType": "checkboxBool",
 				"type": "Boolean",
-				"tooltip": "Подсказка"
+				"tooltip": "Подсказка",
+				"nullable": true
 			},
 			"contractProducerName": {
 				"id": "contractProducerName",
@@ -290,6 +274,37 @@
 				"id": "contractCustomerDestinationCountry",
 				"type": "String",
 				"placeholder": "Введите страну назначения",
+				"type": "String",
+				"uiType": "reference",
+				"label": "Страна экспорта",
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "shortName",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "shortName,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/country/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "shortName_like_ci"
+								}
+							]
+						}
+					]
+				},
 				"constraints": [
 					{
 						"name": "NotNull"
@@ -300,13 +315,15 @@
 				"label": "Совпадает со страной регистрации",
 				"id": "contractCustomerDestinationCountryEqualsToRegistration",
 				"uiType": "checkboxBool",
-				"type": "Boolean"
+				"type": "Boolean",
+				"nullable": true
 			},
 			"isWorkedWithCustomer": {
 				"label": "Информация об опыте работы с покупателем (заказчиком), плательщиком по экспортному контракту",
 				"id": "isWorkedWithCustomer",
 				"uiType": "checkboxBool",
-				"type": "Boolean"
+				"type": "Boolean",
+				"nullable": true
 			},
 			"workedWithCustomerYears": {
 				"label": "Общее кол-во лет сотрудничества",
@@ -370,6 +387,7 @@
 				"id": "workedWithCustomerHaveLatePayment",
 				"uiType": "checkboxBool",
 				"type": "Boolean",
+				"nullable": true,
 				"conditionals": [
 					{
 						"type": "visible",
@@ -422,18 +440,60 @@
 				"label": "Совпадает с Покупателем",
 				"id": "payerIsCustomer",
 				"uiType": "checkboxBool",
-				"type": "Boolean"
+				"type": "Boolean",
+				"nullable": true
 			},
 			"contractPayerFullName": {
 				"label": "Наименование  полное",
 				"id": "contractPayerFullName",
 				"type": "String",
 				"placeholder": "Введите полное наименование компании",
+				"uiType": "reference",
 				"constraints": [
 					{
 						"name": "NotNull"
 					}
-				]
+				],
+				"requestParams": {
+					"additionalFields": {
+						"caption2": "caption",
+						"ogrn2": "ogrn",
+						"inn2": "inn",
+						"regAddress2": "extAddresses[0].extRegion",
+						"regCountry2": "regCountry.caption"
+					},
+					"resultObjectParams": {
+						"name": "description",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "description,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/org/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "description_like_ci"
+								}
+							]
+						}
+					]
+				},
+				"boundFields": {
+					"contractPayerJurAddress": "regAddress2",
+					"contractPayerShortName": "caption2",
+					"contractPayerNumder": "inn2"
+				}
 			},
 			"contractPayerJurAddress": {
 				"label": "Юридический адрес",
