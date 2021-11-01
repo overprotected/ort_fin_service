@@ -8,6 +8,10 @@
 			"value": true,
 			"type": "Boolean"
 		},
+		"organizationFullName": {
+			"value": "organizationFullName",
+			"type": "String"
+		},
 		"petitonNumber": {
 			"value": "S/2021/37558",
 			"type": "String"
@@ -67,7 +71,7 @@
 				"type": "Boolean",
 				"nullable": false,
 				"readonly": true,
-				"label": "Настоящим Организация дает свое согласие АО РОСЭКСИМБАНК на получение в качестве пользователя кредитных отчетов из любого бюро кредитных историй для целей выдачи банковской гарантии",
+				"label": "Настоящим ${organizationFullName} дает свое согласие АО РОСЭКСИМБАНК на получение в качестве пользователя кредитных отчетов из любого бюро кредитных историй для целей выдачи банковской гарантии",
 				"constraints": [
 					{
 						"name": "NotNull"
