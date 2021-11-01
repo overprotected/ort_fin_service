@@ -32,30 +32,13 @@
 			"withSteps": true
 		},
 		"isFormFullScreen": false,
-		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта \"Экспортный стандарт\" {{petitonNumber.value}}",
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
 		"uiSteps": {
 			"count": 6,
 			"current": 1,
 			"passed": [],
 			"names": [ "Условия получения услуги", "Общая информация о Заемщике и его деятельности", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
 		},
-		
-		"onChangeHandler": "function({values, fields, errors, getName}) {
-			console.log('values: ' + values); 
-			console.log('fields: ' + fields); 
-			console.log('errors: ' + errors); 
-			console.log('getName: ' + getName); 
-			const updatedValues = { ...values }; 
-			const updatedErrors = { ...errors }; 
-			console.log( updatedValues['hasSite'] ); 
-			
-			
-			return {
-				updatedValues, 
-				updatedFields: [...fields], 
-				updatedErrors: errors
-			};
-		}",
 	
 		"fields": {
 		
@@ -321,53 +304,6 @@
 						"id": "prohibitedActivityText3Id",
 						"gridAttributes": {
 							"lg": 3
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"type": "typography",
-						"typographyProps": {
-							"text": "Заемщик имеет отношение к следующим видам деятельности: ",
-							"variant": "p"
-						},
-						"conditionals": [
-							{
-								"type": "visible",
-								"equalName": "goodRegistrationDate",
-								"equalValue": true
-							}
-						],
-						"gridAttributes": {
-							"lg": 6,
-							"style": {
-								"margin-bottom": 0
-							}
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"html": "<ul><li>брокерская деятельность</li><li>антикварная деятельность</li><li>ювелирная деятельность</li><li>фармацевтика</li></ul>",
-						"gridAttributes": {
-							"lg": 3,
-							"style": {
-								"margin-top": 0
-							}
-						}
-					},
-					{
-						"html": "<ul><li>производство и/или реализация подакциозной продукции</li><li>игорный бизнес</li><li>черная металлургия</li><li>сельское хозяйство</li></ul>",
-						"gridAttributes": {
-							"lg": 3,
-							"style": {
-								"margin-top": 0
-							}
 						}
 					}
 				]

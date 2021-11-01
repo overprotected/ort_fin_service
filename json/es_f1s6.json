@@ -1,0 +1,121 @@
+{
+	"variables": {
+		"generatedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"scannedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
+		"uiSteps": {
+			"count": 6,
+			"current": 6,
+			"passed": [1, 2, 3, 4, 5],
+			"names": [ "Условия получения услуги", "Общая информация о Заемщике и его деятельности", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
+		},
+	
+		"fields": {
+			"generatedApp": {
+				"id": "generatedAppId",
+				"type": "File",
+				"uiType": "documentForSign",
+				"label": "Сформированная заявка",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Файл 1",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				]
+			},
+			
+			"scannedApp" : {
+				"id": "scannedAppId",
+				"type": "File",
+				"label": "При отсутствии возможности подписать Заявку электронной подписью распечатайте ее по кнопке выше, подпишите и приложите её скан",
+				"multiple": true,
+				"maxMultiple": 4,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				]
+			}
+		},
+	
+		"rows": [
+			
+			{
+				"columns": [
+					{
+						"id": "generatedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "scannedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"text": "Подписывая настоящий запрос на предварительные условия кредитования (финансирования)/получение гарантий, подтверждаю, что все ответы и сведения, указанные в запросе и документах, приложенных к запросу, являются полными и достоверными.",
+							"variant": "p"
+						},
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+			
+		]
+	}
+}
