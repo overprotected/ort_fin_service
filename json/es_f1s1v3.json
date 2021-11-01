@@ -1,0 +1,412 @@
+{
+	"variables": {
+		"organizationRegistrationDate": {
+			"value": "10.05.2021",
+			"type": "String"
+		},
+		"goodRegistrationDate": {
+			"value": true,
+			"type": "Boolean"
+		},
+		"taxationSystem": {
+			"value": null,
+			"type": "String"
+		},
+		"applicableLaw": {
+			"value": null,
+			"type": "String"
+		},
+		"prohibitedActivity": {
+			"value": null,
+			"type": "String"
+		},
+		"exportExpirience": {
+			"value": null,
+			"type": "String"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
+		"uiSteps": {
+			"count": 5,
+			"current": 1,
+			"passed": [],
+			"names": [ 
+				"Условия получения услуги",  
+				"Основные параметры запрашиваемого финансирования", 
+				"Основные параметры экспортного контракта и информация об участниках экспортной сделки", 
+				"Декларации Заявителя о борьбе с подкупом", 
+				"Подписание и отправка в Банк" 
+			]
+		},
+	
+		"fields": {
+		
+			"organizationRegistrationDate": { 
+				"id": "organizationRegistrationDateId", 
+				"uiType": "infoField", 
+				"title": "Дата регистрации вашей компании" 
+			},
+		
+			"earlyRegistrationDate": {
+				"id": "earlyRegistrationDateId",
+				"uiType": "notification",
+				"notificationStatus": "ERROR",
+				"notificationText": "Дата регистрации должна быть не позднее 18 месяцев!",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": false
+					}
+				]
+			},
+			
+			"taxationSystem": {
+				"id": "taxationSystemId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Применяемая система налогообложения",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Общая система налогообложения",
+						"value": "common",
+						"key": "taxationSystemId-common"
+					},
+					{
+						"label": "Упрощенная система налогообложения",
+						"value": "simplified",
+						"key": "taxationSystemId-simplified"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"applicableLaw": {
+				"id": "applicableLawId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Применимое право по Экспортному контракту",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Право РФ",
+						"value": "ru",
+						"key": "applicableLawId-ru"
+					},
+					{
+						"label": "Иное право",
+						"value": "other",
+						"key": "applicableLawId-other"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"prohibitedActivityText1": {
+				"id": "prohibitedActivityText1Id",
+				"uiType": "typography",
+				"html": "<p>Заемщик имеет отношение к следующим видам деятельности: </p>",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			"prohibitedActivityText2": {
+				"id": "prohibitedActivityText2Id",
+				"uiType": "typography",
+				"html": "<ul><li>брокерская деятельность</li><li>антикварная деятельность</li><li>ювелирная деятельность</li><li>фармацевтика</li></ul>",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			"prohibitedActivityText3": {
+				"id": "prohibitedActivityText3Id",
+				"uiType": "typography",
+				"html": "<ul><li>производство и/или реализация подакциозной продукции</li><li>игорный бизнес</li><li>черная металлургия</li><li>сельское хозяйство</li></ul>",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"prohibitedActivity": {
+				"id": "prohibitedActivityId",
+				"uiType": "radio",
+				"type": "String",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "prohibitedActivityId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "prohibitedActivityId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"exportExpirience": {
+				"id": "exportExpirienceId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Наличие опыта экспортной деятельности ",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Есть экспортные контракты стоимостью более 6 000 000,00 рублей",
+						"value": "yes",
+						"key": "exportExpirienceId-yes"
+					},
+					{
+						"label": "Нет экспортных контрактов стоимостью более 6 000 000,00 рублей",
+						"value": "no",
+						"key": "exportExpirienceId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "goodRegistrationDate",
+						"equalValue": true
+					}
+				]
+			},
+			
+			"proposePredexport": {
+				"id": "proposePredexportId",
+				"uiType": "notification",
+				"notificationStatus": "ERROR",
+				"notificationText": "Предлагаем воспользоваться кредитным продуктом \"Предэкспортное финансирование\", выбрав в перечне финансовых услуг",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalFields": {
+							"comparisonType": "or",
+							"fields": [
+								{
+									"equalName": "taxationSystem", 
+									"equalValue": "simplified"
+								},
+								{
+									"equalName": "applicableLaw", 
+									"equalValue": "other"
+								},
+								{
+									"equalName": "prohibitedActivity", 
+									"equalValue": "yes"
+								},
+								{
+									"equalName": "exportExpirience", 
+									"equalValue": "no"
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+	
+		"rows": [
+			
+			{
+				"columns": [
+					{
+						"id": "organizationRegistrationDateId",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "earlyRegistrationDateId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "taxationSystemId-common",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "taxationSystemId-simplified",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "applicableLawId-ru",
+						"gridAttributes": {
+							"lg": 3
+						}
+					},
+					{
+						"id": "applicableLawId-other",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityText1Id",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityText2Id",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}, 
+					{
+						"id": "prohibitedActivityText3Id",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "prohibitedActivityId-yes",
+						"gridAttributes": {
+							"lg": 3
+						}
+					},
+					{
+						"id": "prohibitedActivityId-no",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportExpirienceId-yes",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "exportExpirienceId-no",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "proposePredexportId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+		]
+	}
+}
