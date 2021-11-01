@@ -1,4 +1,4 @@
- {
+{
 		"uiFormType": {
 			"type": "json",
 			"withSteps": true
@@ -6,20 +6,18 @@
 		"isFormFullScreen": false,
 		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
 		"uiSteps": {
-			"count": 6,
-			"current": 4,
+			"count": 5,
+			"current": 3,
 			"passed": [
 				1,
-				2,
-				3
+				2
 			],
 			"names": [
 				"Условия получения услуги",
-				"Общая информация о Заемщике и его деятельности",
 				"Основные параметры запрашиваемого финансирования",
 				"Основные параметры экспортного контракта и информация об участниках экспортной сделки",
 				"Декларации Заявителя о борьбе с подкупом",
-				"Подписание заявки"
+				"Подписание и отправка в Банк"
 			]
 		},
 		"fields": {
@@ -71,9 +69,17 @@
 				"type": "String",
 				"placeholder": "Введите долю в процентах",
 				"isNumber": true,
+				"tooltip": "Не менее 30%",
 				"constraints": [
 					{
 						"name": "NotNull"
+					},
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 2,
+							"max": 3
+						}
 					}
 				]
 			},
@@ -106,7 +112,6 @@
 				"uiType": "checkboxBool",
 				"type": "Boolean",
 				"tooltip": "Подсказка",
-				"nullable": true
 			},
 			"contractProducerName": {
 				"id": "contractProducerName",
@@ -122,7 +127,7 @@
 				],
 				"requestParams": {
 					"resultObjectParams": {
-						"name": "caption",
+						"name": "description",
 						"key": "uuid"
 					},
 					"params": {
@@ -130,7 +135,7 @@
 						"queryParams": {
 							"showRefs": 1,
 							"showDetails": 1,
-							"sort": "caption,asc"
+							"sort": "description,asc"
 						},
 						"relativeUrl": "api/v1/catalogs/org/items/search"
 					},
@@ -171,7 +176,6 @@
 					"additionalFields": {
 						"caption": "caption",
 						"ogrn": "ogrn",
-						"inn": "inn",
 						"regAddress": "extAddresses[0].extRegion",
 						"regCountry": "regCountry.caption"
 					},
@@ -204,8 +208,7 @@
 				},
 				"boundFields": {
 					"contractCustomerShortName": "caption",
-					"contractCustomerOGRN": "ogrn",
-					"contractCustomerINN": "inn",
+					"contractCustomerNumber": "ogrn",
 					"contractCustomerJurAddress": "regAddress",
 					"contractCustomerRegCountry": "regCountry"
 				}
@@ -243,23 +246,11 @@
 					}
 				]
 			},
-			"contractCustomerOGRN": {
-				"label": "ОГРН",
-				"id": "contractCustomerOGRN",
+			"contractCustomerNumber": {
+				"label": "Регистрационный или налоговый номер",
+				"id": "contractCustomerNumber",
 				"type": "String",
-				"placeholder": "Введите ОГРН",
-				"isNumber": true,
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			"contractCustomerINN": {
-				"label": "ИНН",
-				"id": "contractCustomerINN",
-				"type": "String",
-				"placeholder": "Введите ИНН",
+				"placeholder": "Введите номер",
 				"isNumber": true,
 				"constraints": [
 					{
@@ -307,21 +298,26 @@
 					{
 						"name": "NotNull"
 					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "contractCustomerDestinationCountryEqualsToRegistration",
+						"equalValue": false
+					}
 				]
 			},
 			"contractCustomerDestinationCountryEqualsToRegistration": {
 				"label": "Совпадает со страной регистрации",
 				"id": "contractCustomerDestinationCountryEqualsToRegistration",
 				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"nullable": true
+				"type": "Boolean"
 			},
 			"isWorkedWithCustomer": {
 				"label": "Информация об опыте работы с покупателем (заказчиком), плательщиком по экспортному контракту",
 				"id": "isWorkedWithCustomer",
 				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"nullable": true
+				"type": "Boolean"
 			},
 			"workedWithCustomerYears": {
 				"label": "Общее кол-во лет сотрудничества",
@@ -438,8 +434,7 @@
 				"label": "Совпадает с Покупателем",
 				"id": "payerIsCustomer",
 				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"nullable": true
+				"type": "Boolean"
 			},
 			"contractPayerFullName": {
 				"label": "Наименование  полное",
@@ -456,7 +451,6 @@
 					"additionalFields": {
 						"caption2": "caption",
 						"ogrn2": "ogrn",
-						"inn2": "inn",
 						"regAddress2": "extAddresses[0].extRegion",
 						"regCountry2": "regCountry.caption"
 					},
@@ -490,8 +484,15 @@
 				"boundFields": {
 					"contractPayerJurAddress": "regAddress2",
 					"contractPayerShortName": "caption2",
-					"contractPayerNumder": "inn2"
-				}
+					"contractPayerNumder": "ogrn2"
+				},
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "payerIsCustomer",
+						"equalValue": false
+					}
+				]
 			},
 			"contractPayerJurAddress": {
 				"label": "Юридический адрес",
@@ -501,6 +502,13 @@
 				"constraints": [
 					{
 						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "payerIsCustomer",
+						"equalValue": false
 					}
 				]
 			},
@@ -513,6 +521,13 @@
 					{
 						"name": "NotNull"
 					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "payerIsCustomer",
+						"equalValue": false
+					}
 				]
 			},
 			"contractPayerNumder": {
@@ -524,6 +539,13 @@
 				"constraints": [
 					{
 						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "payerIsCustomer",
+						"equalValue": false
 					}
 				]
 			}
@@ -664,7 +686,7 @@
 						}
 					},
 					{
-						"id": "contractCustomerRegCountry",
+						"id": "contractCustomerNumber",
 						"gridAttributes": {
 							"lg": 6
 						}
@@ -674,13 +696,7 @@
 			{
 				"columns": [
 					{
-						"id": "contractCustomerOGRN",
-						"gridAttributes": {
-							"lg": 6
-						}
-					},
-					{
-						"id": "contractCustomerINN",
+						"id": "contractCustomerRegCountry",
 						"gridAttributes": {
 							"lg": 6
 						}
@@ -692,7 +708,7 @@
 					{
 						"id": "contractCustomerDestinationCountry",
 						"gridAttributes": {
-							"lg": 12
+							"lg": 6
 						}
 					}
 				]
