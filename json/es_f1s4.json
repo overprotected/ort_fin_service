@@ -111,7 +111,7 @@
 				"id": "borrowerIsProducer",
 				"uiType": "checkboxBool",
 				"type": "Boolean",
-				"tooltip": "Подсказка",
+				"tooltip": "Подсказка"
 			},
 			"contractProducerName": {
 				"id": "contractProducerName",
