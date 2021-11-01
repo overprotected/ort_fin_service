@@ -1,5 +1,5 @@
 {
-  "onChangeHandler": "function fn({prevValues, values, fields, errors, getName}){\n\n    const newValues = {... values};\n    if(values.codesTN_VED.length>0){\n        newValues.creditPercent=3;\n    }\n    else {\n        newValues.creditPercent=10;\n    }\n\n    return {\n        updatedValues : newValues\n    }\n}",
+  "onChangeHandler": "function fn({prevValues, values, fields, errors, getName}){\n   if(values.commandList.length>0 && values.codesTN_VED.length>0){\n        let bool = true;\n        values.commandList.forEach(itemCommand =>{\n            values.codesTN_VED.forEach(itemCode =>{\n                const code = itemCode.value.substr(0,itemCode.value.indexOf(String.fromCharCode(160)));\n\n                if(code === itemCommand.code){\n                    values.creditPercent = 3;\n                    bool = false;\n                }\n            });\n        });\n        if(bool){\n            values.creditPercent = 10;\n        }\n    }\n}",
   "uiFormType": {
     "type": "json",
     "withSteps": true
@@ -7,10 +7,10 @@
   "isFormFullScreen": false,
   "serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
   "uiSteps": {
-    "count": 6,
-    "current": 3,
-    "passed": [1,2],
-    "names": [ "Условия получения услуги", "Общая информация о Заемщике и его деятельности", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
+    "count": 5,
+    "current": 2,
+    "passed": [1],
+    "names": [ "Условия получения услуги", "Основные параметры запрашиваемого финансирования", "Основные параметры экспортного контракта и информация об участниках экспортной сделки", "Декларации Заявителя о борьбе с подкупом", "Подписание заявки" ]
   },
   "fields": {
     "sumCreditLine": {
@@ -24,7 +24,7 @@
       "decimal": 2,
       "useGrouping":true,
       "serverDelimiter":".",
-      "frontDelimiter":".",
+      "frontDelimiter":",",
       "constraints": [
         {
           "name": "NotNull"
@@ -70,21 +70,6 @@
         }
       ]
     },
-    "haveExperience":{
-      "id": "haveExperience",
-      "data": [
-        { "label": "Есть экспортные контракты стоимостью более 6 000 000.00 рублей" , "value": "yes", "key": "haveExperience-yes" },
-        { "label": "Нет экспортных контрактов стоимостью более 6 000 000.00 рублей", "value": "no", "key": "haveExperience-no"  }
-      ],
-      "type": "String",
-      "uiType": "radio",
-      "label": "Наличие опыта экспортной деятельности",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
     "dateEndCreditLine": {
       "id": "dateEndCreditLine",
       "type": "String",
@@ -93,23 +78,6 @@
       "description": " ",
       "placeholder": "дд.мм.гггг",
       "serverFormat": "YYYY-MM-DD",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "sumAllContracts": {
-      "id": "sumAllContracts",
-      "type": "String",
-      "label": "Совокупная сумма реализованных контрактов",
-      "placeholder": "Введите сумму",
-      "description": " ",
-      "isNumber": true,
-      "decimal": 2,
-      "useGrouping":true,
-      "serverDelimiter":".",
-      "frontDelimiter":".",
       "constraints": [
         {
           "name": "NotNull"
@@ -155,7 +123,7 @@
     "creditPercent": {
       "id": "creditPercent",
       "type": "String",
-      "label": "Размер процентной ставки кредита (в %)",
+      "label": "Размер процентной ставки кредита (в годовых процентах)",
       "description": " ",
       "tooltip": "текст подсказки",
       "readonly": true,
@@ -252,29 +220,7 @@
   ,{
       "columns": [
         {
-          "id": "haveExperience-yes",
-          "gridAttributes": {
-            "lg": 3
-          }
-        },
-        {
-          "id": "haveExperience-no",
-          "gridAttributes": {
-            "lg": 3
-          }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
           "id": "dateEndCreditLine",
-          "gridAttributes": {
-            "lg": 6
-          }
-        },
-        {
-          "id": "sumAllContracts",
           "gridAttributes": {
             "lg": 6
           }
