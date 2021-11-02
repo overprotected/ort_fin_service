@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0luzl6y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_16xs3bs" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0lwnvfs</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0lwnvfs" sourceRef="StartEvent_1" targetRef="Script1" />
+    <bpmn:sequenceFlow id="Flow_01if2ra" sourceRef="Script1" targetRef="Service1" />
+    <bpmn:sequenceFlow id="Flow_17980ib" sourceRef="Service1" targetRef="UserTask1" />
+    <bpmn:scriptTask id="Script1" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0lwnvfs</bpmn:incoming>
+      <bpmn:outgoing>Flow_01if2ra</bpmn:outgoing>
+      <bpmn:script>[]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Service1">
+      <bpmn:incoming>Flow_01if2ra</bpmn:incoming>
+      <bpmn:outgoing>Flow_17980ib</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="UserTask1">
+      <bpmn:incoming>Flow_17980ib</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dfipum</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_end">
+      <bpmn:incoming>Flow_1dfipum</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1dfipum" sourceRef="UserTask1" targetRef="Event_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_16xs3bs">
+      <bpmndi:BPMNEdge id="Flow_0lwnvfs_di" bpmnElement="Flow_0lwnvfs">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="290" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01if2ra_di" bpmnElement="Flow_01if2ra">
+        <di:waypoint x="390" y="120" />
+        <di:waypoint x="490" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17980ib_di" bpmnElement="Flow_17980ib">
+        <di:waypoint x="590" y="120" />
+        <di:waypoint x="680" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dfipum_di" bpmnElement="Flow_1dfipum">
+        <di:waypoint x="780" y="120" />
+        <di:waypoint x="842" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03dm9wb_di" bpmnElement="Script1">
+        <dc:Bounds x="290" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b0m85c_di" bpmnElement="Service1">
+        <dc:Bounds x="490" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12e29gr_di" bpmnElement="UserTask1">
+        <dc:Bounds x="680" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wo5gx7_di" bpmnElement="Event_end">
+        <dc:Bounds x="842" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

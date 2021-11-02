@@ -1,5 +1,9 @@
 {
 	"variables": {
+		"showSign": {
+			"value": true,
+			"type": "Boolean"
+		},
 		"generatedApp": {
 			"value": null,
 			"type": "String"
@@ -24,10 +28,9 @@
 		"uiSteps": {
 			"count": 5,
 			"current": 5,
-			"passed": [1, 2, 3, 4, 5],
+			"passed": [1, 2, 3, 4],
 			"names": [ 
 				"Условия получения услуги", 
-				"Общая информация о Заемщике и его деятельности", 
 				"Основные параметры запрашиваемого финансирования", 
 				"Основные параметры экспортного контракта и информация об участниках экспортной сделки", 
 				"Декларации Заявителя о борьбе с подкупом", 
@@ -36,6 +39,12 @@
 		},
 	
 		"fields": {
+			"showSign": {
+				"label": "Подписывать УКЭП",
+				"id": "showSignId",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},	
 			"generatedApp": {
 				"id": "generatedAppId",
 				"type": "File",
@@ -63,6 +72,13 @@
 							"ecmUuid": "ecmUuid"
 						}
 					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": true
+					}
 				]
 			},
 			
@@ -80,11 +96,29 @@
 							"max": 30000000
 						}
 					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": false
+					}
 				]
 			}
 		},
 	
 		"rows": [
+			
+			{
+				"columns": [
+					{
+						"id": "showSignId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
 			
 			{
 				"columns": [
