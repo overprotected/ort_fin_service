@@ -308,7 +308,7 @@
 			]
 		},
 		"contractCustomerDestinationCountryEqualsToRegistration": {
-			"label": "Совпадает со страной регистрации",
+			"label": "Страна экспорта совпадает со страной регистрации",
 			"id": "contractCustomerDestinationCountryEqualsToRegistration",
 			"uiType": "checkboxBool",
 			"type": "Boolean"
@@ -339,7 +339,7 @@
 			]
 		},
 		"workedWithCustomerContracts": {
-			"label": "Число реализованных экспортных контрактовОбщее кол-во лет сотрудничества",
+			"label": "Число реализованных экспортных контрактов",
 			"id": "workedWithCustomerContracts",
 			"type": "String",
 			"placeholder": "Введите количество",
@@ -431,7 +431,7 @@
 			"margin": "0px 0px 0px 0px"
 		},
 		"payerIsCustomer": {
-			"label": "Совпадает с Покупателем",
+			"label": "Плательщик совпадает с Покупателем",
 			"id": "payerIsCustomer",
 			"uiType": "checkboxBool",
 			"type": "Boolean"
