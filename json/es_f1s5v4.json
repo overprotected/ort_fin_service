@@ -86,7 +86,7 @@
 				"expansionPanel": {
 					"title": "Декларации Заявителя о борьбе с подкупом иностранных должностных лиц при осуществлении международных коммерческих сделок",
 					"status": "default",
-					"expandedByDefault": false,
+					"expandedByDefault": true,
 					"isDynamicStatus": true,
 					"style": {
 						"font-size": "smaller"
