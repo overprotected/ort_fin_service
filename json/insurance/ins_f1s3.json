@@ -1,0 +1,681 @@
+{
+  "variables": {
+    "customerUrWithExperience": ""
+  },
+  "uiSchema": {
+    "uiFormType": {
+      "type": "json",
+      "withSteps": true
+    },
+    "isFormFullScreen": false,
+    "serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+    "uiSteps": {
+      "count": 8,
+      "current": 3,
+      "passed": [1,2],
+      "names": [ "Приложение №1", "Информация о Вашей компании", "Информация о покупатели",
+        "Параметры сделки", "Экспортный контракт", "Инная информация","Согласие с изменением государственной гарантии","Подписание и отправка" ]
+    },
+    "fields": {
+      "customer": {
+        "id": "customer",
+        "type": "String",
+        "label": "Наименование",
+        "placeholder": "Наименование",
+        "uiType": "reference",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "staticVariants": [
+          {
+            "value": "Организации нет в списке",
+            "key": "400"
+          }
+        ],
+        "requestParams": {
+          "resultObjectParams": {
+            "name": "description",
+            "key": "uuid"
+          },
+          "additionalFields": {
+            "country": "extAddresses[0].extCountry",
+            "address": "extAddresses[0]",
+            "okved": "okved",
+            "employeeNumber": "employeeNumber"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 3,
+              "showDetails": 1,
+              "sort": "description,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/org/items/search"
+          },
+          "filters": [
+            {
+              "name": "or",
+              "value": [
+                {
+                  "name": "caption_like_ci"
+                },
+                {
+                  "name": "description_like_ci"
+                }
+              ]
+            }
+          ]
+        },
+        "boundFields": {
+          "customerRegCountry":{
+            "key": "country",
+            "type": "object",
+            "map": {
+              "value": "caption",
+              "key": "uuid"
+            }
+          },
+          "customerAddress":{
+            "key": "address",
+            "type": "object",
+            "map": {
+              "value": ["extRegion","extCity","extStreet","extHouse"],
+              "key": "uuid"
+            }
+          },
+          "customerOkved": {
+            "key": "okved",
+            "type": "object",
+            "map": {
+              "value": "caption",
+              "key": "uuid"
+            }
+          },
+          "countEmployee": "employeeNumber"
+        }
+      },
+      "customerRegCountry": {
+        "id": "customerRegCountry",
+        "type": "String",
+        "uiType": "dropdown",
+        "data": [],
+        "label": "Страна регистрации",
+        "readonly": true,
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "inverse" : true,
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerAddress": {
+        "id": "customerAddress",
+        "type": "String",
+        "label": "Адрес местонахождения",
+        "uiType": "dropdown",
+        "readonly": true,
+        "data": [],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "inverse" : true,
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerOkved": {
+        "id": "customerOkved",
+        "type": "String",
+        "label": "Фактический основной вид деятельности",
+        "uiType": "dropdown",
+        "readonly": true,
+        "data": [],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "inverse" : true,
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "countEmployee": {
+        "id": "countEmployee",
+        "type": "String",
+        "label": "Количество сотрудников в штате",
+        "readonly": true,
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "inverse" : true,
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerNotFound": {
+        "id": "customerNotFound",
+        "type": "String",
+        "label": "Наименование",
+        "placeholder": "Наименование",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerRegCountryNotFound": {
+        "id": "customerRegCountryNotFound",
+        "type": "String",
+        "uiType": "reference",
+        "label": "Страна регистрации",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": "shortName",
+            "key": "uuid"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 1,
+              "showDetails": 1,
+              "sort": "shortName,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/country/items/search"
+          },
+          "filters": [
+            {
+              "name": "or",
+              "value": [
+                {
+                  "name": "caption_like_ci"
+                },
+                {
+                  "name": "shortName_like_ci"
+                }
+              ]
+            }
+          ]
+        },
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerOkvedNotFound": {
+        "id": "customerOkvedNotFound",
+        "type": "String",
+        "label": "Фактический основной вид деятельности",
+        "uiType": "reference",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": ["code","caption"],
+            "key": "uuid"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 1,
+              "showDetails": 1,
+              "sort": "code,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/okved/items/search"
+          },
+          "filters": [
+            {
+              "name": "or",
+              "value": [
+                {
+                  "name": "caption_like_ci"
+                },
+                {
+                  "name": "code_like_ci"
+                }
+              ]
+            }
+          ]
+        },
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerAddressNotFound": {
+        "id": "customerAddressNotFound",
+        "type": "String",
+        "label": "Страна регистрации",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "countEmployeeNotFound": {
+        "id": "countEmployeeNotFound",
+        "type": "String",
+        "label": "Количество сотрудников в штате",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "customer",
+            "equalValue": "Организации нет в списке"
+          }
+        ]
+      },
+      "customerUrWithExperience": {
+        "id": "customerUrWithExperience",
+        "uiType": "radio",
+        "type": "String",
+        "label": "Покупатель - юридическое лицо, срок деятельности которого более 2-х лет с даты регистрации",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "customerUrWithExperience-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "customerUrWithExperience-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "haveUrl": {
+        "id": "haveUrl",
+        "uiType": "radio",
+        "type": "String",
+        "label": "Сайт Покупателя",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "haveUrl-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "haveUrl-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "newUrl": {
+        "id": "newUrl",
+        "type": "String",
+        "placeholder": "URL сайта",
+        "description": " ",
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "haveUrl",
+            "equalValue": "yes"
+          }
+        ]
+      },
+      "haveContract": {
+        "id": "haveContract",
+        "uiType": "radio",
+        "type": "String",
+        "label": "Совместный опыт работы с Покупателем",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "haveContract-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "haveContract-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "actingHaveContract": {
+        "id": "actingHaveContract",
+        "uiType": "radio",
+        "type": "String",
+        "label": "Действующие экспортные контракты с Покупателем",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "actingHaveContract-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "actingHaveContract-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "haveControl": {
+        "id": "haveControl",
+        "uiType": "radio",
+        "type": "String",
+        "label": "Между экспортером и Покупателем отсутствуют отношения прямого или косвенного контроля",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "haveControl-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "haveControl-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "haveCredit": {
+        "id": "haveCredit",
+        "uiType": "radio",
+        "type": "String",
+        "label": "У Покупателя перед вашей компанией отсутствует просроченая задолженность",
+        "tooltip": "Задолженность со сроком отсрочки платежа свыше 90 календарных дней\nЗадолженность по отгрузкам, в отношении которых был перенесен срок платежа",
+        "data": [
+          {
+            "label": "Имеется",
+            "value": "yes",
+            "key": "haveCredit-yes"
+          },
+          {
+            "label": "Не имеется",
+            "value": "no",
+            "key": "haveCredit-no"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "actingHaveContract",
+            "equalValue": "yes"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      }
+    },
+    "rows": [
+      {
+        "type": "formSeparator",
+        "expansionPanel": {
+          "title": "Информация о Покупателе",
+          "status": "Статус",
+          "expandedByDefault": true,
+          "isDynamicStatus": true,
+          "description": " ",
+          "validateStatus": {
+            "success": "Заполнено",
+            "error": "Ошибка",
+            "default": "Заполните"
+          }
+        }
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customer",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "customerRegCountry",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerNotFound",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "customerRegCountryNotFound",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerAddress",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "customerAddressNotFound",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerOkved",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "customerOkvedNotFound",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+          ,{
+            "id": "countEmployee",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ,{
+            "id": "countEmployeeNotFound",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerUrWithExperience-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "customerUrWithExperience-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "haveUrl-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "haveUrl-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "newUrl",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "haveContract-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "haveContract-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "actingHaveContract-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "actingHaveContract-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "haveCredit-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "haveCredit-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "haveControl-yes",
+            "gridAttributes": {
+              "lg": 12
+            }
+          },
+          {
+            "id": "haveControl-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
