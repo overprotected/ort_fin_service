@@ -13,7 +13,7 @@
         <bpmn:outgoing>Flow_0fm1tnq</bpmn:outgoing>
         <bpmn:script>execution.setVariables([
 	"NEXT": "NEXT",
-	
+
 // form 1
 	"goodRegistrationDate": true,
 	"organizationRegistrationDate": "10.05.2021",
@@ -29,7 +29,7 @@
 	"organizationOgrn": "organizationOgrn",
 	"organizationInn": "organizationInn",
 	"organizationOkpo": "organizationOkpo",
-	
+
 // form 3
 	"sumCreditLine": null,
     "haveExperience": null,
@@ -46,43 +46,46 @@
 // form 4
 	"contractCurrency":null,
 	"contractValue": null,
-	"contractCurrency": [:],	
+	"contractCurrency": [:],
 	"contractRussianComponentShare":"30",
 	"contractShipmentPeriod": null,
 	"contractPaymentTerms": null,
-	
+
 	"borrowerIsProducer": false,
 	"contractProducerName": [],
-	
+
 	"contractCustomerFullName" : [:],
-	"contractCustomerJurAddress": null,	
+	"contractCustomerJurAddress": null,
 	"contractCustomerShortName": null,
 	"contractCustomerRegCountry": null,
-	"contractCustomerNumber": null,			
+	"contractCustomerNumber": null,
 	"contractCustomerDestinationCountryEqualsToRegistration": false,
-	"contractCustomerDestinationCountry": [:],	
-	
+	"contractCustomerDestinationCountry": [:],
+
 	"isWorkedWithCustomer": false,
 	"workedWithCustomerYears": null,
 	"workedWithCustomerContracts": null,
 	"workedWithCustomerLatePaymentDescription": null,
 	"workedWithCustomerHaveLatePayment": false,
 	"workedWithCustomerSpecialContracts": null,
-	
+
 	"payerIsCustomer": false,
-	"contractPayerFullName" : [:],	
-	"contractPayerJurAddress" : null,	
-	"contractPayerShortName" : null,		
+	"contractPayerFullName" : [:],
+	"contractPayerJurAddress" : null,
+	"contractPayerShortName" : null,
 	"contractPayerNumder" : null,
-	
+
 // form 5
 	"applicantPromises": [:],
 	"declarationAgreed": false,
 	"creditBureauAgreed": true,
 	"attachList": [],
-	
+
 // form 6
-	"showSign": true
+	"showSign": true,
+
+// send mail
+	"addressees": "navrotskii.v@otr.ru"
 ])</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:serviceTask id="Activity_0bz09lq" name="Status = Черновик" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
@@ -500,7 +503,7 @@ v</camunda:script>
         <bpmn:incoming>Flow_1emh709</bpmn:incoming>
         <bpmn:outgoing>Flow_0z5353m</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0z5353m" sourceRef="Activity_125otec" targetRef="Activity_1kdmhwg" />
+      <bpmn:sequenceFlow id="Flow_0z5353m" sourceRef="Activity_125otec" targetRef="Activity_0ap3ic7" />
       <bpmn:sequenceFlow id="Flow_1emh709" sourceRef="Activity_1hamu57" targetRef="Activity_125otec" />
       <bpmn:serviceTask id="Activity_1kdmhwg" name="Status = В работе. Проводится проверка" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
         <bpmn:extensionElements>
@@ -520,7 +523,7 @@ v</camunda:script>
             </camunda:inputParameter>
           </camunda:inputOutput>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0z5353m</bpmn:incoming>
+        <bpmn:incoming>Flow_1u9qr44</bpmn:incoming>
         <bpmn:outgoing>Flow_1b2ov00</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1b2ov00" sourceRef="Activity_1kdmhwg" targetRef="Event_1ah8fye" />
@@ -537,6 +540,24 @@ v</camunda:script>
         <bpmn:outgoing>Flow_0knslzj</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_0knslzj" sourceRef="Activity_1u9012m" targetRef="Activity_12b83fl" />
+      <bpmn:serviceTask id="Activity_0ap3ic7" name="Send mail" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.EmailNotifyDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="template_name">export_standard_created_app_email</camunda:inputParameter>
+            <camunda:inputParameter name="message">
+              <camunda:map>
+                <camunda:entry key="incomingNumber">${petitonNumber}</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="transport_type">email</camunda:inputParameter>
+            <camunda:inputParameter name="to">${addressees}</camunda:inputParameter>
+            <camunda:inputParameter name="subject">«Экспортный стандарт»: создана заявка</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0z5353m</bpmn:incoming>
+        <bpmn:outgoing>Flow_1u9qr44</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1u9qr44" sourceRef="Activity_0ap3ic7" targetRef="Activity_1kdmhwg" />
     </bpmn:subProcess>
     <bpmn:startEvent id="Event_0cht4hb">
       <bpmn:outgoing>Flow_0elv930</bpmn:outgoing>
@@ -603,16 +624,16 @@ v</camunda:script>
         <dc:Bounds x="310" y="80" width="4260" height="480" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1b2ov00_di" bpmnElement="Flow_1b2ov00">
-        <di:waypoint x="4370" y="200" />
+        <di:waypoint x="4420" y="200" />
         <di:waypoint x="4482" y="200" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1emh709_di" bpmnElement="Flow_1emh709">
         <di:waypoint x="3970" y="200" />
-        <di:waypoint x="4070" y="200" />
+        <di:waypoint x="4040" y="200" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0z5353m_di" bpmnElement="Flow_0z5353m">
-        <di:waypoint x="4170" y="200" />
-        <di:waypoint x="4270" y="200" />
+        <di:waypoint x="4140" y="200" />
+        <di:waypoint x="4180" y="200" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zhz6ci_di" bpmnElement="Flow_0zhz6ci">
         <di:waypoint x="2330" y="200" />
@@ -722,6 +743,10 @@ v</camunda:script>
         <di:waypoint x="1830" y="200" />
         <di:waypoint x="1920" y="200" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u9qr44_di" bpmnElement="Flow_1u9qr44">
+        <di:waypoint x="4280" y="200" />
+        <di:waypoint x="4320" y="200" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="392" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -776,12 +801,6 @@ v</camunda:script>
       <bpmndi:BPMNShape id="Activity_1y8j1ng_di" bpmnElement="Activity_1y8j1ng">
         <dc:Bounds x="2230" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_125otec_di" bpmnElement="Activity_125otec" bioc:stroke="black" bioc:fill="white">
-        <dc:Bounds x="4070" y="160" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1kdmhwg_di" bpmnElement="Activity_1kdmhwg">
-        <dc:Bounds x="4270" y="160" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gs1qs4_di" bpmnElement="Activity_1gs1qs4">
         <dc:Bounds x="1150" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -805,6 +824,15 @@ v</camunda:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lq2e44_di" bpmnElement="Activity_12b83fl">
         <dc:Bounds x="1920" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kdmhwg_di" bpmnElement="Activity_1kdmhwg">
+        <dc:Bounds x="4320" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_125otec_di" bpmnElement="Activity_125otec" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="4040" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ap3ic7_di" bpmnElement="Activity_0ap3ic7" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="4180" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cht4hb_di" bpmnElement="Event_0cht4hb">
         <dc:Bounds x="152" y="277" width="36" height="36" />
