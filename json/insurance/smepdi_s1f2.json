@@ -1,0 +1,348 @@
+{
+	"variables": {
+		"hasWebSite": {
+			"value": 
+				"hasWebSite-yes",
+			"type": "String"
+		},
+		"beneficiaryAge": {
+			"value": [
+				"21",
+				"22"
+			],
+			"type": "Array"
+		}
+	},
+	"uiSchema": {
+		"isFormFullScreen": false,
+		"serviceTitle": "Страхование отсрочки платежа для клиента МСП",
+		"uiSteps": {
+			"count": 8,
+			"current": 2,
+			"passed": [1],
+			"names": [
+				"Заверения",
+				"Информация о Вашей компании",
+				"Информация о Покупателе",
+				"Параметры сделки",
+				"Экспортный контракт",
+				"Иная информация",
+				"Согласие",
+				"Подписание и отправка"
+			]
+		},
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"fields": {
+			"mainTypeOfActivity": {
+				"id": "mainTypeOfActivity",
+				"type": "String",
+				"label": "Фактический основной вид деятельности",
+				"uiType": "reference",
+				"tooltip": "Выберите фактический основной вид деятельности",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "description",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "description,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/smepdi_okved/items/search"
+					},
+					"filters": [
+						{
+							"name": "description_like_ci"
+						}
+					]
+				}
+			},
+			"overdueDebt": {
+				"id": "overdueDebt",
+				"type": "String",
+				"label": "Просроченная задолженность перед кредитными организациями",
+				"uiType": "dropdown",
+				"tooltip": "Выберите количество дней просроченной задолженности",
+				"data": [
+					{
+						"value": "0 календарных дней",
+						"key": 1
+					},
+					{
+						"value": "менее 5 календарных дней",
+						"key": 2
+					},
+					{
+						"value": "от 5 (включительно) до 10 календарных дней",
+						"key": 3
+					},
+					{
+						"value": "от 11 календарных дней",
+						"key": 4
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"hasWebSite": {
+				"id": "hasWebSite",
+				"value": null,
+				"type": "String",
+				"uiType": "radio",
+				"label": "Сайт компании",
+				"data": [
+					{
+						"label": "Имеется",
+						"value": "yes",
+						"key": "hasWebSite-yes"
+					},
+					{
+						"label": "Не имеется",
+						"value": "no",
+						"key": "hasWebSite-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"webSite": {
+				"id": "webSite",
+				"type": "String",
+				"placeholder": "URL сайта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "hasWebSite",
+						"equalValue": "yes"
+					}
+				]
+			},
+			"isBeneficiaryPhysic": {
+				"id": "isBeneficiaryPhysic",
+				"value": null,
+				"type": "String",
+				"uiType": "radio",
+				"label": "Бенефициарный владелец является физическим лицом",
+				"tooltip": "<html><body><div>Заполняется для Страхователей - юридических лиц, в случае, если бенефициарный владелец является физическим лицом)**<br>*Как бенефициарный владелец определен в ст. 3 Федерального закона от 07.08.2001 № 115-ФЗ \"О противодействии легализации (отмыванию) доходов, полученных преступным путём, и финасированию терроризма\". Если у экспортёра несколько бенефициарных владельцев - физических лиц, нужно указать возраст всех владельцев.<br>** ВНИМАНИЕ: копии паспортов всех бенефициарных владельцев и их согласие на обработку персональных данных ЭКСАР включены в список документов на выплату страхового возмещения в Договоре.</div></body></html>",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "isBeneficiaryPhysic-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "isBeneficiaryPhysic-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			"beneficiaryAge": {
+				"id": "beneficiaryAge",
+				"type": "String",
+				"placeholder": "Введите возраст",
+				"multiple": true,
+				"maxMultiple": 4,
+				"isNumber": true,
+				"padZeros": false,
+				"constraints": [
+					{
+						"name": "NotNull"
+					},
+					{
+						"name": "Size",
+						"attributes": {
+							"minEach": "1",
+							"maxEach": "4",
+							"message": "Введите корректный возраст"
+						}
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "isBeneficiaryPhysic",
+						"equalValue": "yes"
+					}
+				]
+			},
+			"hasExportExperience": {
+				"id": "hasExportExperience",
+				"value": null,
+				"type": "String",
+				"uiType": "radio",
+				"label": "Опыт экспорта товаров, и (или) работ, и (или) услуг",
+				"tooltip": "Подсказка",
+				"data": [
+					{
+						"label": "Имеется",
+						"value": "yes",
+						"key": "hasExportExperience-yes"
+					},
+					{
+						"label": "Не имеется",
+						"value": "no",
+						"key": "hasExportExperience-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			}
+		},
+		"rows": [
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Информация о вашей компании",
+					"description": "",
+					"isDynamicStatus": "true",
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				},
+				"gridAttributes": {
+					"lg": 12
+				}
+			},
+			{
+				"columns": [
+					{
+						"id": "mainTypeOfActivity",
+						"gridAttributes": {
+							"lg": 6
+						}
+					},
+					{
+						"id": "overdueDebt",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "hasWebSite-yes",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "hasWebSite-no",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "webSite",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "isBeneficiaryPhysic-yes",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "isBeneficiaryPhysic-no",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "beneficiaryAge",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "addButton",
+						"forId": "beneficiaryAge",
+						"gridAttributes": {
+							"lg": 5
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "hasExportExperience-yes",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "hasExportExperience-no",
+						"gridAttributes": {
+							"lg": 3
+						}
+					}
+				]
+			}
+		]
+	}
+}
