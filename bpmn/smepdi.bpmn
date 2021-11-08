@@ -21,8 +21,8 @@
 	"overdueDebt": [:],
 	"hasWebSite": null,
 	"webSite": null,
-        "isBeneficiaryPhysic": null,
-        "beneficiaryAge": [],
+	"isBeneficiaryPhysic": null,
+	"beneficiaryAge": [],
 	"hasExportExperience": null,
 
 	
@@ -132,7 +132,6 @@
           </camunda:inputOutput>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0lliebj</bpmn:incoming>
-        <bpmn:incoming>Flow_0pntcom</bpmn:incoming>
         <bpmn:outgoing>Flow_04hnjo4</bpmn:outgoing>
       </bpmn:userTask>
       <bpmn:serviceTask id="Activity_1fnfsm7" name="Load organization data from MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
@@ -216,7 +215,7 @@ if (orgRegDate != null) {
       </bpmn:userTask>
       <bpmn:scriptTask id="Activity_1wrtxww" name="Prepare order data" camunda:asyncBefore="true" scriptFormat="groovy">
         <bpmn:incoming>Flow_1isya1i</bpmn:incoming>
-        <bpmn:outgoing>Flow_1o6mbi3</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0jrt53j</bpmn:outgoing>
         <bpmn:script>execution.setVariable("incomingNumber", petitonNumber.toString())
 def dataForRegistry = [
         "orderNumber" : incomingNumber,
@@ -238,43 +237,36 @@ execution.setVariable("dataForRegistry", dataForRegistry)</bpmn:script>
             <camunda:inputParameter name="outputName">mdmOrder</camunda:inputParameter>
           </camunda:inputOutput>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1o6mbi3</bpmn:incoming>
+        <bpmn:incoming>Flow_0jrt53j</bpmn:incoming>
         <bpmn:outgoing>Flow_1c258zr</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:scriptTask id="Activity_10tceln" name="Parse codes" scriptFormat="groovy">
+      <bpmn:scriptTask id="Activity_10tceln" name="Prepare data" scriptFormat="groovy">
         <bpmn:incoming>Flow_1c258zr</bpmn:incoming>
+        <bpmn:incoming>Flow_0pntcom</bpmn:incoming>
         <bpmn:outgoing>Flow_1ovrpnu</bpmn:outgoing>
-        <bpmn:script>def codesTnVed = []
-codesTN_VED.each {
-    def codeTnVed = [:];
-    codeTnVed.dualPurposeUuid = it.key;
-    codeTnVed.kodt = it.value.substring(0, it.value.indexOf(" "));
-codeTnVed.naim = it.value.substring(it.value.indexOf(" "));
-    codesTnVed.add(codeTnVed)
+        <bpmn:script>def beneficiaryAges = []
+beneficiaryAge.each {
+    def ageObj = [:];
+    ageObj.age = it;
+    beneficiaryAges.add(ageObj)
 }
-
 execution.setVariables(
-  "codesTnVed": codesTnVed
+  "beneficiaryAges": beneficiaryAges
 );</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:serviceTask id="Activity_1hamu57" name="Save application in MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
         <bpmn:extensionElements>
           <camunda:inputOutput>
-            <camunda:inputParameter name="origin">export_standard_app</camunda:inputParameter>
+            <camunda:inputParameter name="origin">sme_pdi_app</camunda:inputParameter>
             <camunda:inputParameter name="action">create</camunda:inputParameter>
             <camunda:inputParameter name="outputName">createItem</camunda:inputParameter>
             <camunda:inputParameter name="dataScript">
               <camunda:script scriptFormat="groovy">[
-        "sumCreditLine": sumCreditLine.replaceAll(" ",""),
-        "periodCreditLine": periodCreditLine.key,
-        "haveExperience":haveExperience.equals("haveExperience-yes"),
-        "dateEndCreditLine":dateEndCreditLine,
-        "sumAllContracts":sumAllContracts.replaceAll(" ",""),
-        "creditPercent":creditPercent,
-        "isBenefit":isBenefit,
-        "isDeposit":isDeposit,
-        "isGuarantee": isGuarantee,
-        "codesTnVed": codesTnVed
+"mainTypeOfActivity":mainTypeOfActivity? mainTypeOfActivity.key: "",
+"overdueDebt":overdueDebt? overdueDebt.key: "",
+"hasExportExperience":hasExportExperience.equals("hasExportExperience-yes"),
+"isBeneficiaryPhysic":isBeneficiaryPhysic.equals("isBeneficiaryPhysic-yes"),
+"beneficiaryAges":beneficiaryAges
 ]</camunda:script>
             </camunda:inputParameter>
           </camunda:inputOutput>
@@ -372,7 +364,6 @@ execution.setVariables(
       <bpmn:sequenceFlow id="Flow_1sz5wtr" sourceRef="Gateway_1wskrl4" targetRef="Activity_1hcs6y1">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_1o6mbi3" sourceRef="Activity_1wrtxww" targetRef="Activity_1cf99bq" />
       <bpmn:sequenceFlow id="Flow_1c258zr" sourceRef="Activity_1cf99bq" targetRef="Activity_10tceln" />
       <bpmn:sequenceFlow id="Flow_1ovrpnu" sourceRef="Activity_10tceln" targetRef="Activity_1hamu57" />
       <bpmn:userTask id="Activity_1cegqxz" name="Fill application, step 6" camunda:formKey="f1s6" camunda:candidateGroups="exporter">
@@ -445,7 +436,7 @@ v</camunda:script>
         <bpmn:outgoing>Flow_0w11esh</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1gc2aot" sourceRef="Activity_0l58xju" targetRef="Gateway_036gwxc" />
-      <bpmn:sequenceFlow id="Flow_0pntcom" sourceRef="Gateway_036gwxc" targetRef="Activity_12b83fl">
+      <bpmn:sequenceFlow id="Flow_0pntcom" sourceRef="Gateway_036gwxc" targetRef="Activity_10tceln">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:userTask id="Activity_0wphhza" name="Fill application, step 1" camunda:formKey="f1s1" camunda:candidateGroups="exporter">
@@ -467,6 +458,7 @@ v</camunda:script>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_0ot83rz" sourceRef="Activity_1gs1qs4" targetRef="Activity_0wphhza" />
       <bpmn:sequenceFlow id="Flow_191m393" sourceRef="Activity_0wphhza" targetRef="Activity_0l58xju" />
+      <bpmn:sequenceFlow id="Flow_0jrt53j" sourceRef="Activity_1wrtxww" targetRef="Activity_1cf99bq" />
     </bpmn:subProcess>
     <bpmn:startEvent id="Event_0cht4hb">
       <bpmn:outgoing>Flow_0elv930</bpmn:outgoing>
@@ -532,6 +524,18 @@ v</camunda:script>
       <bpmndi:BPMNShape id="Activity_0m9o8dk_di" bpmnElement="Activity_0m9o8dk" isExpanded="true">
         <dc:Bounds x="260" y="80" width="4020" height="480" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0jrt53j_di" bpmnElement="Flow_0jrt53j">
+        <di:waypoint x="3350" y="200" />
+        <di:waypoint x="3472" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_191m393_di" bpmnElement="Flow_191m393">
+        <di:waypoint x="1340" y="200" />
+        <di:waypoint x="1590" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ot83rz_di" bpmnElement="Flow_0ot83rz">
+        <di:waypoint x="1140" y="200" />
+        <di:waypoint x="1240" y="200" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w11esh_di" bpmnElement="Flow_0w11esh">
         <di:waypoint x="1790" y="225" />
         <di:waypoint x="1790" y="280" />
@@ -539,8 +543,10 @@ v</camunda:script>
         <di:waypoint x="1290" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0pntcom_di" bpmnElement="Flow_0pntcom">
-        <di:waypoint x="1815" y="200" />
-        <di:waypoint x="1902" y="200" />
+        <di:waypoint x="1803" y="212" />
+        <di:waypoint x="2130" y="530" />
+        <di:waypoint x="2390" y="530" />
+        <di:waypoint x="3680" y="239" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gc2aot_di" bpmnElement="Flow_1gc2aot">
         <di:waypoint x="1690" y="200" />
@@ -554,7 +560,7 @@ v</camunda:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1isya1i_di" bpmnElement="Flow_1isya1i">
         <di:waypoint x="3177" y="200" />
-        <di:waypoint x="3262" y="200" />
+        <di:waypoint x="3250" y="200" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_197lqk2_di" bpmnElement="Flow_197lqk2">
         <di:waypoint x="3012" y="200" />
@@ -567,10 +573,6 @@ v</camunda:script>
       <bpmndi:BPMNEdge id="Flow_1c258zr_di" bpmnElement="Flow_1c258zr">
         <di:waypoint x="3572" y="200" />
         <di:waypoint x="3672" y="200" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1o6mbi3_di" bpmnElement="Flow_1o6mbi3">
-        <di:waypoint x="3362" y="200" />
-        <di:waypoint x="3472" y="200" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1sz5wtr_di" bpmnElement="Flow_1sz5wtr">
         <di:waypoint x="2802" y="175" />
@@ -634,14 +636,6 @@ v</camunda:script>
         <di:waypoint x="338" y="200" />
         <di:waypoint x="440" y="200" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ot83rz_di" bpmnElement="Flow_0ot83rz">
-        <di:waypoint x="1140" y="200" />
-        <di:waypoint x="1240" y="200" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_191m393_di" bpmnElement="Flow_191m393">
-        <di:waypoint x="1340" y="200" />
-        <di:waypoint x="1590" y="200" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="302" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -682,7 +676,7 @@ v</camunda:script>
         <dc:Bounds x="2582" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1wrtxww_di" bpmnElement="Activity_1wrtxww">
-        <dc:Bounds x="3262" y="160" width="100" height="80" />
+        <dc:Bounds x="3250" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1cf99bq_di" bpmnElement="Activity_1cf99bq">
         <dc:Bounds x="3472" y="160" width="100" height="80" />
