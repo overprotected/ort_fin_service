@@ -437,18 +437,11 @@
     ,{
         "columns": [
           {
-            "type": "typography",
-            "typographyProps": {
-              "text": "",
-              "variant": "p"
-            },
-            "gridAttributes": {
-              "lg": 1
-            }
-          },
-          {
             "id": "refundAmount",
             "gridAttributes": {
+              "push": {
+                "lg": 1
+              },
               "lg": 7
             }
           }
@@ -457,18 +450,11 @@
     ,{
         "columns": [
           {
-            "type": "typography",
-            "typographyProps": {
-              "text": "",
-              "variant": "p"
-            },
-            "gridAttributes": {
-              "lg": 1
-            }
-          },
-          {
             "id": "refundType",
             "gridAttributes": {
+              "push": {
+                "lg": 1
+              },
               "lg": 7
             }
           }
