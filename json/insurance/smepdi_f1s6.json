@@ -63,7 +63,7 @@
         "label": "Основной обслуживающий банк",
         "requestParams": {
           "resultObjectParams": {
-            "name": "caption",
+            "name": "participantName",
             "key": "uuid"
           },
           "params": {
@@ -71,24 +71,22 @@
             "queryParams": {
               "showRefs": 1,
               "showDetails": 1,
-              "sort": "caption,asc"
+              "sort": "participantName,asc"
             },
-            "relativeUrl": "api/v1/catalogs/org/items/search"
+            "relativeUrl": "api/v1/catalogs/bic/items/search"
           },
           "filters": [
             {
               "name": "and",
               "value": [
                 {
-                  "name": "caption_like_ci"
+                  "name": "participantName_like_ci"
                 },
                 {
-                  "name": "bank",
-                  "value": true
+                  "name": "bicHeadOrg.bic_like_ci"
                 }
               ]
             }
-
           ]
         },
         "constraints": [
@@ -104,7 +102,7 @@
         "label": "Основной кредитующий банк",
         "requestParams": {
           "resultObjectParams": {
-            "name": "caption",
+            "name": "participantName",
             "key": "uuid"
           },
           "params": {
@@ -112,20 +110,19 @@
             "queryParams": {
               "showRefs": 1,
               "showDetails": 1,
-              "sort": "caption,asc"
+              "sort": "participantName,asc"
             },
-            "relativeUrl": "api/v1/catalogs/org/items/search"
+            "relativeUrl": "api/v1/catalogs/bic/items/search"
           },
           "filters": [
             {
               "name": "and",
               "value": [
                 {
-                  "name": "caption_like_ci"
+                  "name": "participantName_like_ci"
                 },
                 {
-                  "name": "bank",
-                  "value": true
+                  "name": "bicHeadOrg.bic_like_ci"
                 }
               ]
             }
@@ -150,7 +147,42 @@
       "bankBik": {
         "id": "bankBik",
         "type": "String",
+        "uiType": "reference",
         "label": "БИК Банка, в котором открыт расчетный счёт",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": "bic",
+            "key": "uuid"
+          },
+          "additionalFields": {
+            "bankName": "participantName"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 1,
+              "showDetails": 1,
+              "sort": "bic,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/bic/items/search"
+          },
+          "filters": [
+            {
+              "name": "and",
+              "value": [
+                {
+                  "name": "bic_like_ci"
+                },
+                {
+                  "name": "bicHeadOrg.bic_like_ci"
+                }
+              ]
+            }
+          ]
+        },
+        "boundFields": {
+          "bankName":"bankName"
+        },
         "constraints": [
           {
             "name": "NotNull"
@@ -159,6 +191,7 @@
       },
       "bankName": {
         "id": "bankName",
+        "readonly": true,
         "type": "String",
         "label": "Наименование Банка, в котором открыт расчётный счёт",
         "constraints": [
@@ -262,7 +295,7 @@
           {
             "type": "typography",
             "typographyProps": {
-              "text": "Реквизиты Вашей компании",
+              "text": "Реквизиты вашей Компании",
               "variant": "p"
             },
             "gridAttributes": {
@@ -274,13 +307,13 @@
       {
         "columns": [
           {
-            "id": "checkAccount",
+            "id": "bankBik",
             "gridAttributes": {
               "lg": 6
             }
           },
           {
-            "id": "bankBik",
+            "id": "bankName",
             "gridAttributes": {
               "lg": 6
             }
@@ -290,7 +323,7 @@
       {
         "columns": [
           {
-            "id": "bankName",
+            "id": "checkAccount",
             "gridAttributes": {
               "lg": 6
             }
@@ -315,7 +348,7 @@
           {
             "type": "typography",
             "typographyProps": {
-              "text": "Контактное лицо вашей компании",
+              "text": "Контактное лицо вашей Компании",
               "variant": "p"
             },
             "gridAttributes": {

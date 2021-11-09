@@ -28,8 +28,8 @@
       "customer": {
         "id": "customer",
         "type": "String",
-        "label": "Наименование",
-        "placeholder": "Наименование",
+        "label": "Организация из списка",
+        "placeholder": "Наименование организации",
         "uiType": "reference",
         "constraints": [
           {
@@ -51,7 +51,8 @@
             "country": "extAddresses[0].extCountry",
             "address": "extAddresses[0]",
             "okved": "okved",
-            "employeeNumber": "employeeNumber"
+            "employeeNumber": "employeeNumber",
+            "url": "url"
           },
           "params": {
             "headers": {},
@@ -101,7 +102,8 @@
               "key": "uuid"
             }
           },
-          "countEmployee": "employeeNumber"
+          "countEmployee": "employeeNumber",
+          "newUrl": "url"
         }
       },
       "customerRegCountry": {
@@ -189,7 +191,7 @@
       "customerNotFound": {
         "id": "customerNotFound",
         "type": "String",
-        "label": "Наименование",
+        "label": "Наименование организации",
         "placeholder": "Наименование",
         "constraints": [
           {
@@ -360,12 +362,12 @@
         "label": "Сайт Покупателя",
         "data": [
           {
-            "label": "Да",
+            "label": "Имеется",
             "value": "yes",
             "key": "haveUrl-yes"
           },
           {
-            "label": "Нет",
+            "label": "Не имеется",
             "value": "no",
             "key": "haveUrl-no"
           }
@@ -396,12 +398,12 @@
         "label": "Совместный опыт работы с Покупателем",
         "data": [
           {
-            "label": "Да",
+            "label": "Имеется",
             "value": "yes",
             "key": "haveContract-yes"
           },
           {
-            "label": "Нет",
+            "label": "Не имеется",
             "value": "no",
             "key": "haveContract-no"
           }
@@ -419,12 +421,12 @@
         "label": "Действующие экспортные контракты с Покупателем",
         "data": [
           {
-            "label": "Да",
+            "label": "Имеется",
             "value": "yes",
             "key": "actingHaveContract-yes"
           },
           {
-            "label": "Нет",
+            "label": "Не имеется",
             "value": "no",
             "key": "actingHaveContract-no"
           }
@@ -462,16 +464,16 @@
         "id": "haveCredit",
         "uiType": "radio",
         "type": "String",
-        "label": "У Покупателя перед вашей компанией отсутствует просроченая задолженность",
+        "label": "У Покупателя перед вашей Компанией отсутствует просроченая задолженность",
         "tooltip": "Задолженность со сроком отсрочки платежа свыше 90 календарных дней\nЗадолженность по отгрузкам, в отношении которых был перенесен срок платежа",
         "data": [
           {
-            "label": "Имеется",
+            "label": "Да",
             "value": "yes",
             "key": "haveCredit-yes"
           },
           {
-            "label": "Не имеется",
+            "label": "Нет",
             "value": "no",
             "key": "haveCredit-no"
           }
@@ -511,13 +513,7 @@
           {
             "id": "customer",
             "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "customerRegCountry",
-            "gridAttributes": {
-              "lg": 6
+              "lg": 12
             }
           }
         ]
@@ -527,13 +523,7 @@
           {
             "id": "customerNotFound",
             "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "customerRegCountryNotFound",
-            "gridAttributes": {
-              "lg": 6
+              "lg": 12
             }
           }
         ]
@@ -559,17 +549,37 @@
           {
             "id": "customerOkved",
             "gridAttributes": {
-              "lg": 6
+              "lg": 12
             }
           },
           {
             "id": "customerOkvedNotFound",
             "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerRegCountry",
+            "gridAttributes": {
               "lg": 6
             }
           }
-          ,{
+        ,{
             "id": "countEmployee",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "customerRegCountryNotFound",
             "gridAttributes": {
               "lg": 6
             }
