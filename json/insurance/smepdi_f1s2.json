@@ -23,13 +23,13 @@
 			],
 			"names": [
 				"Заверения",
-				"Информация о вашей Компании",
+				"Информация о Вашей компании",
 				"Информация о Покупателе",
 				"Параметры сделки",
 				"Экспортный контракт",
 				"Иная информация",
 				"Согласие",
-				"Подписание"
+				"Подписание и отправка"
 			]
 		},
 		"uiFormType": {
@@ -49,7 +49,7 @@
 				],
 				"requestParams": {
 					"resultObjectParams": {
-					"name": ["code","caption"],
+						"name": "caption",
 						"key": "uuid"
 					},
 					"params": {
@@ -158,7 +158,7 @@
 				"value": null,
 				"type": "String",
 				"uiType": "radio",
-				"label": "Сайт Компании",
+				"label": "Сайт компании",
 				"data": [
 					{
 						"label": "Имеется",
@@ -278,7 +278,7 @@
 			{
 				"type": "formSeparator",
 				"expansionPanel": {
-					"title": "Информация о вашей Компании",
+					"title": "Информация о вашей компании",
 					"description": "",
 					"isDynamicStatus": "true",
 					"validateStatus": {
