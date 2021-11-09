@@ -296,9 +296,13 @@
 					{
 						"id": "mainTypeOfActivity",
 						"gridAttributes": {
-							"lg": 6
+							"lg": 12
 						}
-					},
+					}
+				]
+			},
+			{
+				"columns": [
 					{
 						"id": "overdueDebt",
 						"gridAttributes": {
@@ -306,7 +310,7 @@
 						}
 					}
 				]
-			},
+			},			
 			{
 				"columns": [
 					{
