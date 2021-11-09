@@ -1,0 +1,499 @@
+{
+	"variables": {
+		"exportKind": {
+			"value": null,
+			"type": "String"
+		},
+		"exportDestinationCountry": {
+			"value": null,
+			"type": "String"
+		},
+		"exportItem": {
+			"value": null,
+			"type": "String"
+		},
+
+		"currency": {
+			"value": null,
+			"type": "String"
+		},
+		"exportPeriodStartDate": {
+			"value": "02.07.2012",
+			"type": "String"
+		},
+		"exportPeriodFinishDate": {
+			"value": "03.07.2012",
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+		"uiSteps": {
+			"count": 8,
+			"current": 4,
+			"passed": [1, 2, 3],
+			"names": [ 
+				"Заверения", 
+				"Информация о Вашей компании", 
+				"Информация о Покупателе",
+				"Параметры сделки", 
+				"Экспортный контракт", 
+				"Иная информация",
+				"Согласие",
+				"Подписание и отправка" 
+			]
+		},
+	
+		"fields": {
+			"exportKind": {
+				"id": "exportKindId",
+				"uiType": "dropdown",
+				"type": "String",
+				"label": "Вид экспорта",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"multiple": true,
+				"data": [
+					{
+						"key": "exportKindId-1",
+						"value": "вывоз российских товаров из РФ без обязательства об обратном ввозе"
+					},
+					{
+						"key": "exportKindId-2",
+						"value": "осуществление российских работ (услуг) для иностранных юридических лиц за пределами РФ"
+					},
+					{
+						"key": "exportKindId-3",
+						"value": "осуществление российских работ (услуг) для использования результата выполнения работ или оказания услуг за пределами РФ"
+					},
+					{
+						"key": "exportKindId-4",
+						"value": "предоставление иностранному юридическому лицу прав использования российских результатов интеллектуальной деятельности"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"exportDestinationCountry": {
+				"id": "exportDestinationCountryId",
+				"uiType": "reference",
+				"type": "String",
+				"label": "Страна назначения экспорта",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"placeholder": "Страна",
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "shortName",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "shortName,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/country/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "shortName_like_ci"
+								}
+							]
+						}
+					]
+				},
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+		
+			"exportItem": {
+				"id": "exportItemId",
+				"type": "String",
+				"label": "Предмет экспорта",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"placeholder": "Предмет экспорта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"insuredCost": {
+				"id": "insuredCostId",
+				"type": "String",
+				"label": "Страховая стоимость",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"placeholder": "100 000,00",
+				"isNumber": true,
+				"useGrouping": true,
+				"decimal": 2,
+				"serverDelimiter": ".",
+				"frontDelimiter": ",",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"currency": {
+				"id": "currencyId",
+				"uiType": "reference",
+				"label": "Валюта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "ccode",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "ccode,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/currency/items/search"
+					},
+					"filters": [
+						{
+							"name": "ccode_in",
+							"value": [ 
+								"RUB", "USD", "EUR"
+							]
+						}
+					]
+				}
+			},
+			
+			"exportPeriodStartDate": {
+				"id": "exportPeriodStartDateId", 
+				"uiType": "krDate",
+				"type": "String",
+				"label": "Период экспорта",
+				"serverFormat": "YYYY-MM-DD",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"exportPeriodFinishDate": {
+				"id": "exportPeriodFinishDateId", 
+				"uiType": "krDate",
+				"type": "String",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"serverFormat": "YYYY-MM-DD",
+				"minDate": "${exportPeriodStartDate}",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextUsd": {
+				"id": "annualRevenueCheckTextUsdId",
+				"uiType": "typography",
+				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${insuredCost} USD",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "USD"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextRub": {
+				"id": "annualRevenueCheckTextRubId",
+				"uiType": "typography",
+				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${insuredCost} RUB",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "RUB"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextEur": {
+				"id": "annualRevenueCheckTextEurId",
+				"uiType": "typography",
+				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${insuredCost} EUR",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "EUR"
+					}
+				]
+			},
+			
+			"annualRevenueCheck": {
+				"id": "annualRevenueCheckId",
+				"uiType": "radio",
+				"type": "String",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "annualRevenueCheckId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "annualRevenueCheckId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalFields": {
+							"comparisonType": "or",
+							"fields": [
+								{
+									"equalName": "currency", 
+									"equalValue": "EUR"
+								},
+								{
+									"equalName": "currency", 
+									"equalValue": "RUB"
+								},
+								{
+									"equalName": "currency", 
+									"equalValue": "USD"
+								}
+							]
+						}
+					}
+				]
+			},
+			
+			"noSecurityFormCheck": {
+				"id": "noSecurityFormCheckId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "У Вашей Компании отсутствуют какие-либо формы обеспечения или договоры страхования в отношении Собственного удержания по Договору страхования",
+				"tooltip": "ТЕКСТ ТУЛТИПА!",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "noSecurityFormCheckId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "noSecurityFormCheckId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			}
+		},
+		
+		"rows": [
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Параметры сделки",
+					"status": "Статус",
+					"expandedByDefault": true,
+					"isDynamicStatus": true,
+					"description": " ",
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				}
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportKindId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}      
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportDestinationCountryId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "exportItemId",
+						"gridAttributes": {
+							"lg": 8
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "insuredCostId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "currencyId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportPeriodStartDateId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "exportPeriodFinishDateId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextUsdId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextEurId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextRubId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckId-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckId-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "noSecurityFormCheckId-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "noSecurityFormCheckId-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+		]
+	}
+}
