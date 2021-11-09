@@ -81,15 +81,18 @@
       <bpmn:documentation>Заполнить заявку</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:inputParameter>
-          <camunda:inputParameter name="declarationAgreed">${declarationAgreed}</camunda:inputParameter>
-          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
-          <camunda:inputParameter name="attachList">${attachList}</camunda:inputParameter>
+          <camunda:inputParameter name="invoicesIssued">${invoicesIssued}</camunda:inputParameter>
+          <camunda:inputParameter name="advancePayment">${advancePayment}</camunda:inputParameter>
+          <camunda:inputParameter name="deferralFromInvoiceDate">${deferralFromInvoiceDate}</camunda:inputParameter>
+          <camunda:inputParameter name="refundAmount">${refundAmount}</camunda:inputParameter>
+          <camunda:inputParameter name="refundType">${refundType}</camunda:inputParameter>
           <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
           <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
-          <camunda:outputParameter name="declarationAgreed">${declarationAgreed}</camunda:outputParameter>
-          <camunda:outputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:outputParameter>
-          <camunda:outputParameter name="attachList">${attachList}</camunda:outputParameter>
+          <camunda:outputParameter name="advancePayment">${advancePayment}</camunda:outputParameter>
+          <camunda:outputParameter name="deferralFromInvoiceDate">${deferralFromInvoiceDate}</camunda:outputParameter>
+          <camunda:outputParameter name="refundAmount">${refundAmount}</camunda:outputParameter>
+          <camunda:outputParameter name="refundType">${refundType}</camunda:outputParameter>
+          <camunda:outputParameter name="invoicesIssued">${invoicesIssued}</camunda:outputParameter>
           <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
@@ -100,15 +103,8 @@
       <bpmn:documentation>Заполнить заявку</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:inputParameter>
-          <camunda:inputParameter name="declarationAgreed">${declarationAgreed}</camunda:inputParameter>
-          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
-          <camunda:inputParameter name="attachList">${attachList}</camunda:inputParameter>
           <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
           <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
-          <camunda:outputParameter name="declarationAgreed">${declarationAgreed}</camunda:outputParameter>
-          <camunda:outputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:outputParameter>
-          <camunda:outputParameter name="attachList">${attachList}</camunda:outputParameter>
           <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
@@ -162,30 +158,33 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="smepdi">
-      <bpmndi:BPMNEdge id="Flow_0opn5jr_di" bpmnElement="Flow_0opn5jr">
-        <di:waypoint x="188" y="117" />
-        <di:waypoint x="260" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dj06am_di" bpmnElement="Flow_0dj06am">
-        <di:waypoint x="550" y="117" />
-        <di:waypoint x="610" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0hox7am_di" bpmnElement="Flow_0hox7am">
-        <di:waypoint x="710" y="117" />
-        <di:waypoint x="780" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dc1mdp_di" bpmnElement="Flow_0dc1mdp">
-        <di:waypoint x="880" y="117" />
-        <di:waypoint x="970" y="117" />
+      <bpmndi:BPMNEdge id="Flow_0p0jzir_di" bpmnElement="Flow_0p0jzir">
+        <di:waypoint x="360" y="117" />
+        <di:waypoint x="450" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13mhgqx_di" bpmnElement="Flow_13mhgqx">
         <di:waypoint x="1070" y="117" />
         <di:waypoint x="1150" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0p0jzir_di" bpmnElement="Flow_0p0jzir">
-        <di:waypoint x="360" y="117" />
-        <di:waypoint x="450" y="117" />
+      <bpmndi:BPMNEdge id="Flow_0dc1mdp_di" bpmnElement="Flow_0dc1mdp">
+        <di:waypoint x="880" y="117" />
+        <di:waypoint x="970" y="117" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hox7am_di" bpmnElement="Flow_0hox7am">
+        <di:waypoint x="710" y="117" />
+        <di:waypoint x="780" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dj06am_di" bpmnElement="Flow_0dj06am">
+        <di:waypoint x="550" y="117" />
+        <di:waypoint x="610" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0opn5jr_di" bpmnElement="Flow_0opn5jr">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="260" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1quxpid_di" bpmnElement="Activity_04faml4">
         <dc:Bounds x="450" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -200,9 +199,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_190dcnr_di" bpmnElement="Activity_190dcnr">
         <dc:Bounds x="1150" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="152" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1l7swzw_di" bpmnElement="Activity_1l7swzw">
         <dc:Bounds x="260" y="77" width="100" height="80" />
