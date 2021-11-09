@@ -15,6 +15,16 @@
 			"type": "json",
 			"withSteps": true
 		},
+		"navigationButtons": {
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			},
+			"finish": {
+				"hide": false,
+				"label": "Отправить"
+			}
+		},		
 		"isFormFullScreen": false,
 		"serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
 		"uiSteps": {
@@ -23,7 +33,7 @@
 			"passed": [1, 2, 3, 4, 5, 6, 7],
 			"names": [ 
 				"Заверения", 
-				"Информация о Вашей компании", 
+				"Информация о вашей Компании", 
 				"Информация о Покупателе",
 				"Параметры сделки", 
 				"Экспортный контракт", 
@@ -77,8 +87,8 @@
 						"id": "1",
 						"additionalFields": {
 							"onSign": true,
-							"documentTypeIdentifier": "c00427",
-							"ecmUuid": "9dc86ca9-3f2f-4a2c-be5f-35504b1f07be"
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
 						}
 					}
 				],
