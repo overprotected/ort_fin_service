@@ -1,0 +1,50 @@
+{
+	"status": 1,
+	"stageNum": 1,
+	"stageCount": 7,
+	"statusName": "Заполнение заявки",
+	"stages": [
+		{
+			"stageId": "95dc9bcc-311f-11ec-8d3d-0242ac130003",
+			"sequence": 1,
+			"stageName": "Заполнение заявки",
+			"status": 1
+		},
+		{
+			"stageId": "77adbe44-815c-4a6c-9d07-e338528496aa",
+			"sequence": 2,
+			"stageName": "Рассмотрение заявки",
+			"status": 0
+		},
+		{
+			"stageId": "3f318654-0827-40ef-b411-333a42a3329c",
+			"sequence": 3,
+			"stageName": "Согласование проекта договора",
+			"status": 0
+		},
+		{
+			"stageId": "1596ae3d-381f-4b24-8d2f-aad0b5215104",
+			"sequence": 4,
+			"stageName": "Подписание договора-оферты",
+			"status": 0
+		},
+		{
+			"stageId": "14ab03e7-9693-46a1-aaba-754bed22cd5a",
+			"sequence": 5,
+			"stageName": "Оплата страховой премии",
+			"status": 0
+		},
+		{
+			"stageId": "412eada0-6c07-44a7-8ab7-23e6386c31fa",
+			"sequence": 6,
+			"stageName": "Сопровождение договора",
+			"status": 0
+		},
+		{
+			"stageId": "279b5a0c-8e37-4668-b5fe-f33ad5505534",
+			"sequence": 7,
+			"stageName": "Завершено",
+			"status": 0
+		}
+	]
+}
