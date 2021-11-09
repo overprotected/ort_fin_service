@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1wphcms" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="smepdi" name="smepdi" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0opn5jr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0opn5jr" sourceRef="StartEvent_1" targetRef="Activity_1l7swzw" />
+    <bpmn:serviceTask id="Activity_04faml4" name="Load user data from MDM" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="outputName">userInfo</camunda:inputParameter>
+          <camunda:inputParameter name="uuid">${starterUserId}</camunda:inputParameter>
+          <camunda:inputParameter name="action">load</camunda:inputParameter>
+          <camunda:inputParameter name="origin">user_profile</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0p0jzir</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dj06am</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1hqogsm" name="Load organization data from MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+      <bpmn:documentation>Загрузка из МДМ данных об организации</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="origin">org</camunda:inputParameter>
+          <camunda:inputParameter name="action">orgCard</camunda:inputParameter>
+          <camunda:inputParameter name="outputName">mdm_client</camunda:inputParameter>
+          <camunda:inputParameter name="showDetails">1</camunda:inputParameter>
+          <camunda:inputParameter name="showRefs">1</camunda:inputParameter>
+          <camunda:inputParameter name="uuid">${client}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dj06am</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hox7am</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0dj06am" sourceRef="Activity_04faml4" targetRef="Activity_1hqogsm" />
+    <bpmn:userTask id="Activity_0tu0rjd" name="Fill application, step 3" camunda:formKey="f1s3" camunda:candidateGroups="exporter">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="newUrl">${newUrl}</camunda:inputParameter>
+          <camunda:inputParameter name="haveContract">${haveContract}</camunda:inputParameter>
+          <camunda:inputParameter name="actingHaveContract">${actingHaveContract}</camunda:inputParameter>
+          <camunda:inputParameter name="haveControl">${haveControl}</camunda:inputParameter>
+          <camunda:inputParameter name="haveCredit">${haveCredit}</camunda:inputParameter>
+          <camunda:inputParameter name="customer">${customer}</camunda:inputParameter>
+          <camunda:inputParameter name="customerRegCountry">${customerRegCountry}</camunda:inputParameter>
+          <camunda:inputParameter name="customerAddress">${customerAddress}</camunda:inputParameter>
+          <camunda:inputParameter name="customerOkved">${customerOkved}</camunda:inputParameter>
+          <camunda:inputParameter name="countEmployee">${countEmployee}</camunda:inputParameter>
+          <camunda:inputParameter name="customerNotFound">${customerNotFound}</camunda:inputParameter>
+          <camunda:inputParameter name="customerRegCountryNotFound">${customerRegCountryNotFound}</camunda:inputParameter>
+          <camunda:inputParameter name="customerOkvedNotFound">${customerOkvedNotFound}</camunda:inputParameter>
+          <camunda:inputParameter name="customerAddressNotFound">${customerAddressNotFound}</camunda:inputParameter>
+          <camunda:inputParameter name="countEmployeeNotFound">${countEmployeeNotFound}</camunda:inputParameter>
+          <camunda:inputParameter name="customerUrWithExperience">${customerUrWithExperience}</camunda:inputParameter>
+          <camunda:inputParameter name="haveUrl">${haveUrl}</camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${f1s3}</camunda:inputParameter>
+          <camunda:outputParameter name="customer">${customer}</camunda:outputParameter>
+          <camunda:outputParameter name="customerRegCountry">${customerRegCountry}</camunda:outputParameter>
+          <camunda:outputParameter name="customerAddress">${customerAddress}</camunda:outputParameter>
+          <camunda:outputParameter name="customerOkved">${customerOkved}</camunda:outputParameter>
+          <camunda:outputParameter name="countEmployee">${countEmployee}</camunda:outputParameter>
+          <camunda:outputParameter name="customerNotFound">${customerNotFound}</camunda:outputParameter>
+          <camunda:outputParameter name="customerRegCountryNotFound">${customerRegCountryNotFound}</camunda:outputParameter>
+          <camunda:outputParameter name="customerOkvedNotFound">${customerOkvedNotFound}</camunda:outputParameter>
+          <camunda:outputParameter name="customerAddressNotFound">${customerAddressNotFound}</camunda:outputParameter>
+          <camunda:outputParameter name="countEmployeeNotFound">${countEmployeeNotFound}</camunda:outputParameter>
+          <camunda:outputParameter name="customerUrWithExperience">${customerUrWithExperience}</camunda:outputParameter>
+          <camunda:outputParameter name="haveUrl">${haveUrl}</camunda:outputParameter>
+          <camunda:outputParameter name="newUrl">${newUrl}</camunda:outputParameter>
+          <camunda:outputParameter name="haveContract">${haveContract}</camunda:outputParameter>
+          <camunda:outputParameter name="actingHaveContract">${actingHaveContract}</camunda:outputParameter>
+          <camunda:outputParameter name="haveControl">${haveControl}</camunda:outputParameter>
+          <camunda:outputParameter name="haveCredit">${haveCredit}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0hox7am</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dc1mdp</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0hox7am" sourceRef="Activity_1hqogsm" targetRef="Activity_0tu0rjd" />
+    <bpmn:userTask id="Activity_1ikanor" name="Fill application, step 5" camunda:formKey="f1s5" camunda:candidateGroups="exporter">
+      <bpmn:documentation>Заполнить заявку</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:inputParameter>
+          <camunda:inputParameter name="declarationAgreed">${declarationAgreed}</camunda:inputParameter>
+          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+          <camunda:inputParameter name="attachList">${attachList}</camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
+          <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:outputParameter name="declarationAgreed">${declarationAgreed}</camunda:outputParameter>
+          <camunda:outputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:outputParameter>
+          <camunda:outputParameter name="attachList">${attachList}</camunda:outputParameter>
+          <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dc1mdp</bpmn:incoming>
+      <bpmn:outgoing>Flow_13mhgqx</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_190dcnr" name="Fill application, step 6" camunda:formKey="f1s5" camunda:candidateGroups="exporter">
+      <bpmn:documentation>Заполнить заявку</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:inputParameter>
+          <camunda:inputParameter name="declarationAgreed">${declarationAgreed}</camunda:inputParameter>
+          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+          <camunda:inputParameter name="attachList">${attachList}</camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
+          <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:outputParameter name="declarationAgreed">${declarationAgreed}</camunda:outputParameter>
+          <camunda:outputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:outputParameter>
+          <camunda:outputParameter name="attachList">${attachList}</camunda:outputParameter>
+          <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13mhgqx</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0dc1mdp" sourceRef="Activity_0tu0rjd" targetRef="Activity_1ikanor" />
+    <bpmn:sequenceFlow id="Flow_13mhgqx" sourceRef="Activity_1ikanor" targetRef="Activity_190dcnr" />
+    <bpmn:scriptTask id="Activity_1l7swzw" name="Set variables" camunda:asyncAfter="true" scriptFormat="groovy">
+      <bpmn:documentation>Инициализация переменных</bpmn:documentation>
+      <bpmn:incoming>Flow_0opn5jr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p0jzir</bpmn:outgoing>
+      <bpmn:script>execution.setVariables([
+	//form3
+"customer": [:],
+"customerRegCountry": [:],
+"customerAddress": "",
+"customerOkved": [:],
+"countEmployee": "",
+"customerNotFound": "",
+"customerRegCountryNotFound": "",
+"customerOkvedNotFound": "",
+"customerAddressNotFound": "",
+"countEmployeeNotFound": "",
+"customerUrWithExperience": "",
+"haveUrl": "",
+"newUrl": "",
+"haveContract": "",
+"actingHaveContract": "",
+"haveControl": "",
+"haveCredit": "",
+         //form5
+"advancePayment": "",
+"deferralFromInvoiceDate": "",
+"refundAmount": "",
+"refundType": "",
+"invoicesIssued": "",
+        //form6
+"mainBank": [:],
+"mainCreditBank": [:],
+"checkAccount": "",
+"bankBik": "",
+"bankName": "",
+"corAccount": "",
+"employeeFullName": "",
+"employeePost": "",
+"employeePhone": "",
+"employeeEmail": ""
+])</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0p0jzir" sourceRef="Activity_1l7swzw" targetRef="Activity_04faml4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="smepdi">
+      <bpmndi:BPMNEdge id="Flow_0opn5jr_di" bpmnElement="Flow_0opn5jr">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="260" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dj06am_di" bpmnElement="Flow_0dj06am">
+        <di:waypoint x="550" y="117" />
+        <di:waypoint x="610" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hox7am_di" bpmnElement="Flow_0hox7am">
+        <di:waypoint x="710" y="117" />
+        <di:waypoint x="780" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dc1mdp_di" bpmnElement="Flow_0dc1mdp">
+        <di:waypoint x="880" y="117" />
+        <di:waypoint x="970" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13mhgqx_di" bpmnElement="Flow_13mhgqx">
+        <di:waypoint x="1070" y="117" />
+        <di:waypoint x="1150" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p0jzir_di" bpmnElement="Flow_0p0jzir">
+        <di:waypoint x="360" y="117" />
+        <di:waypoint x="450" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1quxpid_di" bpmnElement="Activity_04faml4">
+        <dc:Bounds x="450" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hqogsm_di" bpmnElement="Activity_1hqogsm">
+        <dc:Bounds x="610" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tu0rjd_di" bpmnElement="Activity_0tu0rjd">
+        <dc:Bounds x="780" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ikanor_di" bpmnElement="Activity_1ikanor">
+        <dc:Bounds x="970" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_190dcnr_di" bpmnElement="Activity_190dcnr">
+        <dc:Bounds x="1150" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l7swzw_di" bpmnElement="Activity_1l7swzw">
+        <dc:Bounds x="260" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

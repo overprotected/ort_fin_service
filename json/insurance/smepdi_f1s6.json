@@ -1,0 +1,353 @@
+{
+  "variables": {
+    "checkAccount": {
+      "type": "String",
+      "value": "44345345"
+    },
+    "bankBik": {
+      "type": "String",
+      "value": "44345345"
+    },
+    "bankName": {
+      "type": "String",
+      "value": "Сбер"
+    },
+    "corAccount": {
+      "type": "String",
+      "value": "44345345"
+    },
+    "employeeFullName": {
+      "type": "String",
+      "value": "44345345"
+    },
+    "employeePost": {
+      "type": "String",
+      "value": "44345345"
+    },
+    "employeePhone": {
+      "type": "String",
+      "value": "Сбер"
+    },
+    "employeeEmail": {
+      "type": "String",
+      "value": "44345345"
+    }
+  },
+  "uiSchema": {
+    "uiFormType": {
+      "type": "json",
+      "withSteps": true
+    },
+    "isFormFullScreen": false,
+    "serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+    "uiSteps": {
+      "count": 8,
+      "current": 6,
+      "passed": [1,2,3,4,5],
+      "names": [ "Приложение №1", "Информация о Вашей компании", "Информация о покупатели",
+        "Параметры сделки", "Экспортный контракт", "Инная информация","Согласие с изменением государственной гарантии","Подписание и отправка" ]
+    },
+    "fields": {
+      "mainBank": {
+        "id": "mainBank",
+        "type": "String",
+        "uiType": "reference",
+        "label": "Основной обслуживающий банк",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": "caption",
+            "key": "uuid"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 1,
+              "showDetails": 1,
+              "sort": "caption,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/org/items/search"
+          },
+          "filters": [
+            {
+              "name": "and",
+              "value": [
+                {
+                  "name": "caption_like_ci"
+                },
+                {
+                  "name": "bank",
+                  "value": true
+                }
+              ]
+            }
+
+          ]
+        },
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "mainCreditBank": {
+        "id": "mainCreditBank",
+        "type": "String",
+        "uiType": "reference",
+        "label": "Основной кредитующий банк",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": "caption",
+            "key": "uuid"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showRefs": 1,
+              "showDetails": 1,
+              "sort": "caption,asc"
+            },
+            "relativeUrl": "api/v1/catalogs/org/items/search"
+          },
+          "filters": [
+            {
+              "name": "and",
+              "value": [
+                {
+                  "name": "caption_like_ci"
+                },
+                {
+                  "name": "bank",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "checkAccount": {
+        "id": "checkAccount",
+        "type": "String",
+        "label": "Расчётный счёт в рублях",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "bankBik": {
+        "id": "bankBik",
+        "type": "String",
+        "label": "БИК Банка, в котором открыт расчетный счёт",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "bankName": {
+        "id": "bankName",
+        "type": "String",
+        "label": "Наименование Банка, в котором открыт расчётный счёт",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "corAccount": {
+        "id": "corAccount",
+        "type": "String",
+        "label": "Корр.счёт Банка, в котором открыт расчётный счёт",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "employeeFullName": {
+        "id": "employeeFullName",
+        "type": "String",
+        "label": "ФИО",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "employeePost": {
+        "id": "employeePost",
+        "type": "String",
+        "label": "Должность",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "employeePhone": {
+        "id": "employeePhone",
+        "type": "String",
+        "label": "Телефон",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "employeeEmail": {
+        "id": "employeeEmail",
+        "type": "String",
+        "label": "E-mail",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      }
+    },
+    "rows": [
+      {
+        "type": "formSeparator",
+        "expansionPanel": {
+          "title": "Иная информация",
+          "status": "Статус",
+          "expandedByDefault": true,
+          "isDynamicStatus": true,
+          "description": " ",
+          "validateStatus": {
+            "success": "Заполнено",
+            "error": "Ошибка",
+            "default": "Заполните"
+          }
+        }
+      }
+    ,{
+        "columns": [
+          {
+            "id": "mainBank",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "mainCreditBank",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "divider"
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "Реквизиты Вашей компании",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "checkAccount",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "bankBik",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "bankName",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "corAccount",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "divider"
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "Контактное лицо вашей компании",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "employeeFullName",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "employeePost",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "employeePhone",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "employeeEmail",
+            "gridAttributes": {
+              "lg": 6
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
