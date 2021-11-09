@@ -8,6 +8,8 @@
     <bpmn:serviceTask id="Activity_04faml4" name="Load user data from MDM" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
       <bpmn:extensionElements>
         <camunda:inputOutput>
+          <camunda:inputParameter name="showRefs">1</camunda:inputParameter>
+          <camunda:inputParameter name="showDetails">1</camunda:inputParameter>
           <camunda:inputParameter name="outputName">userInfo</camunda:inputParameter>
           <camunda:inputParameter name="uuid">${starterUserId}</camunda:inputParameter>
           <camunda:inputParameter name="action">load</camunda:inputParameter>
@@ -73,10 +75,10 @@
           <camunda:outputParameter name="haveCredit">${haveCredit}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0hox7am</bpmn:incoming>
+      <bpmn:incoming>Flow_1cy4wcr</bpmn:incoming>
       <bpmn:outgoing>Flow_0dc1mdp</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0hox7am" sourceRef="Activity_1hqogsm" targetRef="Activity_0tu0rjd" />
+    <bpmn:sequenceFlow id="Flow_0hox7am" sourceRef="Activity_1hqogsm" targetRef="Activity_0yc0xwf" />
     <bpmn:userTask id="Activity_1ikanor" name="Fill application, step 5" camunda:formKey="f1s5" camunda:candidateGroups="exporter">
       <bpmn:documentation>Заполнить заявку</bpmn:documentation>
       <bpmn:extensionElements>
@@ -103,12 +105,33 @@
       <bpmn:documentation>Заполнить заявку</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
+          <camunda:inputParameter name="employeePhone">${employeePhone}</camunda:inputParameter>
+          <camunda:inputParameter name="employeeEmail">${employeeEmail}</camunda:inputParameter>
+          <camunda:inputParameter name="mainBank">${mainBank}</camunda:inputParameter>
+          <camunda:inputParameter name="mainCreditBank">${mainCreditBank}</camunda:inputParameter>
+          <camunda:inputParameter name="checkAccount">${checkAccount}</camunda:inputParameter>
+          <camunda:inputParameter name="bankBik">${bankBik}</camunda:inputParameter>
+          <camunda:inputParameter name="bankName">${bankName}</camunda:inputParameter>
+          <camunda:inputParameter name="corAccount">${corAccount}</camunda:inputParameter>
+          <camunda:inputParameter name="employeeFullName">${employeeFullName}</camunda:inputParameter>
+          <camunda:inputParameter name="employeePost">${employeePost}</camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${f1s6}</camunda:inputParameter>
           <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:outputParameter name="mainCreditBank">${mainCreditBank}</camunda:outputParameter>
+          <camunda:outputParameter name="mainBank">${mainBank}</camunda:outputParameter>
+          <camunda:outputParameter name="checkAccount">${checkAccount}</camunda:outputParameter>
+          <camunda:outputParameter name="bankBik">${bankBik}</camunda:outputParameter>
+          <camunda:outputParameter name="bankName">${bankName}</camunda:outputParameter>
+          <camunda:outputParameter name="corAccount">${corAccount}</camunda:outputParameter>
+          <camunda:outputParameter name="employeeFullName">${employeeFullName}</camunda:outputParameter>
+          <camunda:outputParameter name="employeePost">${employeePost}</camunda:outputParameter>
+          <camunda:outputParameter name="employeePhone">${employeePhone}</camunda:outputParameter>
+          <camunda:outputParameter name="employeeEmail">${employeeEmail}</camunda:outputParameter>
           <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_13mhgqx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d0ll4a</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0dc1mdp" sourceRef="Activity_0tu0rjd" targetRef="Activity_1ikanor" />
     <bpmn:sequenceFlow id="Flow_13mhgqx" sourceRef="Activity_1ikanor" targetRef="Activity_190dcnr" />
@@ -124,8 +147,8 @@
 "customerOkved": [:],
 "countEmployee": "",
 "customerNotFound": "",
-"customerRegCountryNotFound": "",
-"customerOkvedNotFound": "",
+"customerRegCountryNotFound": [:],
+"customerOkvedNotFound": [:],
 "customerAddressNotFound": "",
 "countEmployeeNotFound": "",
 "customerUrWithExperience": "",
@@ -148,39 +171,127 @@
 "bankBik": "",
 "bankName": "",
 "corAccount": "",
-"employeeFullName": "",
-"employeePost": "",
-"employeePhone": "",
-"employeeEmail": ""
 ])</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0p0jzir" sourceRef="Activity_1l7swzw" targetRef="Activity_04faml4" />
+    <bpmn:sequenceFlow id="Flow_1cy4wcr" sourceRef="Activity_0yc0xwf" targetRef="Activity_0tu0rjd" />
+    <bpmn:scriptTask id="Activity_0yc0xwf" name="Parse user info" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0hox7am</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cy4wcr</bpmn:outgoing>
+      <bpmn:script>def info = userInfo;
+def fullName = info.lastName +' '+info.firstName+' '+info.middleName;
+def emails = "";
+info.emails.each {
+    emails += it.email+';';
+}
+def phones= "";
+info.phones.each {
+    phones+= it.phone+';';
+}
+
+execution.setVariables([
+"employeeFullName": (fullName ) ? fullName  : "",
+"employeePost": (info) ? info.position : "",
+"employeePhone": phones,
+"employeeEmail": emails
+])</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_1kxehch" name="Save application in MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="origin">sme_pdi_app</camunda:inputParameter>
+          <camunda:inputParameter name="action">create</camunda:inputParameter>
+          <camunda:inputParameter name="outputName">createItem</camunda:inputParameter>
+          <camunda:inputParameter name="dataScript">
+            <camunda:script scriptFormat="groovy">[
+"org": createOrgItem.uuid,
+"haveCredit":haveContract.equals("haveCredit-yes"),
+"haveContract":haveContract.equals("haveControl-yes"),
+]</camunda:script>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nt989n</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r13b0d</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1d0ll4a" sourceRef="Activity_190dcnr" targetRef="Activity_1cdkoqx" />
+    <bpmn:sequenceFlow id="Flow_0r13b0d" sourceRef="Activity_1kxehch" targetRef="Event_1kbitnn" />
+    <bpmn:endEvent id="Event_1kbitnn">
+      <bpmn:incoming>Flow_0r13b0d</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nt989n" sourceRef="Activity_1cdkoqx" targetRef="Activity_1kxehch" />
+    <bpmn:serviceTask id="Activity_1cdkoqx" name="Save organisation in MDM" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="origin">sme_pdi_org</camunda:inputParameter>
+          <camunda:inputParameter name="action">create</camunda:inputParameter>
+          <camunda:inputParameter name="outputName">createOrgItem</camunda:inputParameter>
+          <camunda:inputParameter name="dataScript">
+            <camunda:script scriptFormat="groovy">if(!(customer.key.equals('400'))){
+  [
+    "orgId":customer.key,
+    "name":customer.value
+  ]
+}
+else{
+  [
+    "regCountry":customerRegCountryNotFound.key,
+ "regAddress":customerAddressNotFound,
+    "okved":customerOkvedNotFound.value,
+    "countEmployee":countEmployeeNotFound,
+    "name":customerNotFound
+  ]
+}
+
+</camunda:script>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1d0ll4a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nt989n</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="smepdi">
+      <bpmndi:BPMNEdge id="Flow_0r13b0d_di" bpmnElement="Flow_0r13b0d">
+        <di:waypoint x="1900" y="117" />
+        <di:waypoint x="1982" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d0ll4a_di" bpmnElement="Flow_1d0ll4a">
+        <di:waypoint x="1310" y="117" />
+        <di:waypoint x="1510" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cy4wcr_di" bpmnElement="Flow_1cy4wcr">
+        <di:waypoint x="870" y="117" />
+        <di:waypoint x="930" y="117" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0p0jzir_di" bpmnElement="Flow_0p0jzir">
         <di:waypoint x="360" y="117" />
         <di:waypoint x="450" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13mhgqx_di" bpmnElement="Flow_13mhgqx">
-        <di:waypoint x="1070" y="117" />
-        <di:waypoint x="1150" y="117" />
+        <di:waypoint x="1170" y="117" />
+        <di:waypoint x="1210" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dc1mdp_di" bpmnElement="Flow_0dc1mdp">
-        <di:waypoint x="880" y="117" />
-        <di:waypoint x="970" y="117" />
+        <di:waypoint x="1030" y="117" />
+        <di:waypoint x="1070" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hox7am_di" bpmnElement="Flow_0hox7am">
-        <di:waypoint x="710" y="117" />
-        <di:waypoint x="780" y="117" />
+        <di:waypoint x="720" y="117" />
+        <di:waypoint x="770" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dj06am_di" bpmnElement="Flow_0dj06am">
         <di:waypoint x="550" y="117" />
-        <di:waypoint x="610" y="117" />
+        <di:waypoint x="620" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0opn5jr_di" bpmnElement="Flow_0opn5jr">
         <di:waypoint x="188" y="117" />
         <di:waypoint x="260" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nt989n_di" bpmnElement="Flow_0nt989n">
+        <di:waypoint x="1610" y="117" />
+        <di:waypoint x="1800" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="99" width="36" height="36" />
@@ -189,19 +300,31 @@
         <dc:Bounds x="450" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1hqogsm_di" bpmnElement="Activity_1hqogsm">
-        <dc:Bounds x="610" y="77" width="100" height="80" />
+        <dc:Bounds x="620" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tu0rjd_di" bpmnElement="Activity_0tu0rjd">
-        <dc:Bounds x="780" y="77" width="100" height="80" />
+        <dc:Bounds x="930" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ikanor_di" bpmnElement="Activity_1ikanor">
-        <dc:Bounds x="970" y="77" width="100" height="80" />
+        <dc:Bounds x="1070" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_190dcnr_di" bpmnElement="Activity_190dcnr">
-        <dc:Bounds x="1150" y="77" width="100" height="80" />
+        <dc:Bounds x="1210" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1l7swzw_di" bpmnElement="Activity_1l7swzw">
         <dc:Bounds x="260" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yvp4u0_di" bpmnElement="Activity_0yc0xwf">
+        <dc:Bounds x="770" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kbitnn_di" bpmnElement="Event_1kbitnn">
+        <dc:Bounds x="1982" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kxehch_di" bpmnElement="Activity_1kxehch">
+        <dc:Bounds x="1800" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1p9hc5j_di" bpmnElement="Activity_1cdkoqx">
+        <dc:Bounds x="1510" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
