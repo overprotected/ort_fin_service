@@ -21,10 +21,10 @@
 			],
 			"names": [
 				"Условия получения услуги",
-				"Основные параметры запрашиваемого финансирования",
-				"Основные параметры экспортного контракта и информация об участниках экспортной сделки",
-				"Декларации Заявителя о борьбе с подкупом",
-				"Подписание и отправка в Банк"
+				"Параметры финансирования",
+				"Параметры контракта",
+				"Декларации Заявителя",
+				"Подписание"
 			]
 		},
 		"fields": {
@@ -115,7 +115,7 @@
 				"margin": "0px 0px 0px 0px"
 			},
 			"borrowerIsProducer": {
-				"label": "Совпадает с Заемщиком",
+				"label": "Заемщик является производителем",
 				"id": "borrowerIsProducer",
 				"uiType": "checkboxBool",
 				"type": "Boolean",
@@ -123,6 +123,7 @@
 			},
 			"contractProducerName": {
 				"id": "contractProducerName",
+				"label": "Другие производители",
 				"type": "String",
 				"placeholder": "Введите название",
 				"multiple": true,
@@ -544,7 +545,7 @@
 				"label": "Регистрационный или налоговый номер",
 				"id": "contractPayerNumder",
 				"type": "String",
-				"placeholder": "Введите номер ",
+				"placeholder": "Введите номер",
 				"constraints": [
 					{
 						"name": "NotNull"
@@ -563,7 +564,7 @@
 			{
 				"type": "formSeparator",
 				"expansionPanel": {
-					"title": "Основные параметры экспортного контракта (его проекта) и информация об участниках экспортной сделки",
+					"title": "Параметры контракта",
 					"description": "",
 					"isDynamicStatus": "true",
 					"validateStatus": {
