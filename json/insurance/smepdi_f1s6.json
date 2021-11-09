@@ -61,6 +61,7 @@
         "type": "String",
         "uiType": "reference",
         "label": "Основной обслуживающий банк",
+        "tooltip": "Наименование банка, по счетам в котором за последние 6 месяцев прошла самая большая доля оборота",
         "requestParams": {
           "resultObjectParams": {
             "name": "participantName",
@@ -100,6 +101,7 @@
         "type": "String",
         "uiType": "reference",
         "label": "Основной кредитующий банк",
+        "tooltip": "Наименование банка, кредит(ы) которого занимают самую большую долю в кредитном портфеле вашей компании на дату заполнении заявления",
         "requestParams": {
           "resultObjectParams": {
             "name": "participantName",
