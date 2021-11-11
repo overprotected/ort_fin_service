@@ -66,7 +66,15 @@
 					},
 					"filters": [
 						{
-							"name": "caption_like_ci"
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "ccode_like_ci"
+								}
+							]
 						}
 					]
 				}
@@ -77,16 +85,17 @@
 				"type": "String",
 				"placeholder": "Введите долю в процентах",
 				"isNumber": true,
+				"padZeros": false,
 				"tooltip": "Не менее 30%",
 				"constraints": [
 					{
 						"name": "NotNull"
 					},
 					{
-						"name": "Size",
+						"name": "Pattern",
 						"attributes": {
-							"min": 2,
-							"max": 3
+							"regexp": "^(3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]|100)$",
+							"message": "Допустимый диапазон от 30 до 100%"
 						}
 					}
 				]
@@ -249,6 +258,31 @@
 				"id": "contractCustomerRegCountry",
 				"type": "String",
 				"placeholder": "Введите страну регистрации",
+				"uiType": "reference",
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "caption",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "caption,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/country/items/search"
+					},
+					"filters": [
+						{
+							"name": "caption_like_ci"
+						},
+						{
+							"name": "wo_code",
+							"value": "643"
+						}
+					]
+				},
 				"constraints": [
 					{
 						"name": "NotNull"
@@ -273,10 +307,9 @@
 				"placeholder": "Введите страну назначения",
 				"type": "String",
 				"uiType": "reference",
-				"label": "Страна экспорта",
 				"requestParams": {
 					"resultObjectParams": {
-						"name": "shortName",
+						"name": "caption",
 						"key": "uuid"
 					},
 					"params": {
@@ -284,21 +317,17 @@
 						"queryParams": {
 							"showRefs": 1,
 							"showDetails": 1,
-							"sort": "shortName,asc"
+							"sort": "caption,asc"
 						},
 						"relativeUrl": "api/v1/catalogs/country/items/search"
 					},
 					"filters": [
 						{
-							"name": "or",
-							"value": [
-								{
-									"name": "caption_like_ci"
-								},
-								{
-									"name": "shortName_like_ci"
-								}
-							]
+							"name": "caption_like_ci"
+						},
+						{
+							"name": "wo_code",
+							"value": "643"
 						}
 					]
 				},
@@ -316,7 +345,7 @@
 				]
 			},
 			"contractCustomerDestinationCountryEqualsToRegistration": {
-				"label": "Страна экспорта совпадает со страной регистрации",
+				"label": "Страна экспорта совпадает со страной регистрации Покупателя",
 				"id": "contractCustomerDestinationCountryEqualsToRegistration",
 				"uiType": "checkboxBool",
 				"type": "Boolean"
@@ -446,6 +475,54 @@
 				"id": "payerIsCustomer",
 				"uiType": "checkboxBool",
 				"type": "Boolean"
+			},
+			"contractPayerRegCountry": {
+				"label": "Страна регистрации Плательщика",
+				"id": "contractPayerRegCountry",
+				"type": "String",
+				"placeholder": "Введите страну регистрации",
+				"type": "String",
+				"uiType": "reference",
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "shortName",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "shortName,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/country/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "shortName_like_ci"
+								}
+							]
+						}
+					]
+				},
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "payerIsCustomer",
+						"equalValue": false
+					}
+				]
 			},
 			"contractPayerFullName": {
 				"label": "Наименование  полное",
@@ -670,6 +747,16 @@
 			{
 				"columns": [
 					{
+						"id": "contractCustomerRegCountry",
+						"gridAttributes": {
+							"lg": 6
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
 						"id": "contractCustomerFullName",
 						"gridAttributes": {
 							"lg": 12
@@ -697,16 +784,6 @@
 					},
 					{
 						"id": "contractCustomerNumber",
-						"gridAttributes": {
-							"lg": 6
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "contractCustomerRegCountry",
 						"gridAttributes": {
 							"lg": 6
 						}
@@ -815,6 +892,16 @@
 						"id": "payerIsCustomer",
 						"gridAttributes": {
 							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "contractPayerRegCountry",
+						"gridAttributes": {
+							"lg": 6
 						}
 					}
 				]
