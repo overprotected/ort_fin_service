@@ -2,7 +2,7 @@
 	"variables": {},
 	"uiSchema": {
 		"isFormFullScreen": false,
-		"serviceTitle": "Страхование отсрочки платежа для клиента МСП",
+		"serviceTitle": "Страхование. Отсрочка платежа для МСП",
 		"uiSteps": {
 			"count": 8,
 			"current": 7,

@@ -14,7 +14,7 @@
 	},
 	"uiSchema": {
 		"isFormFullScreen": false,
-		"serviceTitle": "Страхование отсрочки платежа для клиента МСП",
+		"serviceTitle": "Страхование. Отсрочка платежа для МСП",
 		"uiSteps": {
 			"count": 8,
 			"current": 2,
@@ -49,7 +49,10 @@
 				],
 				"requestParams": {
 					"resultObjectParams": {
-					"name": ["code","caption"],
+						"name": [
+							"code",
+							"caption"
+						],
 						"key": "uuid"
 					},
 					"params": {
@@ -57,7 +60,7 @@
 						"queryParams": {
 							"showRefs": 1,
 							"showDetails": 1,
-							"sort": "caption,asc"
+							"sort": "code,asc"
 						},
 						"relativeUrl": "api/v1/catalogs/okved/items/search"
 					},
@@ -128,22 +131,23 @@
 				"type": "String",
 				"label": "Просроченная задолженность перед кредитными организациями",
 				"uiType": "dropdown",
-				"tooltip": "Совокупное количество дней просроченной задолженности перед кредитными организациями за последние 12 месяцев. Отсчитываются с даты подписания Заявления на страхование",
+				"placeholder": "Количество календарных дней",
+				"tooltip": "Совокупное количество календарных дней просроченной задолженности перед кредитными организациями за последние 12 месяцев. Отсчитываются с даты подписания Заявления на страхование",
 				"data": [
 					{
-						"value": "0 календарных дней",
+						"value": "0",
 						"key": 1
 					},
 					{
-						"value": "менее 5 календарных дней",
+						"value": "менее 5",
 						"key": 2
 					},
 					{
-						"value": "от 5 (включительно) до 10 календарных дней",
+						"value": "от 5 (включительно) до 10",
 						"key": 3
 					},
 					{
-						"value": "от 11 календарных дней",
+						"value": "от 11",
 						"key": 4
 					}
 				],
@@ -221,6 +225,7 @@
 			},
 			"beneficiaryAge": {
 				"id": "beneficiaryAge",
+				"label": "Укажите возраст бенефициарного владельца",
 				"type": "String",
 				"placeholder": "Введите возраст",
 				"multiple": true,
@@ -230,14 +235,6 @@
 				"constraints": [
 					{
 						"name": "NotNull"
-					},
-					{
-						"name": "Size",
-						"attributes": {
-							"minEach": "1",
-							"maxEach": "4",
-							"message": "Введите корректный возраст"
-						}
 					}
 				],
 				"conditionals": [
@@ -310,7 +307,7 @@
 						}
 					}
 				]
-			},			
+			},
 			{
 				"columns": [
 					{
