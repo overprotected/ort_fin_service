@@ -1,322 +1,324 @@
 {
-  "onChangeHandler": "function fn({prevValues, values, fields, errors, getName}){\n   if(values.commandList.length>0 && values.codesTN_VED.length>0){\n        let bool = true;\n        values.commandList.forEach(itemCommand =>{\n            values.codesTN_VED.forEach(itemCode =>{\n                const code = itemCode.value.substr(0,itemCode.value.indexOf(String.fromCharCode(160)));\n\n                if(code === itemCommand.code){\n                    values.creditPercent = 3;\n                    bool = false;\n                }\n            });\n        });\n        if(bool){\n            values.creditPercent = 10;\n        }\n    }\n}",
-  "uiFormType": {
-    "type": "json",
-    "withSteps": true
-  },
-  "isFormFullScreen": false,
-  "serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» {{petitonNumber.value}}",
-  "uiSteps": {
-    "count": 5,
-    "current": 2,
-    "passed": [1],
-    "names": [
-      "Условия получения услуги",
-      "Параметры финансирования",
-      "Параметры контракта",
-      "Декларации Заявителя",
-      "Подписание"
-    ]
-  },
-  "fields": {
-    "sumCreditLine": {
-      "id": "sumCreditLine",
+  "variables": {
+    "customerUrWithExperience": "",
+    "dateFrom": {
       "type": "String",
-      "label": "Сумма кредитной линии в рублях РФ",
-      "description": " ",
-      "tooltip": "В рамках этого кредитного продукта финансирование возможно только в рублых РФ",
-      "placeholder": "Введите сумму",
-      "isNumber": true,
-      "decimal": 2,
-      "useGrouping":true,
-      "serverDelimiter":".",
-      "frontDelimiter":",",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
+      "value": "10.11.2021"
     },
     "periodCreditLine": {
-      "id": "periodCreditLine",
       "type": "String",
-      "label": "Срок, кредитной линии (в месяцах)",
-      "description": " ",
-      "tooltip": "Срок кредитной линии в рамках этого продукта не должен превышать 23 месяца",
-      "uiType": "dropdown",
-      "placeholder": "Выберите срок из списка",
-      "data": [
-        {"value": "1 месяц","key": 1},
-        {"value": "2 месяца","key": 2},
-        {"value": "3 месяца","key": 3},
-        {"value": "4 месяца","key": 4},
-        {"value": "5 месяцев","key": 5},
-        {"value": "6 месяцев","key": 6},
-        {"value": "7 месяцев","key": 7},
-        {"value": "8 месяцев","key": 8},
-        {"value": "9 месяцев","key": 9},
-        {"value": "10 месяцев","key": 10},
-        {"value": "11 месяцев","key": 11},
-        {"value": "12 месяцев","key": 12},
-        {"value": "13 месяцев","key": 13},
-        {"value": "14 месяцев","key": 14},
-        {"value": "15 месяцев","key": 15},
-        {"value": "16 месяцев","key": 16},
-        {"value": "17 месяцев","key": 17},
-        {"value": "18 месяцев","key": 18},
-        {"value": "19 месяцев","key": 19},
-        {"value": "20 месяцев","key": 20},
-        {"value": "21 месяц","key": 21},
-        {"value": "22 месяца","key": 22},
-        {"value": "23 месяца","key": 23}
+      "value": "23"
+    }
+  },
+  "uiSchema": {
+    "onChangeHandler": "function fn({prevValues, values, fields, errors, getName}){\n   if(values.commandList.length>0 && values.codesTN_VED.length>0){\n        let bool = true;\n        values.commandList.forEach(itemCommand =>{\n            values.codesTN_VED.forEach(itemCode =>{\n                const code = itemCode.value.substr(0,itemCode.value.indexOf(String.fromCharCode(160)));\n\n                if(code === itemCommand.code){\n                    values.creditPercent = 3;\n                    bool = false;\n                }\n            });\n        });\n        if(bool){\n            values.creditPercent = 10;\n        }\n    }\n}",
+    "uiFormType": {
+      "type": "json",
+      "withSteps": true
+    },
+    "isFormFullScreen": false,
+    "serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Экспортный стандарт» ",
+    "uiSteps": {
+      "count": 5,
+      "current": 2,
+      "passed": [
+        1
       ],
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
+      "names": [
+        "Условия получения услуги",
+        "Параметры финансирования",
+        "Параметры контракта",
+        "Декларации Заявителя",
+        "Подписание"
       ]
     },
-    "dateEndCreditLine": {
-      "id": "dateEndCreditLine",
-      "type": "String",
-      "uiType": "krDate",
-      "label": "Планируемая дата окончания периода использования кредитной линии",
-      "tooltip": "Период не должен превышать срок кредитной линии минус 30 дней",
-      "description": " ",
-      "placeholder": "дд.мм.гггг",
-      "serverFormat": "YYYY-MM-DD",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "codesTN_VED": {
-      "id": "codesTN_VED",
-      "type": "String",
-      "tooltip": "Минимальное количество цифр в поле должно быть 4, максимальное - 10",
-      "placeholder": "Введите код",
-      "label": "Код ТН ВЭД ЕАЭС продукции по фиксируемому экспортному контракту",
-      "description": " ",
-      "multiple": true,
-      "maxMultiple": 10,
-      "uiType": "reference",
-      "requestParams": {
-        "resultObjectParams": {
-          "name": ["kodt","naim"],
-          "key": "uuid"
-        },
-        "params": {
-          "headers": {},
-          "queryParams": {
-            "showDetails": 0,
-            "showRefs": 0,
-            "size": 10
-          },
-          "relativeUrl": "api/v1/catalogs/dual_purpose_tnved_codes/items/search"
-        },
-        "filters": [
+    "fields": {
+      "sumCreditLine": {
+        "id": "sumCreditLine",
+        "type": "String",
+        "label": "Сумма кредитной линии в рублях РФ",
+        "description": " ",
+        "tooltip": "В рамках этого кредитного продукта финансирование возможно только в рублых РФ",
+        "placeholder": "Введите сумму",
+        "isNumber": true,
+        "decimal": 2,
+        "useGrouping":true,
+        "serverDelimiter": ".",
+        "frontDelimiter": ",",
+
+        "padZeros": false,
+        "constraints": [
           {
-            "name": "kodt_like_ci"
+            "name": "NotNull"
+          },
+          {
+            "name": "Pattern",
+            "attributes": {
+              "regexp": "^([1-9][0-9]{0,6}|10000000)$",
+              "message": "Сумма должна быть не более 10 млн"
+            }
           }
         ]
       },
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "creditPercent": {
-      "id": "creditPercent",
-      "type": "String",
-      "label": "Размер процентной ставки кредита (в годовых процентах)",
-      "description": " ",
-      "tooltip": "текст подсказки",
-      "readonly": true,
-      "isNumber": true
-    },
-    "conditions": {
-      "id": "conditions",
-      "type": "String",
-      "label": "Условия (порядок) погашения кредита :",
-      "description": " ",
-      "readonly": true,
-      "multiline":true,
-      "maxRows": 5,
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "isBenefit": {
-      "id": "isBenefit",
-      "type": "Boolean",
-      "uiType": "checkboxBool",
-      "label": "Поручительство бенефициара",
-      "nullable": false,
-      "readonly": true,
-      "description": " ",
-      "tooltip": "Поручительство всех участников общества (бенефициаров), каждый из которых владеет не менее 20% размера уставного капитала",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "isDeposit": {
-      "id": "isDeposit",
-      "type": "Boolean",
-      "uiType": "checkboxBool",
-      "label": "Залог прав требования по экспортным контрактам (не требуется в случае, если сумма кредита до 3 млн. руб. (включительно))",
-      "nullable": false,
-      "description": " ",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    },
-    "isGuarantee": {
-      "id": "isGuarantee",
-      "type": "Boolean",
-      "uiType": "checkboxBool",
-      "label": "Поручительство третих лиц",
-      "nullable": false,
-      "description": " ",
-      "constraints": [
-        {
-          "name": "NotNull"
-        }
-      ]
-    }
-  },
-  "rows": [
-    {
-      "type": "formSeparator",
-      "expansionPanel": {
-        "title": "Параметры финансирования",
-        "status": "Статус",
-        "expandedByDefault": true,
-        "isDynamicStatus": true,
+      "periodCreditLine": {
+        "id": "periodCreditLine",
+        "type": "String",
+        "label": "Срок, кредитной линии (в месяцах)",
         "description": " ",
-        "validateStatus": {
-          "success": "Заполнено",
-          "error": "Ошибка",
-          "default": "Заполните"
-        }
-      }
-    }
-  ,{
-      "columns": [
-        {
-          "id": "sumCreditLine",
-          "gridAttributes": {
-            "lg": 6
+        "tooltip": "Срок кредитной линии в рамках этого продукта не должен превышать 23 месяца",
+        "readonly": true,
+        "constraints": [
+          {
+            "name": "NotNull"
           }
+        ]
+      },
+      "dateEndCreditLine": {
+        "id": "dateEndCreditLine",
+        "type": "String",
+        "uiType": "krDate",
+        "label": "Планируемая дата окончания периода использования кредитной линии",
+        "tooltip": "Период не должен превышать срок кредитной линии минус 30 дней",
+        "description": " ",
+        "daysFromNow": 670
+      },
+      "codesTN_VED": {
+        "id": "codesTN_VED",
+        "type": "String",
+        "tooltip": "Минимальное количество цифр в поле должно быть 4, максимальное - 10",
+        "placeholder": "Введите код",
+        "label": "Код ТН ВЭД ЕАЭС продукции по фиксируемому экспортному контракту",
+        "description": " ",
+        "multiple": true,
+        "maxMultiple": 10,
+        "uiType": "reference",
+        "requestParams": {
+          "resultObjectParams": {
+            "name": [
+              "kodt",
+              "naim"
+            ],
+            "key": "uuid"
+          },
+          "params": {
+            "headers": {},
+            "queryParams": {
+              "showDetails": 0,
+              "showRefs": 0,
+              "size": 10
+            },
+            "relativeUrl": "api/v1/catalogs/dual_purpose_tnved_codes/items/search"
+          },
+          "filters": [
+            {
+              "name": "kodt_like_ci"
+            }
+          ]
         },
-        {
-          "id": "periodCreditLine",
-          "gridAttributes": {
-            "lg": 6
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "creditPercent": {
+        "id": "creditPercent",
+        "type": "String",
+        "label": "Размер процентной ставки кредита (в годовых процентах)",
+        "description": " ",
+        "tooltip": "текст подсказки",
+        "readonly": true,
+        "isNumber": true
+      },
+      "conditions": {
+        "id": "conditions",
+        "type": "String",
+        "label": "Условия (порядок) погашения кредита :",
+        "description": " ",
+        "readonly": true,
+        "multiline": true,
+        "maxRows": 5,
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "isBenefit": {
+        "id": "isBenefit",
+        "type": "Boolean",
+        "uiType": "checkboxBool",
+        "label": "Поручительство бенефициара",
+        "nullable": false,
+        "readonly": true,
+        "description": " ",
+        "tooltip": "Поручительство всех участников общества (бенефициаров), каждый из которых владеет не менее 20% размера уставного капитала",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "isDeposit": {
+        "id": "isDeposit",
+        "type": "Boolean",
+        "uiType": "checkboxBool",
+        "label": "Залог прав требования по экспортным контрактам (не требуется в случае, если сумма кредита до 3 млн. руб. (включительно))",
+        "nullable": false,
+        "description": " ",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "NOTIFICATION_1": {
+        "id": "NOTIFICATION_1",
+        "uiType": "notification",
+        "notificationStatus": "INFO",
+        "notificationText":"Условия (порядок) погашения кредита:",
+        "html": "<h4>1. Погашение Задолженности по Кредиту осуществляется за счет средств поступающей на Расчетный счет Заемщика, открытый в АО РОСЭКСИМБАНК, \nвыручки по Экспортному контракту или собственных средств Заемщика.\n\n<br> 2. Возможно досрочное погашение.</h4>"
+      },
+      "isGuarantee": {
+        "id": "isGuarantee",
+        "type": "Boolean",
+        "uiType": "checkboxBool",
+        "label": "Поручительство третих лиц",
+        "nullable": false,
+        "description": " ",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      }
+    },
+    "rows": [
+      {
+        "type": "formSeparator",
+        "expansionPanel": {
+          "title": "Параметры финансирования",
+          "status": "Статус",
+          "expandedByDefault": true,
+          "isDynamicStatus": true,
+          "description": " ",
+          "validateStatus": {
+            "success": "Заполнено",
+            "error": "Ошибка",
+            "default": "Заполните"
           }
         }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "dateEndCreditLine",
-          "gridAttributes": {
-            "lg": 6
+      },
+      {
+        "columns": [
+          {
+            "id": "sumCreditLine",
+            "gridAttributes": {
+              "lg": 6
+            }
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "type": "divider"
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "codesTN_VED",
-          "gridAttributes": {
-            "lg": 12
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "periodCreditLine",
+            "gridAttributes": {
+              "lg": 6
+            }
+          },
+          {
+            "id": "dateEndCreditLine",
+            "gridAttributes": {
+              "lg": 6
+            }
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "creditPercent",
-          "gridAttributes": {
-            "lg": 6
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "divider"
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "type": "divider"
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "conditions",
-          "gridAttributes": {
-            "lg": 10
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "codesTN_VED",
+            "gridAttributes": {
+              "lg": 12
+            }
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "type": "divider"
-        }
-      ]
-    }
-  ,{
-      "title": "Варианты обеспечения по кредиту"
-    }
-  ,{
-      "columns": [
-        {
-          "id": "isBenefit",
-          "gridAttributes": {
-            "lg": 12
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "creditPercent",
+            "gridAttributes": {
+              "lg": 6
+            }
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "isDeposit",
-          "gridAttributes": {
-            "lg": 12
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "divider"
           }
-        }
-      ]
-    }
-  ,{
-      "columns": [
-        {
-          "id": "isGuarantee",
-          "gridAttributes": {
-            "lg": 12
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "NOTIFICATION_1",
+            "gridAttributes": {
+              "lg": 12
+            }
           }
-        }
-      ]
-    }
-  ]
+        ]
+      },
+      {
+        "columns": [
+          {
+            "type": "divider"
+          }
+        ]
+      },
+      {
+        "title": "Варианты обеспечения по кредиту"
+      },
+      {
+        "columns": [
+          {
+            "id": "isBenefit",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "isDeposit",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "isGuarantee",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ]
+  }
 }
