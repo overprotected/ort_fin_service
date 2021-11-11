@@ -206,15 +206,15 @@
 				"id": "exportExpirienceId",
 				"uiType": "radio",
 				"type": "String",
-				"label": "Наличие опыта экспортной деятельности ",
+				"label": "Наличие опыта реализации экспортного контракта стоимостью более 6 000 000 руб.",
 				"data": [
 					{
-						"label": "Есть экспортные контракты стоимостью более 6 000 000,00 рублей",
+						"label": "Да",
 						"value": "yes",
 						"key": "exportExpirienceId-yes"
 					},
 					{
-						"label": "Нет экспортных контрактов стоимостью более 6 000 000,00 рублей",
+						"label": "Нет",
 						"value": "no",
 						"key": "exportExpirienceId-no"
 					}
@@ -298,6 +298,14 @@
 			{
 				"columns": [
 					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
 						"id": "earlyRegistrationDateId",
 						"gridAttributes": {
 							"lg": 12
@@ -330,6 +338,14 @@
 			{
 				"columns": [
 					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
 						"id": "applicableLawId-ru",
 						"gridAttributes": {
 							"lg": 12
@@ -344,6 +360,14 @@
 						"gridAttributes": {
 							"lg": 12
 						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
 					}
 				]
 			},
@@ -392,6 +416,14 @@
 						"gridAttributes": {
 							"lg": 12
 						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
 					}
 				]
 			},
