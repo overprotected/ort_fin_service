@@ -8,7 +8,7 @@
       "withSteps": true
     },
     "isFormFullScreen": false,
-    "serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+    "serviceTitle": " «Страхование. Отсрочка платежа для МСП»",
     "uiSteps": {
       "count": 8,
       "current": 3,
@@ -256,35 +256,6 @@
         "id": "customerOkvedNotFound",
         "type": "String",
         "label": "Фактический основной вид деятельности",
-        "uiType": "reference",
-        "requestParams": {
-          "resultObjectParams": {
-            "name": ["code","caption"],
-            "key": "uuid"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 1,
-              "showDetails": 1,
-              "sort": "code,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/okved/items/search"
-          },
-          "filters": [
-            {
-              "name": "or",
-              "value": [
-                {
-                  "name": "caption_like_ci"
-                },
-                {
-                  "name": "code_like_ci"
-                }
-              ]
-            }
-          ]
-        },
         "constraints": [
           {
             "name": "NotNull"
@@ -318,6 +289,21 @@
       "countEmployeeNotFound": {
         "id": "countEmployeeNotFound",
         "type": "String",
+        "uiType": "dropdown",
+        "data": [
+          {
+            "value": "Менее 10",
+            "key": "Менее 10"
+          },
+          {
+            "value": "От 10 (включительно) до 50",
+            "key": "От 10 (включительно) до 50"
+          },
+          {
+            "value": "От 50 (включительно)",
+            "key": "От 50 (включительно)"
+          }
+        ],
         "label": "Количество сотрудников в штате",
         "constraints": [
           {
@@ -421,12 +407,12 @@
         "label": "Действующие экспортные контракты с Покупателем",
         "data": [
           {
-            "label": "Имеется",
+            "label": "Имеются",
             "value": "yes",
             "key": "actingHaveContract-yes"
           },
           {
-            "label": "Не имеется",
+            "label": "Не имеются",
             "value": "no",
             "key": "actingHaveContract-no"
           }
@@ -441,7 +427,7 @@
         "id": "haveControl",
         "uiType": "radio",
         "type": "String",
-        "label": "Между экспортером и Покупателем отсутствуют отношения прямого или косвенного контроля",
+        "label": "Между вашей Компанией и Покупателем отсутствуют отношения прямого или косвенного контроля",
         "data": [
           {
             "label": "Да",
