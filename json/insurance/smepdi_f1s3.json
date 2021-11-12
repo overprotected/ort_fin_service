@@ -446,12 +446,23 @@
           }
         ]
       },
+      "haveContractText": {
+        "id": "haveContractText",
+        "uiType": "typography",
+        "html": "<div>У Покупателя перед вашей компанией отсутствуют :</div><br><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;• Просроченная задолженность*;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;• Задолженность со сроком отсрочки платежа свыше 90 календарных дней;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;• Задолженность по отгрузкам, в отношении которых был перенесён срок платежа.</li></ul>",
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalName": "actingHaveContract",
+            "equalValue": "yes"
+          }
+        ]
+      },
       "haveCredit": {
         "id": "haveCredit",
         "uiType": "radio",
         "type": "String",
-        "label": "У Покупателя перед вашей Компанией отсутствует просроченая задолженность",
-        "tooltip": "Задолженность со сроком отсрочки платежа свыше 90 календарных дней\nЗадолженность по отгрузкам, в отношении которых был перенесен срок платежа",
+        "label": " ",
         "data": [
           {
             "label": "Да",
@@ -642,6 +653,16 @@
           },
           {
             "id": "actingHaveContract-no",
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      },
+      {
+        "columns": [
+          {
+            "id": "haveContractText",
             "gridAttributes": {
               "lg": 12
             }
