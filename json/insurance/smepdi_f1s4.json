@@ -17,6 +17,10 @@
 			"value": null,
 			"type": "String"
 		},
+		"annualRevenueCurrency": {
+			"value": null,
+			"type": "String"
+		},
 		"exportPeriodStartDate": {
 			"value": "02.07.2012",
 			"type": "String"
@@ -57,8 +61,8 @@
 				"id": "exportKindId",
 				"uiType": "dropdown",
 				"type": "String",
-				"label": "Вид экспорта",
-				"tooltip": "Если больше одного ответа, указать в строках нижевыбрать несколько вариантов",
+				"label": "Вид экспорта (возможен множественный выбор)",
+				"tooltip": "Если больше одного ответа, выбрать несколько вариантов",
 				"multiple": true,
 				"data": [
 					{
@@ -226,7 +230,7 @@
 			"annualRevenueCheckTextUsd": {
 				"id": "annualRevenueCheckTextUsdId",
 				"uiType": "typography",
-				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${annualRevenue} USD",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} USD",
 				"conditionals": [
 					{
 						"type": "visible",
@@ -239,7 +243,7 @@
 			"annualRevenueCheckTextRub": {
 				"id": "annualRevenueCheckTextRubId",
 				"uiType": "typography",
-				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${annualRevenue} RUB",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} RUB",
 				"conditionals": [
 					{
 						"type": "visible",
@@ -252,7 +256,7 @@
 			"annualRevenueCheckTextEur": {
 				"id": "annualRevenueCheckTextEurId",
 				"uiType": "typography",
-				"text": "Годовая выручка Вашей компании за последний отчетный год больше, чем ${annualRevenue} EUR",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} EUR",
 				"conditionals": [
 					{
 						"type": "visible",
@@ -307,11 +311,75 @@
 				]
 			},
 			
+			"annualRevenueSum": {
+				"id": "annualRevenueSumId",
+				"type": "String",
+				"label": "Укажите сумму годовой выручки",
+				"isNumber": true,
+				"useGrouping": true,
+				"decimal": 2,
+				"serverDelimiter": ".",
+				"frontDelimiter": ",",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "annualRevenueCheck",
+						"equalValue": "no"
+					}
+				]
+			},
+			
+			"annualRevenueCurrency": {
+				"id": "annualRevenueCurrencyId",
+				"uiType": "reference",
+				"label": "Валюта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "ccode",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "ccode,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/currency/items/search"
+					},
+					"filters": [
+						{
+							"name": "ccode_in",
+							"value": [ 
+								"RUB", "USD", "EUR"
+							]
+						}
+					]
+				},
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "annualRevenueCheck",
+						"equalValue": "no"
+					}
+				]
+			},
+			
 			"noSecurityFormCheck": {
 				"id": "noSecurityFormCheckId",
 				"uiType": "radio",
 				"type": "String",
-				"label": "У Вашей Компании отсутствуют какие-либо формы обеспечения или договоры страхования в отношении Собственного удержания по Договору страхования",
+				"label": "У вашей Компании отсутствуют какие-либо формы обеспечения или договоры страхования в отношении Собственного удержания по Договору страхования",
 				"tooltip": "Собственное удержание - доля от Убытка, которая не подлежит возмещению ЭКСАР при наступлении страхового случая и которую Страхователь обязан нести самостоятельно. Договором ЭКСАР предусмотрено Собственное удержание в размере 30%",
 				"data": [
 					{
@@ -475,6 +543,23 @@
 						"id": "annualRevenueCheckId-no",
 						"gridAttributes": {
 							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueSumId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "annualRevenueCurrencyId",
+						"gridAttributes": {
+							"lg": 4
 						}
 					}
 				]

@@ -116,6 +116,8 @@
 	"exportPeriodStartDate": null,
 	"exportPeriodFinishDate": null,
 	"annualRevenueCheck": null,
+	"annualRevenueSum": null,
+	"annualRevenueCurrency": [:],
 	"noSecurityFormCheck": null,
 	
 // form5
@@ -172,6 +174,8 @@
       <bpmn:userTask id="Activity_1k3iwvw" name="Fill application, step 4" camunda:formKey="f1s4" camunda:candidateGroups="exporter">
         <bpmn:extensionElements>
           <camunda:inputOutput>
+            <camunda:inputParameter name="annualRevenueCurrency">${annualRevenueCurrency}</camunda:inputParameter>
+            <camunda:inputParameter name="annualRevenueSum">${annualRevenueSum}</camunda:inputParameter>
             <camunda:inputParameter name="noSecurityFormCheck">${noSecurityFormCheck}</camunda:inputParameter>
             <camunda:inputParameter name="annualRevenueCheck">${annualRevenueCheck}</camunda:inputParameter>
             <camunda:inputParameter name="exportPeriodFinishDate">${exportPeriodFinishDate}</camunda:inputParameter>
@@ -183,6 +187,8 @@
             <camunda:inputParameter name="exportKind">${exportKind}</camunda:inputParameter>
             <camunda:inputParameter name="uiSchema">${f1s4}</camunda:inputParameter>
             <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+            <camunda:outputParameter name="annualRevenueCurrency">${annualRevenueCurrency}</camunda:outputParameter>
+            <camunda:outputParameter name="annualRevenueSum">${annualRevenueSum}</camunda:outputParameter>
             <camunda:outputParameter name="noSecurityFormCheck">${noSecurityFormCheck}</camunda:outputParameter>
             <camunda:outputParameter name="annualRevenueCheck">${annualRevenueCheck}</camunda:outputParameter>
             <camunda:outputParameter name="exportPeriodFinishDate">${exportPeriodFinishDate}</camunda:outputParameter>
@@ -255,6 +261,8 @@ execution.setVariable("dataForRegistry", dataForRegistry)</bpmn:script>
 	"exportPeriodStartDate": exportPeriodStartDate,
 	"exportPeriodFinishDate": exportPeriodFinishDate,
 	"annualRevenueCheck": annualRevenueCheck.equals("annualRevenueCheckId-yes"),
+	"annualRevenueSum": annualRevenueSum,
+	"annualRevenueCurrency":annualRevenueCurrency.key,
 	"noSecurityFormCheck": noSecurityFormCheck.equals("noSecurityFormCheckId-yes")
 ]</camunda:script>
             </camunda:inputParameter>
