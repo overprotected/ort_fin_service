@@ -64,9 +64,14 @@
 					}
 				]
 			},
-			
-			"generatedApp": {
-				"id": "generatedAppId",
+			"staticInsuranceFile": {
+				"id": "staticInsuranceFile",
+				"type": "File",
+				"uiType": "documentForSign",
+				"label": "Статичный документ"
+			},
+			"insuranceStatement": {
+				"id": "insuranceStatement",
 				"type": "File",
 				"uiType": "documentForSign",
 				"constraints": [
@@ -75,20 +80,6 @@
 						"attributes": {
 							"min": 0,
 							"max": 10485760
-						}
-					}
-				],
-				"attachments": [
-					{
-						"fileName": "Заявление.pdf",
-						"fileSize": 300000,
-						"fileUrl": "asd",
-						"fileExtension": "pdf",
-						"id": "1",
-						"additionalFields": {
-							"onSign": true,
-							"documentTypeIdentifier": "12312",
-							"ecmUuid": "ecmUuid"
 						}
 					}
 				],
@@ -125,11 +116,20 @@
 					}
 				]
 			},
-			
 			{
 				"columns": [
 					{
-						"id": "generatedAppId",
+						"id": "staticInsuranceFile",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "insuranceStatement",
 						"gridAttributes": {
 							"lg": 12
 						}
