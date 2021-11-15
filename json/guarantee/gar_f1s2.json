@@ -1,0 +1,397 @@
+{
+	"variables": {
+		"product": {
+			"value": true,
+			"type": "String"
+		},
+		
+		"currency": {
+			"value": null,
+			"type": "String"
+		},
+		
+		"guaranteeTerm": {
+			"value": "Не более 11 месяцев",
+			"type": "String"
+		},
+		
+		"percent": {
+			"value": "1%",
+			"type": "String"
+		},
+		
+		"guaranteeSecurity": {
+			"value": true,
+			"type": "String"
+		},
+		
+		"owner": {
+			"value": "",
+			"type": "String"
+		}
+
+	},
+  
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения гарантии S/2021/37558",
+		"formTitle": "Запрос на предварительные условия получения гарантии S/2021/37558",
+	
+		"uiSteps": {
+			"count": 4,
+			"current": 2,
+			"passed": [1],
+			"names": ["Общая информация",
+					 "Основные параметры",
+					 "Декларации Заявителя",
+					 "Подписание заявки"]
+		},
+		
+		"navigationButtons": {
+			"next": {
+				"hide": false,
+				"label": "Далее"
+			},
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			}
+		},
+
+
+		"fields": {
+				"product": {
+					"label": "Гарантия НДС для некрупных экспортеров",
+					"id": "productId",
+					"uiType": "checkboxBool",
+					"type": "Boolean",
+					"nullable": false,
+					"readonly": true
+				},
+				
+				"guaranteeSum": {
+					"label": "Сумма банковской гарантии",
+					"id": "guaranteeSumId",
+					"type": "String",
+					"placeholder": "Введите сумму гарантии",
+					"isNumber": true,
+					"useGrouping": true,
+					"decimal": 2,
+					"constraints": [
+						{
+							"name": "NotNull"
+						},
+						
+						{
+							"name": "Size",
+							"attributes": {
+								"min": 1,
+								"max": 5000000
+							}
+						}
+					]
+				},
+				
+				"currency": {
+					"id": "currencyId",
+					"label": "Валюта",
+					"uiType": "reference",
+					"constraints": [
+						{
+							"name": "NotNull"
+						}
+					],
+					"requestParams": {
+						"resultObjectParams": {
+							"name": "caption",
+							"key": "uuid"
+						},
+						"params": {
+							"headers": {},
+							"queryParams": {
+								"showRefs": 1,
+								"showDetails": 1,
+								"sort": "caption,asc"
+							},
+							"relativeUrl": "api/v1/catalogs/currency/items/search"
+						},
+						"filters": [
+							{
+								"name": "caption_like_ci"
+							}
+						]
+					}
+				},
+				
+				"guaranteeTerm": { 
+					"id": "guaranteeTermId", 
+					"uiType": "infoField", 
+					"title": "Срок исполнения обеспечиваемых Гарантией обязательств Принципала (в месяцах)" 
+				},
+				
+				"percent": {
+					"label": "Размер процентной ставки кредита (в годовых)",
+					"id": "percentId",
+					"type": "String",
+					"readonly": true,
+					"constraints": [
+						{
+							"name": "NotNull"
+						}
+					]
+				},
+				
+				"guaranteeSecurity": {
+					"label": "Поручительство бенефициарного владельца",
+					"id": "guaranteeSecurityId",
+					"uiType": "checkboxBool",
+					"type": "Boolean"
+				},
+				
+				"owner": {
+					"id": "ownerId",
+					"type": "String",
+					"label": "",
+					"multiline": false,
+					"readonly": false,
+					"multiple": true,
+					"placeholder": "Введите ФИО владельца",
+					"maxmultiple": 3,
+					"constraints": [
+						{
+							"name": "NotNull"
+						}
+					],
+			
+					"conditionals": [
+						{
+							"type": "visible",
+							"equalName": "guaranteeSecurity",
+							"equalValue": true
+						}
+					]
+				},
+		
+				"errorPanel": {
+					"id": "errorPanelId",
+					"uiType": "notification",
+					"notificationStatus": "ERROR",
+					"notificationText":"Предлагаем воспользоваться услугой «Гарантия в пользу налоговых органов (НДС)»",
+					"buttonUrl":null,
+					"buttonText":"Перейти",
+					
+					"conditionals": [
+						{
+							"type": "visible",
+							"equalName": "guaranteeSecurity",
+							"equalValue": false
+						}
+					]
+				}
+			},
+		
+		"rows": [
+			
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Основные параметры запрашиваемого продукта",
+					"status": "default",
+					"expandedByDefault": true,
+					"isDynamicStatus": true,
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				}
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"text": "Продукт",
+							"variant": "h6"
+						},
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "productId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "separator",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "guaranteeSumId",
+						"gridAttributes": {
+							"lg": 8
+						}
+					},
+					
+					{
+						"id": "currencyId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "guaranteeTermId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "percentId",
+						"gridAttributes": {
+							"lg": 8
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "separator",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+					
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"text": "Обеспечение по гарантии",
+							"variant": "h6"
+						},
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+							"id": "guaranteeSecurityId",
+							"gridAttributes": {
+								"lg": 12
+							}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"text": "Информация о бенифициарном владельце организации",
+							"variant": "h6"
+						},
+						"gridAttributes": {
+							"lg": 7
+						}
+					},
+					
+					{
+						"type": "typography",
+						"typographyProps": {
+							"variant": "p",
+							"text": "",
+							"tooltip": "Ф.И.О. лица, которое, в конечном счете, прямо или косвенно через третьих лиц владеет организацией – имеет преобладающее участие 25 процентов в капитале, либо имеет возможность контролировать действия организации."
+							},
+						"gridAttributes": {
+							"lg": 1
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+							"id": "ownerId",
+							"gridAttributes": {
+								"lg": 8
+							}
+					}	
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "addButton",
+						"forId": "ownerId",
+						"field": {
+							"buttonStyle": "link"
+						},
+						"gridAttributes": {
+							"lg": 5
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+							"id": "errorPanelId",
+							"gridAttributes": {
+								"lg": 12
+							}
+					}	
+				]
+			}
+		]	
+	}
+}
