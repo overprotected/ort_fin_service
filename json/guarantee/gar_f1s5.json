@@ -1,0 +1,205 @@
+{
+	"variables": {
+		"showSign": {
+			"value": true,
+			"type": "Boolean"
+		},
+		"generatedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"scannedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		},
+		
+		"bottomText": {
+			"value": [
+				{	 
+				 "text": "Пожалуйста, подпишите усиленной квалифицированной электронной подписью (УКЭП) Запрос на финансирование в рамках продукта «Гарантия в пользу налоговых органов для некрупных экспортеров» и все документы, приложенные к нему.",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px"
+					}
+				}
+			]
+		},
+		
+		"acceptation": {
+			"value": false,
+			"type": "Boolean"
+		}
+	},
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"navigationButtons": {
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			},
+			"finish": {
+				"hide": false,
+				"label": "Отправить"
+			}
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Гарантия в пользу налоговых органов для некрупных экспортеров» {{petitonNumber.value}}",
+		
+		"uiSteps": {
+			"count": 5,
+			"current": 5,
+			"passed": [1,2,3,4],
+			"names": ["Общая информация",
+					 "Основные параметры",
+					 "Декларации Заявителя",
+					 "Сопровождающие документы",
+					 "Подписание заявки"]
+		},
+		
+		"fields": {
+			"showSign": {
+				"label": "Подписывать УКЭП",
+				"id": "showSignId",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			"generatedApp": {
+				"id": "generatedAppId",
+				"type": "File",
+				"uiType": "documentForSign",
+				"label": "Сформированная заявка",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Файл 1",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": true
+					}
+				]
+			},
+			"scannedApp": {
+				"id": "scannedAppId",
+				"type": "File",
+				"label": "При отсутствии возможности подписать Заявку электронной подписью распечатайте ее по кнопке выше, подпишите и приложите её скан",
+				"multiple": true,
+				"maxMultiple": 4,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": false
+					}
+				]
+			},
+			
+			"bottomText": {
+				"id": "bottomText",
+				"uiType": "customMessages",
+				"label": ""
+			},
+			
+			"acceptation": {
+				"label": "Подписывая настоящий запрос на предварительные условия кредитования (финансирования), подтверждаю, что все ответы и сведения, указанные в запросе и документах, приложенных к запросу, являются полными и достоверными.",
+				"id": "acceptationId",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			}
+		},
+		"rows": [
+			{
+				"columns": [
+					{
+						"id": "showSignId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "generatedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "scannedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "bottomText",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "acceptationId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+			
+			
+		]
+	}
+}
