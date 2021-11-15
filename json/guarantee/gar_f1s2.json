@@ -28,6 +28,11 @@
 		"owner": {
 			"value": "",
 			"type": "String"
+		},
+		
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
 		}
 
 	},
