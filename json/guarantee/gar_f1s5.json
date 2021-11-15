@@ -1,0 +1,484 @@
+{
+	"variables": {
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		},
+		
+		"documentListPt1": {
+			"value": [
+				{	 
+				 "text": "Учредительные документы:",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px"
+					}
+				},
+				
+				{	 
+				 "text": "1. Действующая редакция Устава с изменениями (при наличии);",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "2. Учредительный договор (копия, заверенная организацией);",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				
+				{	 
+				 "text": "3. Документы о назначении директора (копия, заверенная организацией);",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "4. Копия паспорта представителя, заключающего соглашение о выдаче банковской гарантии (доверенность на представителя, заключающего соглашение о выдаче банковской гарантии);",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "5. Копии паспортов поручителей.",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				}
+			]
+		},
+			
+		"documentListPt2": {
+			"value": [
+				{	 
+				 "text": "Анкеты и заявления:",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px"
+					}
+				},
+				
+				{	 
+				 "text": "1. Анкета физического лица по форме Банка (на директора/представителя, заключающего соглашение о выдаче банковской гарантии,   бенефициарного владельца) (оригинал);",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "2. Анкета юридического лица по форме Банка (оригинал);",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				
+				{	 
+				 "text": "3. Анкета на поручителя физического лица по форме Банка (оригинал);",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "4. Заявление на предоставление финансирования (оригинал);",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "5. Заявление на выдачу гарантии по установленной форме (оригинал).",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				}
+			]
+		},
+			
+		"documentListPt3": {
+			"value": [
+				{	 
+				 "text": "Бухгалтерские документы:",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px"
+					}
+				},
+				
+				{	 
+				 "text": "1. Годовая бухгалтерская отчетность на последнюю отчетную дату (копия, заверенная организацией);",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "2. Подтверждение положительного опыта прохождения не менее 2-х камеральных проверок (письмо из ФНС об окончании камеральной  проверки, положительное решение ФНС о возмещение) (копия, заверенная организацией);",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				
+				{	 
+				 "text": "3. Проект гарантии, предоставленный Принципалом;",
+					"style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				},
+				
+				{	 
+				 "text": "4. Платежное поручение Принципала на оплату комиссии по гарантии (копия).",
+				  "style": {
+					"whiteSpace": "pre-wrap",
+					"text-align":"justify",
+					"margin-bottom":"-20px",
+					"margin-left":"20px"
+					}
+				}
+			]
+		},
+		
+		"showAddField": {
+			"value": null,
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"navigationButtons": {
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			},
+			"finish": {
+				"hide": false,
+				"label": "Отправить"
+			}
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Гарантия в пользу налоговых органов для некрупных экспортеров» {{petitonNumber.value}}",
+		"uiSteps": {
+			"count": 4,
+			"current": 3,
+			"passed": [
+				1,
+				2
+			],
+			"names": [ 
+				"Общая информация",  
+				"Основные параметры", 
+				"Сопровождающие документы",
+				"Подписание"
+			]
+		},
+		"fields": {
+	
+			"documentListPt1": {
+				"id": "documentListPt1",
+				"uiType": "customMessages",
+				"label": ""
+			},
+			
+			"documentListPt2": {
+				"id": "documentListPt2",
+				"uiType": "customMessages",
+				"label": ""
+			},
+			
+			"documentListPt3": {
+				"id": "documentListPt3",
+				"uiType": "customMessages",
+				"label": ""
+			},
+			
+			"showP33": {
+				"label": "Среди поручителей есть юридиеские лица",
+				"id": "showP33Id",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			
+			"templates": {
+				"id": "templatesId",
+				"type": "File",
+				"uiType": "fileLink",
+				"label": "",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Шаблоны_документов.rar",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "rar",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				]
+			},
+			
+			"filledDocs": {
+				"id": "filledDocsId",
+				"type": "File",
+				"label": "Загрузите заполненные по шаблону документы",
+				"multiple": true,
+				"maxMultiple": 400,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				]
+			},
+			
+			"additionalDocs": {
+				"id": "additionalDocsId",
+				"type": "File",
+				"label": "Загрузите дополнительные документы",
+				"multiple": true,
+				"maxMultiple": 10,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				]
+			},
+			
+			"showAddField": {
+				"label": "Дополнительная информация",
+				"tooltip": "Test",
+				"id": "showAddFieldId",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			
+			"addInfo": {
+				"label": "",
+				"id": "addInfoId",
+				"type": "String",
+				"placeholder": "Внесите дополнительную информацию",
+				"isNumber": false,
+				"multiline": true,
+				"maxRows": 10,
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showAddField",
+						"equalValue": true
+					}
+				]
+			}
+		},
+		"rows": [
+		{	
+			"columns": [
+			{
+				"type": "typography",
+				"typographyProps": {
+					"text": "Сопровождающие документы к Запросу на финансирование в рамках продукта «Гарантия в пользу налоговых органов для некрупных экспортеров»",
+					"variant": "h5"
+				},
+            
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+		
+		{
+			"type": "formSeparator",
+			"expansionPanel": {
+				"title": "Перечень необходимых сопровождающих документов",
+				"status": " "
+			}
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "documentListPt1",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "documentListPt2",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "documentListPt3",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+			
+		{
+			"type": "formSeparator"
+		},
+		
+		{
+			"columns": [
+			{
+				"id": "templatesId",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+		
+		{
+			"columns": [
+			{
+				"type": "separator",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+		
+		{
+			"columns": [
+			{
+				"id": "filledDocsId",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "additionalDocsId",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "showAddFieldId",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		},
+	  
+		{
+			"columns": [
+			{
+				"id": "addInfoId",
+				"gridAttributes": {
+					"lg": 12
+				}
+			}
+			]
+		}
+		
+		]
+	}
+}
