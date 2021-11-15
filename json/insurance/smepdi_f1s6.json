@@ -143,6 +143,13 @@
         "constraints": [
           {
             "name": "NotNull"
+          },
+          {
+            "name": "Pattern",
+            "attributes": {
+              "regexp": "^(\\d{9,9})$",
+              "message": "Маска счета не соответствует"
+            }
           }
         ]
       },
@@ -209,6 +216,13 @@
         "constraints": [
           {
             "name": "NotNull"
+          },
+          {
+            "name": "Pattern",
+            "attributes": {
+              "regexp": "^(\\d{9,9})$",
+              "message": "Маска счета не соответствует"
+            }
           }
         ]
       },
