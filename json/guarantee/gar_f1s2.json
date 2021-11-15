@@ -6,7 +6,7 @@
 		},
 		
 		"currency": {
-			"value": null,
+			"value": "RUR",
 			"type": "String"
 		},
 		
@@ -92,10 +92,10 @@
 						},
 						
 						{
-							"name": "Size",
+							"name": "Pattern",
 							"attributes": {
-								"min": 1,
-								"max": 5000000
+								"regexp": "^([1-9][0-9]{0,6}|5000000)$",
+								"message": "Сумма должна быть не более 5 млн"
 							}
 						}
 					]
@@ -104,32 +104,13 @@
 				"currency": {
 					"id": "currencyId",
 					"label": "Валюта",
-					"uiType": "reference",
+					"type": "String",
+					"readonly": true,
 					"constraints": [
 						{
 							"name": "NotNull"
 						}
-					],
-					"requestParams": {
-						"resultObjectParams": {
-							"name": "caption",
-							"key": "uuid"
-						},
-						"params": {
-							"headers": {},
-							"queryParams": {
-								"showRefs": 1,
-								"showDetails": 1,
-								"sort": "caption,asc"
-							},
-							"relativeUrl": "api/v1/catalogs/currency/items/search"
-						},
-						"filters": [
-							{
-								"name": "caption_like_ci"
-							}
-						]
-					}
+					]
 				},
 				
 				"guaranteeTerm": { 
