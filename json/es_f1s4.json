@@ -221,6 +221,19 @@
 									"name": "description_like_ci"
 								}
 							]
+						},
+						{
+							"name": "and",
+							"value": [
+								{
+									"name": "nonResidentRf",
+									"value": true
+								},
+								{
+									"name": "regCountry",
+									"valueFromField": "contractCustomerRegCountry.key"
+								}
+							]
 						}
 					]
 				},
