@@ -239,8 +239,8 @@
 				"type": "Boolean"
 			},
 			
-			"templates": {
-				"id": "templatesId",
+			"templatesFile": {
+				"id": "templatesFile",
 				"type": "File",
 				"uiType": "fileLink",
 				"label": "",
@@ -252,25 +252,11 @@
 							"max": 10485760
 						}
 					}
-				],
-				"attachments": [
-					{
-						"fileName": "Шаблоны_документов.rar",
-						"fileSize": 300000,
-						"fileUrl": "asd",
-						"fileExtension": "rar",
-						"id": "1",
-						"additionalFields": {
-							"onSign": true,
-							"documentTypeIdentifier": "12312",
-							"ecmUuid": "ecmUuid"
-						}
-					}
 				]
 			},
 			
 			"filledDocs": {
-				"id": "filledDocsId",
+				"id": "filledDocs",
 				"type": "File",
 				"label": "Загрузите заполненные по шаблону документы",
 				"multiple": true,
@@ -398,7 +384,7 @@
 		{
 			"columns": [
 			{
-				"id": "templatesId",
+				"id": "templatesFile",
 				"gridAttributes": {
 					"lg": 12
 				}
@@ -420,7 +406,7 @@
 		{
 			"columns": [
 			{
-				"id": "filledDocsId",
+				"id": "filledDocs",
 				"gridAttributes": {
 					"lg": 12
 				}

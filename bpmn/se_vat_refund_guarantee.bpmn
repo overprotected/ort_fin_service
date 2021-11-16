@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1wwue8e" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="se_vat_refund_guarantee" name="Запрос на предварительные условия получения гарантии" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12uxce4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0yr501w">
+      <bpmn:incoming>Flow_0j7xovl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12uxce4" sourceRef="StartEvent_1" targetRef="Activity_127vthu" />
+    <bpmn:serviceTask id="Activity_19xi89t" name="Get file" camunda:class="ru.seventech.camunda.serviceTask.EcmDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="action">attachList</camunda:inputParameter>
+          <camunda:inputParameter name="title">Шаблоны</camunda:inputParameter>
+          <camunda:inputParameter name="sort">createDate</camunda:inputParameter>
+          <camunda:inputParameter name="direction">desc</camunda:inputParameter>
+          <camunda:inputParameter name="origin">c00815</camunda:inputParameter>
+          <camunda:inputParameter name="outputName">templatesFileOut</camunda:inputParameter>
+          <camunda:inputParameter name="page">0</camunda:inputParameter>
+          <camunda:inputParameter name="size">1</camunda:inputParameter>
+          <camunda:inputParameter name="attach_name">templatesFile</camunda:inputParameter>
+          <camunda:inputParameter name="access">view</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1sbe75p</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dx9lkw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1dx9lkw" sourceRef="Activity_19xi89t" targetRef="Activity_1s7mraj" />
+    <bpmn:userTask id="Activity_1s7mraj" name="Fill application, step 4" camunda:formKey="f1s6" camunda:candidateGroups="exporter">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+          <camunda:inputParameter name="attachList">
+            <camunda:script scriptFormat="groovy">execution.getVariable("templatesFileOut").each {
+  attachList.add(it)
+}
+
+attachList</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${gar_f1s4}</camunda:inputParameter>
+          <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:outputParameter name="attachList">${attachList}</camunda:outputParameter>
+          <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1dx9lkw</bpmn:incoming>
+      <bpmn:outgoing>Flow_05orrol</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_05orrol" sourceRef="Activity_1s7mraj" targetRef="Activity_10qehjf" />
+    <bpmn:scriptTask id="Activity_127vthu" name="Set variables" camunda:asyncAfter="true" scriptFormat="groovy">
+      <bpmn:documentation>Инициализация переменных</bpmn:documentation>
+      <bpmn:incoming>Flow_12uxce4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1sbe75p</bpmn:outgoing>
+      <bpmn:script>def attachList = [  
+["id":103,"attach_name":"filledDocs","title":"Заполненные по шаблону документы",
+         "isexist":0,"mandatory":0,"access":"edit","url":"","size":"0",
+         "authorFio":"","additionalFields":["multiple":"true"]]
+]
+
+execution.setVariables([
+	"NEXT": "NEXT",
+        "attachList": attachList
+])</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1sbe75p" sourceRef="Activity_127vthu" targetRef="Activity_19xi89t" />
+    <bpmn:userTask id="Activity_11tqn4f" name="Fill application, step 5" camunda:formKey="f1s6" camunda:candidateGroups="exporter">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+          <camunda:inputParameter name="attachList">
+            <camunda:script scriptFormat="groovy">def attachList = []
+def size = "500"
+def ecmUuid = guaranteeDocumentsOut.uuid
+def attachForSign = [
+                "id": 100,
+                "attach_name": "filledDocs",
+                "title": "Заполненные документы",
+                "isexist": 0,
+                "mandatory": 0,
+                "access": "edit",
+                "url": "",
+                "size": size,
+                "authorFio": "",
+                "additionalFields": ["onSign":"true", "ecmUuid": ecmUuid, "documentTypeIdentifier":"c00816"]
+]
+
+attachList.add(attachForSign)
+
+attachList</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="uiSchema">${gar_f1s5}</camunda:inputParameter>
+          <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+          <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lvi8fx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j7xovl</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0j7xovl" sourceRef="Activity_11tqn4f" targetRef="Event_0yr501w" />
+    <bpmn:serviceTask id="Activity_10qehjf" name="Create file for sign" camunda:class="ru.seventech.camunda.serviceTask.EcmDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="origin">c00816</camunda:inputParameter>
+          <camunda:inputParameter name="action">smartCreate</camunda:inputParameter>
+          <camunda:inputParameter name="fieldsMap">
+            <camunda:map>
+              <camunda:entry key="orgId">${client}</camunda:entry>
+              <camunda:entry key="serviceId">${service.uuid}</camunda:entry>
+              <camunda:entry key="docKind">0</camunda:entry>
+              <camunda:entry key="source">ЕЛК</camunda:entry>
+              <camunda:entry key="caption">Документы для гарантии</camunda:entry>
+              <camunda:entry key="index">0</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="outputName">guaranteeDocumentsOut</camunda:inputParameter>
+          <camunda:inputParameter name="attach_name">filledDocs</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_05orrol</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lvi8fx</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0lvi8fx" sourceRef="Activity_10qehjf" targetRef="Activity_11tqn4f" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="se_vat_refund_guarantee">
+      <bpmndi:BPMNEdge id="Flow_12uxce4_di" bpmnElement="Flow_12uxce4">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="250" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dx9lkw_di" bpmnElement="Flow_1dx9lkw">
+        <di:waypoint x="530" y="120" />
+        <di:waypoint x="620" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05orrol_di" bpmnElement="Flow_05orrol">
+        <di:waypoint x="720" y="120" />
+        <di:waypoint x="780" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sbe75p_di" bpmnElement="Flow_1sbe75p">
+        <di:waypoint x="350" y="120" />
+        <di:waypoint x="430" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j7xovl_di" bpmnElement="Flow_0j7xovl">
+        <di:waypoint x="1040" y="120" />
+        <di:waypoint x="1162" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lvi8fx_di" bpmnElement="Flow_0lvi8fx">
+        <di:waypoint x="880" y="120" />
+        <di:waypoint x="940" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_11tqn4f_di" bpmnElement="Activity_11tqn4f">
+        <dc:Bounds x="940" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_127vthu_di" bpmnElement="Activity_127vthu">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19xi89t_di" bpmnElement="Activity_19xi89t">
+        <dc:Bounds x="430" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1s7mraj_di" bpmnElement="Activity_1s7mraj">
+        <dc:Bounds x="620" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10qehjf_di" bpmnElement="Activity_10qehjf">
+        <dc:Bounds x="780" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yr501w_di" bpmnElement="Event_0yr501w">
+        <dc:Bounds x="1162" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

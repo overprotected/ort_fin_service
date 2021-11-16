@@ -58,8 +58,8 @@
 				"uiType": "checkboxBool",
 				"type": "Boolean"
 			},
-			"generatedApp": {
-				"id": "generatedAppId",
+			"filledDocs": {
+				"id": "filledDocs",
 				"type": "File",
 				"uiType": "documentForSign",
 				"label": "Сформированная заявка",
@@ -69,20 +69,6 @@
 						"attributes": {
 							"min": 0,
 							"max": 10485760
-						}
-					}
-				],
-				"attachments": [
-					{
-						"fileName": "Файл 1",
-						"fileSize": 300000,
-						"fileUrl": "asd",
-						"fileExtension": "pdf",
-						"id": "1",
-						"additionalFields": {
-							"onSign": true,
-							"documentTypeIdentifier": "12312",
-							"ecmUuid": "ecmUuid"
 						}
 					}
 				],
@@ -139,7 +125,7 @@
 			{
 				"columns": [
 					{
-						"id": "generatedAppId",
+						"id": "filledDocs",
 						"gridAttributes": {
 							"lg": 12
 						}
