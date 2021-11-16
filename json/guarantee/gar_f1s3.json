@@ -17,7 +17,6 @@
 			"type": "String"
 		}
 	},
-	
 	"uiSchema": {
 		"uiFormType": {
 			"type": "json",
@@ -28,16 +27,18 @@
 		"uiSteps": {
 			"count": 5,
 			"current": 3,
-			"passed": [1, 2],
-			"names": [ 
-				"Общая информация",  
-				"Основные параметры", 
+			"passed": [
+				1,
+				2
+			],
+			"names": [
+				"Общая информация",
+				"Основные параметры",
 				"Декларации заявителя",
 				"Сопровождающие документы",
 				"Подписание"
 			]
 		},
-	
 		"fields": {
 			"declarationAgreed": {
 				"id": "declarationAgreedId",
@@ -45,22 +46,20 @@
 				"type": "Boolean",
 				"data": [
 					{
-						"label": "Заявитель подтверждает и заверяет, что в соответствии с национальным и международным законодательством по борьбе с подкупом, включая Конвенцию по борьбе с подкупом иностранных должностных лиц при осуществлении международных коммерческих сделок (17.12.1997 г., г. Париж):",
+						"label": "Подтверждаю и заверяю",
 						"value": "yes",
 						"key": "declarationAgreed-yes"
 					}
 				],
-				
 				"constraints": [
 					{
-					  "name": "NotNull"
+						"name": "NotNull"
 					}
 				],
 				"value": null,
 				"type": "String",
 				"uiType": "checkbox"
 			},
-			
 			"declarationNeeded": {
 				"id": "declarationNeededId",
 				"uiType": "notification",
@@ -74,7 +73,6 @@
 					}
 				]
 			},
-			
 			"creditBureauAgreed": {
 				"id": "creditBureauAgreedId",
 				"uiType": "checkboxBool",
@@ -89,7 +87,6 @@
 				]
 			}
 		},
-	
 		"rows": [
 			{
 				"type": "formSeparator",
@@ -108,18 +105,20 @@
 					}
 				}
 			},
-			
 			{
 				"columns": [
 					{
-						"id": "declarationAgreed-yes",
+						"type": "typography",
+						"typographyProps": {
+							"html": "<h4 align=\"justify\">Заявитель подтверждает и заверяет, что в соответствии с национальным и международным законодательством по борьбе с подкупом, включая Конвенцию по борьбе с подкупом иностранных должностных лиц при осуществлении международных коммерческих сделок (17.12.1997 г., г. Париж):</h4>",
+							"variant": "p"
+						},
 						"gridAttributes": {
 							"lg": 12
 						}
 					}
 				]
 			},
-			
 			{
 				"columns": [
 					{
@@ -190,7 +189,16 @@
 					}
 				]
 			},
-			
+			{
+				"columns": [
+					{
+						"id": "declarationAgreed-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
 			{
 				"columns": [
 					{
@@ -201,12 +209,9 @@
 					}
 				]
 			},
-			
-			
 			{
 				"type": "formSeparator"
 			},
-			
 			{
 				"columns": [
 					{
@@ -217,7 +222,6 @@
 					}
 				]
 			}
-			
 		]
 	}
 }
