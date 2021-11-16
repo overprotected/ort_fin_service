@@ -85,7 +85,7 @@ execution.setVariables([
 	"NEXT": "NEXT",
 
 //file
-"attachList": attachList
+"attachList": attachList,
 	
 // form 1 
 	"organizationFullName": "organizationFullName",
@@ -426,7 +426,7 @@ def addr = mdm.extAddresses.find({it.extAddressType == "legal"})
 def legalAddress = addr? [addr.extIndex, (addr.extCountry) ? addr.extCountry.caption : "", addr.extRegion, addr.extDistrict, addr.extCity, addr.extCommunity, addr.extStreet, addr.extHouse, addr.extBuilding, addr.extOffice, addr.extComment].findAll({it != null}).join("; ") : ""
 def orgRegDate = (mdm &amp;&amp; mdm.registerDate != null) ? new Date().parse('yyyy-MM-dd',mdm.registerDate) : null;
 execution.setVariables([
-	"organizationFullName": (mdm) ? mdm.description: "",
+	"organizationFullName":(mdm)?  mdm.description: "",
 	"organizationShortName": (mdm)?  mdm.caption: "",
 	"organizationAddress": legalAddress != null ? legalAddress : "",
 	"organizationOGRN": (mdm &amp;&amp; mdm.ogrn != null) ? mdm.ogrn: "",
