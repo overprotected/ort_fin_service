@@ -146,7 +146,6 @@
 					"placeholder": "дд.мм.гггг",
 					"disableFuture": true,
 					"disablePaste": false,
-					"range": true,
 					"serverFormat": "YYYY-MM-DD",
 
 					"constraints": [
