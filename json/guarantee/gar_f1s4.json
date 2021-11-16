@@ -5,174 +5,6 @@
 			"type": "String"
 		},
 		
-		"documentListPt1": {
-			"value": [
-				{	 
-				 "text": "Учредительные документы:",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px"
-					}
-				},
-				
-				{	 
-				 "text": "1. Действующая редакция Устава с изменениями (при наличии);",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "2. Учредительный договор (копия, заверенная организацией);",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				
-				{	 
-				 "text": "3. Документы о назначении директора (копия, заверенная организацией);",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "4. Копия паспорта представителя, заключающего соглашение о выдаче банковской гарантии (доверенность на представителя, заключающего соглашение о выдаче банковской гарантии);",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "5. Копии паспортов поручителей.",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				}
-			]
-		},
-			
-		"documentListPt2": {
-			"value": [
-				{	 
-				 "text": "Анкеты и заявления:",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px"
-					}
-				},
-				
-				{	 
-				 "text": "1. Анкета физического лица по форме Банка (на директора/представителя, заключающего соглашение о выдаче банковской гарантии,   бенефициарного владельца) (оригинал);",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "2. Анкета юридического лица по форме Банка с приложением (оригинал);",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				
-				{	 
-				 "text": "3. Анкета на поручителя физического лица по форме Банка (оригинал);",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "4. Заявление на предоставление финансирования (оригинал);",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				}
-			]
-		},
-			
-		"documentListPt3": {
-			"value": [
-				{	 
-				 "text": "Бухгалтерские документы:",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px"
-					}
-				},
-				
-				{	 
-				 "text": "1. Годовая бухгалтерская отчетность на последнюю отчетную дату (копия, заверенная организацией);",
-				  "style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				{	 
-				 "text": "2. Подтверждение положительного опыта прохождения не менее 2-х камеральных проверок (письмо из ФНС об окончании камеральной  проверки, положительное решение ФНС о возмещение) (копия, заверенная организацией);",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				},
-				
-				
-				{	 
-				 "text": "3. Проект гарантии, предоставленный Принципалом;",
-					"style": {
-					"whiteSpace": "pre-wrap",
-					"text-align":"justify",
-					"margin-bottom":"-20px",
-					"margin-left":"20px"
-					}
-				}
-			]
-		},
-		
 		"showAddField": {
 			"value": null,
 			"type": "String"
@@ -195,7 +27,7 @@
 			}
 		},
 		"isFormFullScreen": false,
-		"serviceTitle": "Запрос на предварительные условия получения финансирования в рамках кредитного продукта «Гарантия в пользу налоговых органов для некрупных экспортеров» {{petitonNumber.value}}",
+		"serviceTitle": "Запрос на получение услуги «Гарантия. Возврат НДС для МСП по упрощенной процедуре» {{petitonNumber.value}}",
 		"uiSteps": {
 			"count": 5,
 			"current": 4,
@@ -214,26 +46,8 @@
 		},
 		"fields": {
 	
-			"documentListPt1": {
-				"id": "documentListPt1",
-				"uiType": "customMessages",
-				"label": ""
-			},
-			
-			"documentListPt2": {
-				"id": "documentListPt2",
-				"uiType": "customMessages",
-				"label": ""
-			},
-			
-			"documentListPt3": {
-				"id": "documentListPt3",
-				"uiType": "customMessages",
-				"label": ""
-			},
-			
 			"showP33": {
-				"label": "Среди поручителей есть юридиеские лица",
+				"label": "Среди поручителей есть юридические лица",
 				"id": "showP33Id",
 				"uiType": "checkboxBool",
 				"type": "Boolean"
@@ -325,7 +139,7 @@
 			{
 				"type": "typography",
 				"typographyProps": {
-					"text": "Сопровождающие документы к Запросу на финансирование в рамках продукта «Гарантия в пользу налоговых органов для некрупных экспортеров»",
+					"text": "Сопровождающие документы к Запросу на получение услуги «Гарантия. Возврат НДС для МСП по упрощенной процедуре»",
 					"variant": "h5"
 				},
             
@@ -343,37 +157,49 @@
 				"status": " "
 			}
 		},
-	  
+		
 		{
 			"columns": [
-			{
-				"id": "documentListPt1",
-				"gridAttributes": {
-					"lg": 12
+				{
+					"type": "typography",
+					"typographyProps": {
+						"html": "<h4 align=\"justify\">Учредительные документы:</h4><p><ol><h4 align=\"justify\">1. Действующая редакция Устава с изменениями (при наличии);</h4><h4 align=\"justify\">2. Учредительный договор (копия, заверенная организацией);</h4><h4 align=\"justify\">3. Документы о назначении директора (копия, заверенная организацией);</h4><h4 align=\"justify\">4. Копия паспорта представителя, заключающего соглашение о выдаче банковской гарантии (доверенность на представителя, заключающего соглашение о выдаче банковской гарантии);<h4 align=\"justify\">5. Копии паспортов поручителей.</h4></ol></h4>",
+						"variant": "p"
+					},
+					"gridAttributes": {
+						"lg": 12
+					}
 				}
-			}
 			]
 		},
-	  
+		
 		{
 			"columns": [
-			{
-				"id": "documentListPt2",
-				"gridAttributes": {
-					"lg": 12
+				{
+					"type": "typography",
+					"typographyProps": {
+						"html": "<h4 align=\"justify\">Анкеты и заявления:</h4><p><ol><h4 align=\"justify\">1. Анкета физического лица по форме Банка (на директора/представителя, заключающего соглашение о выдаче банковской гарантии,   бенефициарного владельца) (оригинал);</h4><h4 align=\"justify\">2. Анкета юридического лица по форме Банка с приложением (оригинал);</h4><h4 align=\"justify\">3. Анкета на поручителя физического лица по форме Банка (оригинал);</h4>4. Заявление на предоставление финансирования (оригинал);</h4></ol></h4>",
+						"variant": "p"
+					},
+					"gridAttributes": {
+						"lg": 12
+					}
 				}
-			}
 			]
 		},
-	  
+		
 		{
 			"columns": [
-			{
-				"id": "documentListPt3",
-				"gridAttributes": {
-					"lg": 12
+				{
+					"type": "typography",
+					"typographyProps": {
+						"html": "<h4 align=\"justify\">Бухгалтерские документы:</h4><p><ol align=\"justify\"><h4 align=\"justify\">1. Годовая бухгалтерская отчетность на последнюю отчетную дату (копия, заверенная организацией);</h4><h4 align=\"justify\">2. Подтверждение положительного опыта прохождения не менее 2-х камеральных проверок (письмо из ФНС об окончании камеральной  проверки, положительное решение ФНС о возмещение) (копия, заверенная организацией);</h4><h4 align=\"justify\">3. Проект гарантии, предоставленный Принципалом;</h4></ol></h4>",
+						"variant": "p"
+					},
+					"gridAttributes": {
+						"lg": 12
+					}
 				}
-			}
 			]
 		},
 			
