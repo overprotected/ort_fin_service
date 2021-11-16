@@ -86,8 +86,8 @@
 				]
 			},
 			
-			"additionalDocs": {
-				"id": "additionalDocsId",
+			"otherDocs": {
+				"id": "otherDocs",
 				"type": "File",
 				"label": "Загрузите дополнительные документы",
 				"multiple": true,
@@ -243,7 +243,7 @@
 		{
 			"columns": [
 			{
-				"id": "additionalDocsId",
+				"id": "otherDocs",
 				"gridAttributes": {
 					"lg": 12
 				}
