@@ -333,17 +333,18 @@
 			{
 				"columns": [
 					{
-							"id": "guaranteeSecurityId",
-							"gridAttributes": {
-								"lg": 12
-							}
+						"id": "guaranteeSecurityId",
+						"gridAttributes": {
+							"lg": 12
+						}
 					}
 				]
 			},
 			
 			{
 				"columns": [
-					{	"id":"ownerLabelId",
+					{	
+						"id":"ownerLabelId",
 						"gridAttributes": {
 							"lg": 7
 						}
