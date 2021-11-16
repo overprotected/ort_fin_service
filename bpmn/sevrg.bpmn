@@ -98,7 +98,7 @@ execution.setVariables([
 	"organizationINN": "organizationINN",
 	"organizationOKPO": "organizationOKPO",
 	"organizationRegDate": null,
-	"organizationStartDate": "10.05.2021",
+	"organizationStartDate": null,
 	"showStartDate": false,
 
 // form 2
@@ -111,7 +111,7 @@ execution.setVariables([
 	"owner": [],
 	
 // form 3
-	"declarationAgreed": false,
+	"declarationAgreed": "",
 	"creditBureauAgreed": true,
 
 // form 4
@@ -252,7 +252,7 @@ execution.setVariable("dataForRegistry", dataForRegistry)</bpmn:script>
           </camunda:inputOutput>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0ujoh9s</bpmn:incoming>
-        <bpmn:incoming>Flow_1cylqn2</bpmn:incoming>
+        <bpmn:incoming>Flow_0kasofu</bpmn:incoming>
         <bpmn:outgoing>Flow_0dj8lc7</bpmn:outgoing>
       </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_0dj8lc7" sourceRef="Activity_1t08dfd" targetRef="Activity_0wv9p8c" />
@@ -409,6 +409,7 @@ execution.setVariables(
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_15exmuq</bpmn:incoming>
         <bpmn:outgoing>Flow_1venwlj</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0d6juul</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1venwlj" sourceRef="Activity_0ajf99y" targetRef="Activity_0jabj3b" />
       <bpmn:sequenceFlow id="Flow_0pdji8b" sourceRef="Gateway_0y1r9th" targetRef="Activity_1vkm16g">
@@ -417,7 +418,8 @@ execution.setVariables(
       <bpmn:scriptTask id="Activity_0jabj3b" name="Parse organization data" scriptFormat="groovy">
         <bpmn:documentation>Инициализация переменных данными из ДТО Контрагента</bpmn:documentation>
         <bpmn:incoming>Flow_1venwlj</bpmn:incoming>
-        <bpmn:outgoing>Flow_1cylqn2</bpmn:outgoing>
+        <bpmn:incoming>Flow_0d6juul</bpmn:incoming>
+        <bpmn:outgoing>Flow_0kasofu</bpmn:outgoing>
         <bpmn:script>def mdm = mdm_client
 def addr = mdm.extAddresses.find({it.extAddressType == "legal"})
 def legalAddress = addr? [addr.extIndex, (addr.extCountry) ? addr.extCountry.caption : "", addr.extRegion, addr.extDistrict, addr.extCity, addr.extCommunity, addr.extStreet, addr.extHouse, addr.extBuilding, addr.extOffice, addr.extComment].findAll({it != null}).join("; ") : ""
@@ -432,7 +434,6 @@ execution.setVariables([
 	"organizationRegDate": (orgRegDate != null) ? orgRegDate.format("dd.MM.yyyy") : ""
 ])</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_1cylqn2" sourceRef="Activity_0jabj3b" targetRef="Activity_1t08dfd" />
       <bpmn:serviceTask id="Activity_189re9r" name="Get file" camunda:class="ru.seventech.camunda.serviceTask.EcmDelegate">
         <bpmn:extensionElements>
           <camunda:inputOutput>
@@ -514,6 +515,8 @@ execution.setVariables([
 
 </bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_0d6juul" sourceRef="Activity_0ajf99y" targetRef="Activity_0jabj3b" />
+      <bpmn:sequenceFlow id="Flow_0kasofu" sourceRef="Activity_0jabj3b" targetRef="Activity_1t08dfd" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_076668k" sourceRef="StartEvent_1" targetRef="Activity_02lscwy" />
     <bpmn:endEvent id="Event_0cla9ax" name="finished">
@@ -581,33 +584,37 @@ execution.setVariables([
       <bpmndi:BPMNShape id="Activity_02lscwy_di" bpmnElement="Activity_02lscwy" isExpanded="true">
         <dc:Bounds x="260" y="77" width="6620" height="283" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_05rbntn_di" bpmnElement="Flow_05rbntn">
-        <di:waypoint x="3010" y="177" />
-        <di:waypoint x="3065" y="177" />
+      <bpmndi:BPMNEdge id="Flow_0kasofu_di" bpmnElement="Flow_0kasofu">
+        <di:waypoint x="1540" y="177" />
+        <di:waypoint x="1700" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d6juul_di" bpmnElement="Flow_0d6juul">
+        <di:waypoint x="1330" y="177" />
+        <di:waypoint x="1440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pmbh4i_di" bpmnElement="Flow_0pmbh4i">
+        <di:waypoint x="980" y="177" />
+        <di:waypoint x="1080" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_07xzemn_di" bpmnElement="Flow_07xzemn">
         <di:waypoint x="2820" y="177" />
         <di:waypoint x="2910" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pmbh4i_di" bpmnElement="Flow_0pmbh4i">
-        <di:waypoint x="1010" y="177" />
-        <di:waypoint x="1110" y="177" />
+      <bpmndi:BPMNEdge id="Flow_05rbntn_di" bpmnElement="Flow_05rbntn">
+        <di:waypoint x="3010" y="177" />
+        <di:waypoint x="3065" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ztq6yh_di" bpmnElement="Flow_0ztq6yh">
         <di:waypoint x="800" y="177" />
-        <di:waypoint x="910" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cylqn2_di" bpmnElement="Flow_1cylqn2">
-        <di:waypoint x="1590" y="177" />
-        <di:waypoint x="1700" y="177" />
+        <di:waypoint x="880" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0pdji8b_di" bpmnElement="Flow_0pdji8b">
         <di:waypoint x="2145" y="177" />
         <di:waypoint x="2240" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1venwlj_di" bpmnElement="Flow_1venwlj">
-        <di:waypoint x="1410" y="177" />
-        <di:waypoint x="1490" y="177" />
+        <di:waypoint x="1330" y="177" />
+        <di:waypoint x="1440" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09q1bxl_di" bpmnElement="Flow_09q1bxl">
         <di:waypoint x="3395" y="177" />
@@ -618,8 +625,8 @@ execution.setVariables([
         <di:waypoint x="6410" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15exmuq_di" bpmnElement="Flow_15exmuq">
-        <di:waypoint x="1210" y="177" />
-        <di:waypoint x="1310" y="177" />
+        <di:waypoint x="1180" y="177" />
+        <di:waypoint x="1230" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u4hlsc_di" bpmnElement="Flow_0u4hlsc">
         <di:waypoint x="570" y="177" />
@@ -728,7 +735,7 @@ execution.setVariables([
         <dc:Bounds x="470" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q5uets_di" bpmnElement="Activity_0q5uets">
-        <dc:Bounds x="950" y="137" width="100" height="80" />
+        <dc:Bounds x="1080" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ru4bko_di" bpmnElement="Activity_1k3iwvw">
         <dc:Bounds x="2540" y="137" width="100" height="80" />
@@ -773,10 +780,10 @@ execution.setVariables([
         <dc:Bounds x="6210" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ajf99y_di" bpmnElement="Activity_0ajf99y">
-        <dc:Bounds x="1170" y="137" width="100" height="80" />
+        <dc:Bounds x="1230" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jabj3b_di" bpmnElement="Activity_0jabj3b">
-        <dc:Bounds x="1370" y="137" width="100" height="80" />
+        <dc:Bounds x="1440" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_189re9r_di" bpmnElement="Activity_189re9r">
         <dc:Bounds x="700" y="137" width="100" height="80" />
@@ -787,17 +794,8 @@ execution.setVariables([
       <bpmndi:BPMNShape id="Activity_1eix5tg_di" bpmnElement="Activity_1eix5tg">
         <dc:Bounds x="2720" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0jabj3b_di" bpmnElement="Activity_0jabj3b">
-        <dc:Bounds x="1490" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ajf99y_di" bpmnElement="Activity_0ajf99y">
-        <dc:Bounds x="1310" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0q5uets_di" bpmnElement="Activity_0q5uets">
-        <dc:Bounds x="1110" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vuepyp_di" bpmnElement="Activity_0qzkuji">
-        <dc:Bounds x="910" y="137" width="100" height="80" />
+        <dc:Bounds x="880" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cla9ax_di" bpmnElement="Event_0cla9ax">
         <dc:Bounds x="7002" y="159" width="36" height="36" />
