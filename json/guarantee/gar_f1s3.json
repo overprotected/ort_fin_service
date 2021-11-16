@@ -119,10 +119,7 @@
 							"variant": "p"
 						},
 						"gridAttributes": {
-							"lg": 12,
-							"style": {
-								"margin-left": 25
-							}
+							"lg": 12
 						}
 					}
 				]
@@ -136,10 +133,7 @@
 							"variant": "p"
 						},
 						"gridAttributes": {
-							"lg": 12,
-							"style": {
-								"margin-left": 25
-							}
+							"lg": 12
 						}
 					}
 				]
@@ -153,10 +147,7 @@
 							"variant": "p"
 						},
 						"gridAttributes": {
-							"lg": 12,
-							"style": {
-								"margin-left": 25
-							}
+							"lg": 12
 						}
 					}
 				]
@@ -170,10 +161,7 @@
 							"variant": "p"
 						},
 						"gridAttributes": {
-							"lg": 12,
-							"style": {
-								"margin-left": 25
-							}
+							"lg": 12
 						}
 					}
 				]
@@ -187,10 +175,7 @@
 							"variant": "p"
 						},
 						"gridAttributes": {
-							"lg": 12,
-							"style": {
-								"margin-left": 25
-							}
+							"lg": 12
 						}
 					}
 				]
