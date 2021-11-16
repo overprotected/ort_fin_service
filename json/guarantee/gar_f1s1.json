@@ -31,7 +31,7 @@
 		},
 		
 		"organizationRegDate": {
-			"value": "10.05.1875",
+			"value": "10.05.2021",
 			"type": "String"
 		},
 		
@@ -146,7 +146,12 @@
 					"placeholder": "дд.мм.гггг",
 					"disableFuture": true,
 					"disablePaste": false,
-					"serverFormat": "YYYY-MM-DD",
+					"range": false,
+					"serverFormat": "DD-MM-YYYY",
+					"minDate":{
+						"value":"{{organizationRegDate.value}}",
+						"OFFSET":0
+						},
 
 					"constraints": [
 						{
