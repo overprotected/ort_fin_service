@@ -193,9 +193,8 @@
 				"requestParams": {
 					"additionalFields": {
 						"caption": "caption",
-						"ogrn": "ogrn",
-						"regAddress": "extAddresses[0].extRegion",
-						"regCountry": "regCountry.caption"
+						"ogrn": "codeOgrnAnalog",
+						"regAddress": "extAddresses[0].extAddress"
 					},
 					"resultObjectParams": {
 						"name": "description",
@@ -240,8 +239,7 @@
 				"boundFields": {
 					"contractCustomerShortName": "caption",
 					"contractCustomerNumber": "ogrn",
-					"contractCustomerJurAddress": "regAddress",
-					"contractCustomerRegCountry": "regCountry"
+					"contractCustomerJurAddress": "regAddress"
 				}
 			},
 			"contractCustomerJurAddress": {
@@ -498,7 +496,7 @@
 				"uiType": "reference",
 				"requestParams": {
 					"resultObjectParams": {
-						"name": "shortName",
+						"name": "caption",
 						"key": "uuid"
 					},
 					"params": {
@@ -506,21 +504,17 @@
 						"queryParams": {
 							"showRefs": 1,
 							"showDetails": 1,
-							"sort": "shortName,asc"
+							"sort": "caption,asc"
 						},
 						"relativeUrl": "api/v1/catalogs/country/items/search"
 					},
 					"filters": [
 						{
-							"name": "or",
-							"value": [
-								{
-									"name": "caption_like_ci"
-								},
-								{
-									"name": "shortName_like_ci"
-								}
-							]
+							"name": "caption_like_ci"
+						},
+						{
+							"name": "wo_code",
+							"value": "643"
 						}
 					]
 				},
@@ -577,6 +571,19 @@
 								},
 								{
 									"name": "description_like_ci"
+								}
+							]
+						},
+						{
+							"name": "and",
+							"value": [
+								{
+									"name": "nonResidentRf",
+									"value": true
+								},
+								{
+									"name": "regCountry",
+									"valueFromField": "contractPayerRegCountry.key"
 								}
 							]
 						}
@@ -762,7 +769,7 @@
 					{
 						"id": "contractCustomerRegCountry",
 						"gridAttributes": {
-							"lg": 6
+							"lg": 9
 						}
 					}
 				]
@@ -808,7 +815,7 @@
 					{
 						"id": "contractCustomerDestinationCountry",
 						"gridAttributes": {
-							"lg": 6
+							"lg": 9
 						}
 					}
 				]
@@ -914,7 +921,7 @@
 					{
 						"id": "contractPayerRegCountry",
 						"gridAttributes": {
-							"lg": 6
+							"lg": 9
 						}
 					}
 				]
