@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_06yr9v2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="se_vat_refund_guarantee" name="Гарантия. Возврат НДС для МСП по упрощенной процедуре" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="start">
+      <bpmn:outgoing>Flow_076668k</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_02lscwy">
+      <bpmn:incoming>Flow_076668k</bpmn:incoming>
+      <bpmn:outgoing>Flow_05yhsqn</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0je1px4">
+        <bpmn:outgoing>Flow_1nt1cfy</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="Activity_10gun5n" name="Send push" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.EmailNotifyDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="template_name">sevrg_created_app_push</camunda:inputParameter>
+            <camunda:inputParameter name="message">
+              <camunda:map>
+                <camunda:entry key="incomingNumber">${petitonNumber}</camunda:entry>
+                <camunda:entry key="appCreationDate">${appCreationDate}</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="transport_type">elk</camunda:inputParameter>
+            <camunda:inputParameter name="recipient_org">${client}</camunda:inputParameter>
+            <camunda:inputParameter name="subject">Гарантия. Возврат НДС для МСП по упрощенной процедуре</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_07qp1bm</bpmn:incoming>
+        <bpmn:outgoing>Flow_0fsnyvz</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="Activity_0mnj7gm" name="Send mail" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.EmailNotifyDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="template_name">sevrg_created_app_email</camunda:inputParameter>
+            <camunda:inputParameter name="message">
+              <camunda:map>
+                <camunda:entry key="incomingNumber">${petitonNumber}</camunda:entry>
+                <camunda:entry key="appCreationDate">${appCreationDate}</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="transport_type">email</camunda:inputParameter>
+            <camunda:inputParameter name="to">${addressees}</camunda:inputParameter>
+            <camunda:inputParameter name="subject">Гарантия. Возврат НДС для МСП по упрощенной процедуре</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0fsnyvz</bpmn:incoming>
+        <bpmn:outgoing>Flow_02wr1hu</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="Activity_1o9wz8w" name="Status = В работе. Заявка отправлена на рассмотрение" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="input_ProcessStatus">
+              <camunda:map>
+                <camunda:entry key="status">1</camunda:entry>
+                <camunda:entry key="stageNum">2</camunda:entry>
+                <camunda:entry key="statusName">В работе. Проводится проверка</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="Input_StageStatus">
+              <camunda:map>
+                <camunda:entry key="1">9</camunda:entry>
+                <camunda:entry key="2">1</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1yyo5vb</bpmn:incoming>
+        <bpmn:outgoing>Flow_1gm7rto</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_0fsnyvz" sourceRef="Activity_10gun5n" targetRef="Activity_0mnj7gm" />
+      <bpmn:endEvent id="Event_0h73dqs">
+        <bpmn:incoming>Flow_02wr1hu</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:scriptTask id="Activity_07p9qw5" name="Set variables" camunda:asyncAfter="true" scriptFormat="groovy">
+        <bpmn:documentation>Инициализация переменных</bpmn:documentation>
+        <bpmn:incoming>Flow_1nt1cfy</bpmn:incoming>
+        <bpmn:outgoing>Flow_0u4hlsc</bpmn:outgoing>
+        <bpmn:script>execution.setVariables([
+	"NEXT": "NEXT",
+	
+// form 1 
+	"organizationFullName": "organizationFullName",
+	"organizationAddress": "organizationAddress",
+	"organizationShortName": "organizationShortName",
+	"organizationORGN": "organizationORGN",
+	"organizationINN": "organizationINN",
+	"organizationOKPO": "organizationOKPO",
+	"organizationRegDate": null,
+	"organizationStartDate": "10.05.2021",
+	"showStartDate": false,
+
+// form 2
+"product": true,
+	"guaranteeSum": null,
+	"currency": "RUR",
+	"guaranteeTerm": "Не более 11 месяцев",
+	"percent": "1%",
+	"guaranteeSecurity": false,
+	"owner": [],
+	
+// form 3
+	"declarationAgreed": false,
+	"creditBureauAgreed": true,
+
+// form 4
+	"showAddField": false,
+	"addInfo": "",
+	
+// form 5
+	"showSign": true,
+
+// send mail
+	"addressees": "navrotskii.v@otr.ru;averkiev.aleksandr@otr.ru"
+])</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:serviceTask id="Activity_0q5uets" name="Status = Черновик" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="input_ProcessStatus">
+              <camunda:map>
+                <camunda:entry key="status">1</camunda:entry>
+                <camunda:entry key="stageNum">1</camunda:entry>
+                <camunda:entry key="statusName">Черновик</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="Input_StageStatus">
+              <camunda:map>
+                <camunda:entry key="1">1</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1iutezi</bpmn:incoming>
+        <bpmn:outgoing>Flow_15exmuq</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1nt1cfy" sourceRef="Event_0je1px4" targetRef="Activity_07p9qw5" />
+      <bpmn:sequenceFlow id="Flow_02wr1hu" sourceRef="Activity_0mnj7gm" targetRef="Event_0h73dqs" />
+      <bpmn:sequenceFlow id="Flow_1gm7rto" sourceRef="Activity_1o9wz8w" targetRef="Activity_0dhcb4c" />
+      <bpmn:sequenceFlow id="Flow_1cw7ize" sourceRef="Activity_1k3iwvw" targetRef="Gateway_0m0x5b8" />
+      <bpmn:userTask id="Activity_1k3iwvw" name="Fill application, step 4" camunda:formKey="f1s4" camunda:candidateGroups="exporter">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="addInfo">${addInfo}</camunda:inputParameter>
+            <camunda:inputParameter name="showAddField">${showAddField}</camunda:inputParameter>
+            <camunda:inputParameter name="uiSchema">${f1s4}</camunda:inputParameter>
+            <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+            <camunda:outputParameter name="addInfo">${addInfo}</camunda:outputParameter>
+            <camunda:outputParameter name="showAddField">${showAddField}</camunda:outputParameter>
+            <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0wge75s</bpmn:incoming>
+        <bpmn:incoming>Flow_1mebmku</bpmn:incoming>
+        <bpmn:outgoing>Flow_1cw7ize</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:scriptTask id="Activity_0ta0gly" name="Prepare order data" camunda:asyncBefore="true" scriptFormat="groovy">
+        <bpmn:incoming>Flow_09q1bxl</bpmn:incoming>
+        <bpmn:outgoing>Flow_10mvbcq</bpmn:outgoing>
+        <bpmn:script>execution.setVariable("incomingNumber", petitonNumber.toString())
+def dataForRegistry = [
+        "orderNumber" : incomingNumber,
+        "orderName" : service.find{ it.key == "name" }?.value,
+        "serviceId" : service.uuid,
+        "orderOptions" : [:],
+        "status" : "Черновик",
+        "applicantOrgId": client,
+        "processId": execution.processInstanceId
+]
+execution.setVariable("dataForRegistry", dataForRegistry)</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:serviceTask id="Activity_15fayjg" name="Save order in MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="origin">order</camunda:inputParameter>
+            <camunda:inputParameter name="action">create</camunda:inputParameter>
+            <camunda:inputParameter name="dataScript">${dataForRegistry}</camunda:inputParameter>
+            <camunda:inputParameter name="outputName">mdmOrder</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_10mvbcq</bpmn:incoming>
+        <bpmn:outgoing>Flow_0t8p8st</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="Activity_086wip0" name="Save application in MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="origin">sevrg_app</camunda:inputParameter>
+            <camunda:inputParameter name="action">create</camunda:inputParameter>
+            <camunda:inputParameter name="outputName">createItem</camunda:inputParameter>
+            <camunda:inputParameter name="dataScript">
+              <camunda:script scriptFormat="groovy">[
+// form 1
+	"organizationStartDate": organizationStartDate,
+	"organizationSameDate": !showStartDate,
+	
+// form 2
+	"guaranteeSum": guaranteeSum,
+	"guaranteeTerm": guaranteeTerm,
+	"percent": 1.0,
+	"guaranteeSecurity": guaranteeSecurity,
+	"owner": owners,
+	
+// form 3
+
+// form 4
+
+// form 5
+	"addInfo": addInfo
+]</camunda:script>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_14ujzyl</bpmn:incoming>
+        <bpmn:outgoing>Flow_1yyo5vb</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1yyo5vb" sourceRef="Activity_086wip0" targetRef="Activity_1o9wz8w" />
+      <bpmn:sequenceFlow id="Flow_0t8p8st" sourceRef="Activity_15fayjg" targetRef="Activity_011zyhr" />
+      <bpmn:sequenceFlow id="Flow_10mvbcq" sourceRef="Activity_0ta0gly" targetRef="Activity_15fayjg" />
+      <bpmn:userTask id="Activity_1t08dfd" name="Fill application, step 1" camunda:formKey="f1s1" camunda:candidateGroups="exporter">
+        <bpmn:documentation>Заполнить заявку</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="organizationStartDate">${organizationStartDate}</camunda:inputParameter>
+            <camunda:inputParameter name="showStartDate">${showStartDate}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationRegDate">${organizationRegDate}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationOKPO">${organizationOKPO}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationINN">${organizationINN}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationOGRN">${organizationOGRN}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationShortName">${organizationShortName}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationAddress">${organizationAddress}</camunda:inputParameter>
+            <camunda:inputParameter name="organizationFullName">${organizationFullName}</camunda:inputParameter>
+            <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="uiSchema">${f1s1}</camunda:inputParameter>
+            <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+            <camunda:outputParameter name="organizationStartDate">${organizationStartDate}</camunda:outputParameter>
+            <camunda:outputParameter name="showStartDate">${showStartDate}</camunda:outputParameter>
+            <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0ujoh9s</bpmn:incoming>
+        <bpmn:incoming>Flow_1cylqn2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0dj8lc7</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0dj8lc7" sourceRef="Activity_1t08dfd" targetRef="Activity_0wv9p8c" />
+      <bpmn:userTask id="Activity_0wv9p8c" name="Fill application, step 2" camunda:formKey="f1s2" camunda:candidateGroups="exporter">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="owner">${owner}</camunda:inputParameter>
+            <camunda:inputParameter name="guaranteeSecurity">${guaranteeSecurity}</camunda:inputParameter>
+            <camunda:inputParameter name="percent">${percent}</camunda:inputParameter>
+            <camunda:inputParameter name="guaranteeTerm">${guaranteeTerm}</camunda:inputParameter>
+            <camunda:inputParameter name="currency">${currency}</camunda:inputParameter>
+            <camunda:inputParameter name="guaranteeSum">${guaranteeSum}</camunda:inputParameter>
+            <camunda:inputParameter name="product">${product}</camunda:inputParameter>
+            <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="uiSchema">${f1s2}</camunda:inputParameter>
+            <camunda:outputParameter name="owner">${owner}</camunda:outputParameter>
+            <camunda:outputParameter name="guaranteeSecurity">${guaranteeSecurity}</camunda:outputParameter>
+            <camunda:outputParameter name="guaranteeSum">${guaranteeSum}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0dj8lc7</bpmn:incoming>
+        <bpmn:incoming>Flow_0nntquq</bpmn:incoming>
+        <bpmn:outgoing>Flow_01s7ff4</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_01s7ff4" sourceRef="Activity_0wv9p8c" targetRef="Gateway_0y1r9th" />
+      <bpmn:exclusiveGateway id="Gateway_0y1r9th">
+        <bpmn:incoming>Flow_01s7ff4</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ujoh9s</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0pdji8b</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0ujoh9s" sourceRef="Gateway_0y1r9th" targetRef="Activity_1t08dfd">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:userTask id="Activity_1vkm16g" name="Fill application, step 3" camunda:formKey="f1s3" camunda:candidateGroups="exporter">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:inputParameter>
+            <camunda:inputParameter name="declarationAgreed">${declarationAgreed}</camunda:inputParameter>
+            <camunda:inputParameter name="uiSchema">${f1s3}</camunda:inputParameter>
+            <camunda:outputParameter name="creditBureauAgreed">${creditBureauAgreed}</camunda:outputParameter>
+            <camunda:outputParameter name="declarationAgreed">${declarationAgreed}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_09zs2xz</bpmn:incoming>
+        <bpmn:incoming>Flow_0pdji8b</bpmn:incoming>
+        <bpmn:outgoing>Flow_155cjdk</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_155cjdk" sourceRef="Activity_1vkm16g" targetRef="Gateway_1fevxc2" />
+      <bpmn:exclusiveGateway id="Gateway_1fevxc2">
+        <bpmn:incoming>Flow_155cjdk</bpmn:incoming>
+        <bpmn:outgoing>Flow_0wge75s</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0nntquq</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0wge75s" sourceRef="Gateway_1fevxc2" targetRef="Activity_1k3iwvw">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0nntquq" sourceRef="Gateway_1fevxc2" targetRef="Activity_0wv9p8c">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:exclusiveGateway id="Gateway_0m0x5b8">
+        <bpmn:incoming>Flow_1cw7ize</bpmn:incoming>
+        <bpmn:outgoing>Flow_0hw1x4m</bpmn:outgoing>
+        <bpmn:outgoing>Flow_09zs2xz</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0hw1x4m" sourceRef="Gateway_0m0x5b8" targetRef="Activity_1xyhvow">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_09zs2xz" sourceRef="Gateway_0m0x5b8" targetRef="Activity_1vkm16g">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:userTask id="Activity_1xyhvow" name="Fill application, step 5" camunda:formKey="f1s5" camunda:candidateGroups="exporter">
+        <bpmn:documentation>Заполнить заявку</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="petitonNumber">${petitonNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="attachList">
+              <camunda:script scriptFormat="groovy">def attachList = []
+def size = "500"
+def ecmUuid = insuranceDocuments.uuid
+def attachForSign = [
+                "id": 100,
+                "attach_name": "insuranceStatement",
+                "title": "Заявление",
+                "isexist": 0,
+                "mandatory": 0,
+                "access": "edit",
+                "url": "",
+                "size": size,
+                "authorFio": "",
+                "additionalFields": ["onSign":"true", "ecmUuid": ecmUuid, "documentTypeIdentifier":"c00810"]
+]
+
+execution.getVariable("staticInsuranceFileOut").each {
+  attachList.add(it)
+}
+
+attachList.add(attachForSign)
+
+attachList</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="showSign">${showSign}</camunda:inputParameter>
+            <camunda:inputParameter name="uiSchema">${f1s5}</camunda:inputParameter>
+            <camunda:inputParameter name="NEXT">${NEXT}</camunda:inputParameter>
+            <camunda:outputParameter name="NEXT">${NEXT}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0hw1x4m</bpmn:incoming>
+        <bpmn:outgoing>Flow_04hhpdt</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_04hhpdt" sourceRef="Activity_1xyhvow" targetRef="Gateway_03flpbh" />
+      <bpmn:exclusiveGateway id="Gateway_03flpbh">
+        <bpmn:incoming>Flow_04hhpdt</bpmn:incoming>
+        <bpmn:outgoing>Flow_1mebmku</bpmn:outgoing>
+        <bpmn:outgoing>Flow_09q1bxl</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_1mebmku" sourceRef="Gateway_03flpbh" targetRef="Activity_1k3iwvw">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "PREV"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:scriptTask id="Activity_011zyhr" name="Prepare data" scriptFormat="groovy">
+        <bpmn:incoming>Flow_0t8p8st</bpmn:incoming>
+        <bpmn:outgoing>Flow_14ujzyl</bpmn:outgoing>
+        <bpmn:script>def owners = []
+owner.each {
+    def fullNameObj = [:];
+    fullNameObj.fullName = it;
+    owners.add(fullNameObj)
+}
+execution.setVariables(
+  "owners": owners
+);</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_14ujzyl" sourceRef="Activity_011zyhr" targetRef="Activity_086wip0" />
+      <bpmn:serviceTask id="Activity_07x2hf4" name="Create file for sign" camunda:class="ru.seventech.camunda.serviceTask.EcmDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="origin">c00810</camunda:inputParameter>
+            <camunda:inputParameter name="action">smartCreate</camunda:inputParameter>
+            <camunda:inputParameter name="fieldsMap">
+              <camunda:map>
+                <camunda:entry key="orgId">${client}</camunda:entry>
+                <camunda:entry key="serviceId">${service.uuid}</camunda:entry>
+                <camunda:entry key="docKind">0</camunda:entry>
+                <camunda:entry key="source">ЕЛК</camunda:entry>
+                <camunda:entry key="caption">Тестирование Страховой</camunda:entry>
+                <camunda:entry key="index">0</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="outputName">insuranceDocuments</camunda:inputParameter>
+            <camunda:inputParameter name="attach_name">insuranceStatement</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0f5w4px</bpmn:incoming>
+        <bpmn:outgoing>Flow_1iutezi</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1iutezi" sourceRef="Activity_07x2hf4" targetRef="Activity_0q5uets" />
+      <bpmn:sequenceFlow id="Flow_0u4hlsc" sourceRef="Activity_07p9qw5" targetRef="Activity_0v6em8m" />
+      <bpmn:sequenceFlow id="Flow_0f5w4px" sourceRef="Activity_0v6em8m" targetRef="Activity_07x2hf4" />
+      <bpmn:serviceTask id="Activity_0v6em8m" name="Get file" camunda:class="ru.seventech.camunda.serviceTask.EcmDelegate">
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="action">attachList</camunda:inputParameter>
+            <camunda:inputParameter name="title">Заявление</camunda:inputParameter>
+            <camunda:inputParameter name="sort">createDate</camunda:inputParameter>
+            <camunda:inputParameter name="direction">desc</camunda:inputParameter>
+            <camunda:inputParameter name="origin">c00811</camunda:inputParameter>
+            <camunda:inputParameter name="outputName">staticInsuranceFileOut</camunda:inputParameter>
+            <camunda:inputParameter name="page">0</camunda:inputParameter>
+            <camunda:inputParameter name="size">1</camunda:inputParameter>
+            <camunda:inputParameter name="attach_name">staticInsuranceFile</camunda:inputParameter>
+            <camunda:inputParameter name="access">view</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0u4hlsc</bpmn:incoming>
+        <bpmn:outgoing>Flow_0f5w4px</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_15exmuq" sourceRef="Activity_0q5uets" targetRef="Activity_0ajf99y" />
+      <bpmn:sequenceFlow id="Flow_07qp1bm" sourceRef="Activity_0dhcb4c" targetRef="Activity_10gun5n" />
+      <bpmn:scriptTask id="Activity_0dhcb4c" name="Prepare notification data" scriptFormat="groovy">
+        <bpmn:incoming>Flow_1gm7rto</bpmn:incoming>
+        <bpmn:outgoing>Flow_07qp1bm</bpmn:outgoing>
+        <bpmn:script>execution.setVariables(
+	"appCreationDate": (new Date()).format("dd.MM.yyyy")
+);</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_09q1bxl" sourceRef="Gateway_03flpbh" targetRef="Activity_0ta0gly">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:serviceTask id="Activity_0ajf99y" name="Load organization data from MDM" camunda:asyncBefore="true" camunda:class="ru.seventech.camunda.serviceTask.MdmDelegate">
+        <bpmn:documentation>Загрузка из МДМ данных об организации</bpmn:documentation>
+        <bpmn:extensionElements>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="origin">org</camunda:inputParameter>
+            <camunda:inputParameter name="action">orgCard</camunda:inputParameter>
+            <camunda:inputParameter name="outputName">mdm_client</camunda:inputParameter>
+            <camunda:inputParameter name="showDetails">1</camunda:inputParameter>
+            <camunda:inputParameter name="showRefs">1</camunda:inputParameter>
+            <camunda:inputParameter name="uuid">${client}</camunda:inputParameter>
+          </camunda:inputOutput>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_15exmuq</bpmn:incoming>
+        <bpmn:outgoing>Flow_1venwlj</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1venwlj" sourceRef="Activity_0ajf99y" targetRef="Activity_0jabj3b" />
+      <bpmn:sequenceFlow id="Flow_0pdji8b" sourceRef="Gateway_0y1r9th" targetRef="Activity_1vkm16g">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:scriptTask id="Activity_0jabj3b" name="Parse organization data" scriptFormat="groovy">
+        <bpmn:documentation>Инициализация переменных данными из ДТО Контрагента</bpmn:documentation>
+        <bpmn:incoming>Flow_1venwlj</bpmn:incoming>
+        <bpmn:outgoing>Flow_1cylqn2</bpmn:outgoing>
+        <bpmn:script>def mdm = mdm_client
+def addr = mdm.extAddresses.find({it.extAddressType == "legal"})
+def legalAddress = addr? [addr.extIndex, (addr.extCountry) ? addr.extCountry.caption : "", addr.extRegion, addr.extDistrict, addr.extCity, addr.extCommunity, addr.extStreet, addr.extHouse, addr.extBuilding, addr.extOffice, addr.extComment].findAll({it != null}).join("; ") : ""
+def orgRegDate = (mdm &amp;&amp; mdm.registerDate != null) ? new Date().parse('yyyy-MM-dd',mdm.registerDate) : null;
+execution.setVariables([
+	"organizationFullName": (mdm) ? mdm.description: "",
+	"organizationShortName": (mdm)?  mdm.caption: "",
+	"organizationAddress": legalAddress != null ? legalAddress : "",
+	"organizationOGRN": (mdm &amp;&amp; mdm.ogrn != null) ? mdm.ogrn: "",
+	"organizationINN": (mdm &amp;&amp; mdm.inn != null) ? mdm.inn: "",
+	"organizationOKPO": (mdm &amp;&amp; mdm.okpo != null) ? mdm.okpo: "",
+	"organizationRegDate": (orgRegDate != null) ? orgRegDate.format("dd.MM.yyyy") : ""
+])</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1cylqn2" sourceRef="Activity_0jabj3b" targetRef="Activity_1t08dfd" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_076668k" sourceRef="StartEvent_1" targetRef="Activity_02lscwy" />
+    <bpmn:endEvent id="Event_0cla9ax" name="finished">
+      <bpmn:incoming>Flow_05yhsqn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_05yhsqn" sourceRef="Activity_02lscwy" targetRef="Event_0cla9ax" />
+    <bpmn:serviceTask id="Activity_116hg8p" name="Статус=Завершено. Отказ клиента" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:class="ru.seventech.camunda.serviceTask.ProcessStatusDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="input_ProcessStatus">
+            <camunda:map>
+              <camunda:entry key="status">9</camunda:entry>
+              <camunda:entry key="stageNum">7</camunda:entry>
+              <camunda:entry key="statusName">Завершено. Отказ клиента</camunda:entry>
+              <camunda:entry key="success">2</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="Input_StageStatus">
+            <camunda:map>
+              <camunda:entry key="1">9</camunda:entry>
+              <camunda:entry key="7">9</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:outputParameter name="currentStatusName">Завершено</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02irfsr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tu1o9u</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0p49qt4">
+      <bpmn:incoming>Flow_1tu1o9u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02irfsr" sourceRef="Event_10cnwqv" targetRef="Activity_116hg8p" />
+    <bpmn:sequenceFlow id="Flow_1tu1o9u" sourceRef="Activity_116hg8p" targetRef="Event_0p49qt4" />
+    <bpmn:boundaryEvent id="Event_10cnwqv" attachedToRef="Activity_02lscwy">
+      <bpmn:outgoing>Flow_02irfsr</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_18y2dd5" messageRef="Message_1bqqmjr" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_1bqqmjr" name="killProcessMsg" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="se_vat_refund_guarantee">
+      <bpmndi:BPMNEdge id="Flow_1tu1o9u_di" bpmnElement="Flow_1tu1o9u">
+        <di:waypoint x="7100" y="100" />
+        <di:waypoint x="7202" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02irfsr_di" bpmnElement="Flow_02irfsr">
+        <di:waypoint x="6898" y="100" />
+        <di:waypoint x="7000" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05yhsqn_di" bpmnElement="Flow_05yhsqn">
+        <di:waypoint x="6880" y="177" />
+        <di:waypoint x="7002" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_076668k_di" bpmnElement="Flow_076668k">
+        <di:waypoint x="188" y="177" />
+        <di:waypoint x="260" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="202" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02lscwy_di" bpmnElement="Activity_02lscwy" isExpanded="true">
+        <dc:Bounds x="260" y="77" width="6620" height="283" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1cylqn2_di" bpmnElement="Flow_1cylqn2">
+        <di:waypoint x="1570" y="177" />
+        <di:waypoint x="1700" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pdji8b_di" bpmnElement="Flow_0pdji8b">
+        <di:waypoint x="2145" y="177" />
+        <di:waypoint x="2240" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1venwlj_di" bpmnElement="Flow_1venwlj">
+        <di:waypoint x="1370" y="177" />
+        <di:waypoint x="1470" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09q1bxl_di" bpmnElement="Flow_09q1bxl">
+        <di:waypoint x="3165" y="177" />
+        <di:waypoint x="5200" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07qp1bm_di" bpmnElement="Flow_07qp1bm">
+        <di:waypoint x="6310" y="177" />
+        <di:waypoint x="6410" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15exmuq_di" bpmnElement="Flow_15exmuq">
+        <di:waypoint x="1170" y="177" />
+        <di:waypoint x="1270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f5w4px_di" bpmnElement="Flow_0f5w4px">
+        <di:waypoint x="770" y="177" />
+        <di:waypoint x="870" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u4hlsc_di" bpmnElement="Flow_0u4hlsc">
+        <di:waypoint x="570" y="177" />
+        <di:waypoint x="670" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iutezi_di" bpmnElement="Flow_1iutezi">
+        <di:waypoint x="970" y="177" />
+        <di:waypoint x="1070" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14ujzyl_di" bpmnElement="Flow_14ujzyl">
+        <di:waypoint x="5710" y="177" />
+        <di:waypoint x="5810" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mebmku_di" bpmnElement="Flow_1mebmku">
+        <di:waypoint x="3140" y="202" />
+        <di:waypoint x="3140" y="250" />
+        <di:waypoint x="2630" y="250" />
+        <di:waypoint x="2630" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04hhpdt_di" bpmnElement="Flow_04hhpdt">
+        <di:waypoint x="3020" y="177" />
+        <di:waypoint x="3115" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09zs2xz_di" bpmnElement="Flow_09zs2xz">
+        <di:waypoint x="2800" y="152" />
+        <di:waypoint x="2800" y="110" />
+        <di:waypoint x="2290" y="110" />
+        <di:waypoint x="2290" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hw1x4m_di" bpmnElement="Flow_0hw1x4m">
+        <di:waypoint x="2825" y="177" />
+        <di:waypoint x="2920" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nntquq_di" bpmnElement="Flow_0nntquq">
+        <di:waypoint x="2460" y="202" />
+        <di:waypoint x="2460" y="250" />
+        <di:waypoint x="1950" y="250" />
+        <di:waypoint x="1950" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wge75s_di" bpmnElement="Flow_0wge75s">
+        <di:waypoint x="2485" y="177" />
+        <di:waypoint x="2580" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_155cjdk_di" bpmnElement="Flow_155cjdk">
+        <di:waypoint x="2340" y="177" />
+        <di:waypoint x="2435" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ujoh9s_di" bpmnElement="Flow_0ujoh9s">
+        <di:waypoint x="2120" y="152" />
+        <di:waypoint x="2120" y="110" />
+        <di:waypoint x="1750" y="110" />
+        <di:waypoint x="1750" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01s7ff4_di" bpmnElement="Flow_01s7ff4">
+        <di:waypoint x="2000" y="177" />
+        <di:waypoint x="2095" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dj8lc7_di" bpmnElement="Flow_0dj8lc7">
+        <di:waypoint x="1800" y="177" />
+        <di:waypoint x="1900" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10mvbcq_di" bpmnElement="Flow_10mvbcq">
+        <di:waypoint x="5300" y="177" />
+        <di:waypoint x="5400" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t8p8st_di" bpmnElement="Flow_0t8p8st">
+        <di:waypoint x="5500" y="177" />
+        <di:waypoint x="5610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yyo5vb_di" bpmnElement="Flow_1yyo5vb">
+        <di:waypoint x="5910" y="177" />
+        <di:waypoint x="6010" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cw7ize_di" bpmnElement="Flow_1cw7ize">
+        <di:waypoint x="2680" y="177" />
+        <di:waypoint x="2775" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gm7rto_di" bpmnElement="Flow_1gm7rto">
+        <di:waypoint x="6110" y="177" />
+        <di:waypoint x="6210" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02wr1hu_di" bpmnElement="Flow_02wr1hu">
+        <di:waypoint x="6700" y="177" />
+        <di:waypoint x="6812" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nt1cfy_di" bpmnElement="Flow_1nt1cfy">
+        <di:waypoint x="368" y="177" />
+        <di:waypoint x="470" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fsnyvz_di" bpmnElement="Flow_0fsnyvz">
+        <di:waypoint x="6510" y="177" />
+        <di:waypoint x="6600" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0je1px4_di" bpmnElement="Event_0je1px4">
+        <dc:Bounds x="332" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10gun5n_di" bpmnElement="Activity_10gun5n" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="6410" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mnj7gm_di" bpmnElement="Activity_0mnj7gm" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="6600" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o9wz8w_di" bpmnElement="Activity_1o9wz8w">
+        <dc:Bounds x="6010" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0h73dqs_di" bpmnElement="Event_0h73dqs">
+        <dc:Bounds x="6812" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07p9qw5_di" bpmnElement="Activity_07p9qw5">
+        <dc:Bounds x="470" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q5uets_di" bpmnElement="Activity_0q5uets">
+        <dc:Bounds x="1070" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ru4bko_di" bpmnElement="Activity_1k3iwvw">
+        <dc:Bounds x="2580" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ta0gly_di" bpmnElement="Activity_0ta0gly">
+        <dc:Bounds x="5200" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15fayjg_di" bpmnElement="Activity_15fayjg">
+        <dc:Bounds x="5400" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_086wip0_di" bpmnElement="Activity_086wip0">
+        <dc:Bounds x="5810" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t08dfd_di" bpmnElement="Activity_1t08dfd">
+        <dc:Bounds x="1700" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wv9p8c_di" bpmnElement="Activity_0wv9p8c">
+        <dc:Bounds x="1900" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0y1r9th_di" bpmnElement="Gateway_0y1r9th" isMarkerVisible="true">
+        <dc:Bounds x="2095" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vkm16g_di" bpmnElement="Activity_1vkm16g">
+        <dc:Bounds x="2240" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1fevxc2_di" bpmnElement="Gateway_1fevxc2" isMarkerVisible="true">
+        <dc:Bounds x="2435" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0m0x5b8_di" bpmnElement="Gateway_0m0x5b8" isMarkerVisible="true">
+        <dc:Bounds x="2775" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xyhvow_di" bpmnElement="Activity_1xyhvow">
+        <dc:Bounds x="2920" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_03flpbh_di" bpmnElement="Gateway_03flpbh" isMarkerVisible="true">
+        <dc:Bounds x="3115" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_011zyhr_di" bpmnElement="Activity_011zyhr">
+        <dc:Bounds x="5610" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07x2hf4_di" bpmnElement="Activity_07x2hf4">
+        <dc:Bounds x="870" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ox9p5y_di" bpmnElement="Activity_0v6em8m">
+        <dc:Bounds x="670" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10tn3qf_di" bpmnElement="Activity_0dhcb4c">
+        <dc:Bounds x="6210" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ajf99y_di" bpmnElement="Activity_0ajf99y">
+        <dc:Bounds x="1270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jabj3b_di" bpmnElement="Activity_0jabj3b">
+        <dc:Bounds x="1470" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cla9ax_di" bpmnElement="Event_0cla9ax">
+        <dc:Bounds x="7002" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="7002" y="202" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_116hg8p_di" bpmnElement="Activity_116hg8p" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="7000" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p49qt4_di" bpmnElement="Event_0p49qt4">
+        <dc:Bounds x="7202" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05nyb3e_di" bpmnElement="Event_10cnwqv">
+        <dc:Bounds x="6862" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
