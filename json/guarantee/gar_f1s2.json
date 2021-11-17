@@ -94,7 +94,7 @@
 							"name": "Pattern",
 							"attributes": {
 								"regexp": "^([1-9][0-9]{0,6}|5000000)$",
-								"message": "Сумма должна быть не более 5 млн"
+								"message": "Сумма должна быть не более 5 000 000,00 рублей"
 							}
 						}
 					]
@@ -194,8 +194,6 @@
 					"uiType": "notification",
 					"notificationStatus": "ERROR",
 					"notificationText":"Предлагаем воспользоваться услугой «Гарантия в пользу налоговых органов (НДС)»",
-					"buttonUrl":null,
-					"buttonText":"Перейти",
 					
 					"conditionals": [
 						{
@@ -334,17 +332,18 @@
 			{
 				"columns": [
 					{
-							"id": "guaranteeSecurityId",
-							"gridAttributes": {
-								"lg": 12
-							}
+						"id": "guaranteeSecurityId",
+						"gridAttributes": {
+							"lg": 12
+						}
 					}
 				]
 			},
 			
 			{
 				"columns": [
-					{	"id":"ownerLabelId",
+					{	
+						"id":"ownerLabelId",
 						"gridAttributes": {
 							"lg": 7
 						}
