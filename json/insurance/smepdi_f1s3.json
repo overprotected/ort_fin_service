@@ -1,706 +1,589 @@
 {
-  "variables": {
-    "customerUrWithExperience": ""
-  },
-  "uiSchema": {
-    "uiFormType": {
-      "type": "json",
-      "withSteps": true
-    },
-    "isFormFullScreen": false,
-    "serviceTitle": " «Страхование. Отсрочка платежа для МСП»",
-    "uiSteps": {
-      "count": 8,
-      "current": 3,
-      "passed": [1,2],
-      "names": [
-        "Заверения",
-        "Информация о вашей Компании",
-        "Информация о Покупателе",
-        "Параметры сделки",
-        "Экспортный контракт",
-        "Иная информация",
-        "Согласие",
-        "Подписание"
-      ]
-    },
-    "fields": {
-      "customer": {
-        "id": "customer",
-        "type": "String",
-        "label": "Организация из списка",
-        "placeholder": "Наименование организации",
-        "uiType": "reference",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "staticVariants": [
-          {
-            "value": "Организации нет в списке",
-            "key": "400"
-          }
-        ],
-        "requestParams": {
-          "resultObjectParams": {
-            "name": "description",
-            "key": "uuid"
-          },
-          "additionalFields": {
-            "country": "extAddresses[0].extCountry",
-            "address": "extAddresses[0]",
-            "okved": "okved",
-            "employeeNumber": "employeeNumber",
-            "url": "url"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 3,
-              "showDetails": 1,
-              "sort": "description,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/org/items/search"
-          },
-          "filters": [
-            {
-              "name": "or",
-              "value": [
-                {
-                  "name": "caption_like_ci"
-                },
-                {
-                  "name": "description_like_ci"
-                }
-              ]
-            }
-          ]
-        },
-        "boundFields": {
-          "customerRegCountry":{
-            "key": "country",
-            "type": "object",
-            "map": {
-              "value": "caption",
-              "key": "uuid"
-            }
-          },
-          "customerAddress":{
-            "key": "address",
-            "type": "object",
-            "map": {
-              "value": ["extRegion","extCity","extStreet","extHouse"],
-              "key": "uuid"
-            }
-          },
-          "customerOkved": {
-            "key": "okved",
-            "type": "object",
-            "map": {
-              "value": "caption",
-              "key": "uuid"
-            }
-          },
-          "countEmployee": "employeeNumber",
-          "newUrl": "url"
-        }
-      },
-      "customerRegCountry": {
-        "id": "customerRegCountry",
-        "type": "String",
-        "uiType": "dropdown",
-        "data": [],
-        "label": "Страна регистрации",
-        "readonly": true,
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "inverse" : true,
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerAddress": {
-        "id": "customerAddress",
-        "type": "String",
-        "label": "Адрес местонахождения",
-        "uiType": "dropdown",
-        "readonly": true,
-        "data": [],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "inverse" : true,
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerOkved": {
-        "id": "customerOkved",
-        "type": "String",
-        "label": "Фактический основной вид деятельности",
-        "uiType": "dropdown",
-        "readonly": true,
-        "data": [],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "inverse" : true,
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "countEmployee": {
-        "id": "countEmployee",
-        "type": "String",
-        "label": "Количество сотрудников в штате",
-        "readonly": true,
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "inverse" : true,
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerNotFound": {
-        "id": "customerNotFound",
-        "type": "String",
-        "label": "Наименование организации",
-        "placeholder": "Наименование",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerRegCountryNotFound": {
-        "id": "customerRegCountryNotFound",
-        "type": "String",
-        "uiType": "reference",
-        "label": "Страна регистрации",
-        "requestParams": {
-          "resultObjectParams": {
-            "name": "shortName",
-            "key": "uuid"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 1,
-              "showDetails": 1,
-              "sort": "shortName,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/country/items/search"
-          },
-          "filters": [
-            {
-              "name": "or",
-              "value": [
-                {
-                  "name": "caption_like_ci"
-                },
-                {
-                  "name": "shortName_like_ci"
-                }
-              ]
-            }
-          ]
-        },
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerOkvedNotFound": {
-        "id": "customerOkvedNotFound",
-        "type": "String",
-        "label": "Фактический основной вид деятельности",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerAddressNotFound": {
-        "id": "customerAddressNotFound",
-        "type": "String",
-        "label": "Адрес местонахождения",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "countEmployeeNotFound": {
-        "id": "countEmployeeNotFound",
-        "type": "String",
-        "uiType": "dropdown",
-        "data": [
-          {
-            "value": "Менее 10",
-            "key": "Менее 10"
-          },
-          {
-            "value": "От 10 (включительно) до 50",
-            "key": "От 10 (включительно) до 50"
-          },
-          {
-            "value": "От 50 (включительно)",
-            "key": "От 50 (включительно)"
-          }
-        ],
-        "label": "Количество сотрудников в штате",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "customer",
-            "equalValue": "Организации нет в списке"
-          }
-        ]
-      },
-      "customerUrWithExperience": {
-        "id": "customerUrWithExperience",
-        "uiType": "radio",
-        "type": "String",
-        "label": "Покупатель - юридическое лицо, срок деятельности которого более 2-х лет с даты регистрации",
-        "data": [
-          {
-            "label": "Да",
-            "value": "yes",
-            "key": "customerUrWithExperience-yes"
-          },
-          {
-            "label": "Нет",
-            "value": "no",
-            "key": "customerUrWithExperience-no"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "haveUrl": {
-        "id": "haveUrl",
-        "uiType": "radio",
-        "type": "String",
-        "label": "Сайт Покупателя",
-        "data": [
-          {
-            "label": "Имеется",
-            "value": "yes",
-            "key": "haveUrl-yes"
-          },
-          {
-            "label": "Не имеется",
-            "value": "no",
-            "key": "haveUrl-no"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "newUrl": {
-        "id": "newUrl",
-        "type": "String",
-        "placeholder": "URL сайта",
-        "description": " ",
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "haveUrl",
-            "equalValue": "yes"
-          }
-        ]
-      },
-      "haveContract": {
-        "id": "haveContract",
-        "uiType": "radio",
-        "type": "String",
-        "label": "Совместный опыт работы с Покупателем",
-        "data": [
-          {
-            "label": "Имеется",
-            "value": "yes",
-            "key": "haveContract-yes"
-          },
-          {
-            "label": "Не имеется",
-            "value": "no",
-            "key": "haveContract-no"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "actingHaveContract": {
-        "id": "actingHaveContract",
-        "uiType": "radio",
-        "type": "String",
-        "label": "Действующие экспортные контракты с Покупателем",
-        "data": [
-          {
-            "label": "Имеются",
-            "value": "yes",
-            "key": "actingHaveContract-yes"
-          },
-          {
-            "label": "Не имеются",
-            "value": "no",
-            "key": "actingHaveContract-no"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "haveControl": {
-        "id": "haveControl",
-        "uiType": "radio",
-        "type": "String",
-        "label": "Между вашей Компанией и Покупателем отсутствуют отношения прямого или косвенного контроля",
-        "data": [
-          {
-            "label": "Да",
-            "value": "yes",
-            "key": "haveControl-yes"
-          },
-          {
-            "label": "Нет",
-            "value": "no",
-            "key": "haveControl-no"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "haveContractText": {
-        "id": "haveContractText",
-        "uiType": "typography",
-        "html": "<div>У Покупателя перед вашей компанией отсутствуют :</div><br><ul><li>&nbsp;&nbsp;&nbsp;&nbsp;• Просроченная задолженность*;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;• Задолженность со сроком отсрочки платежа свыше 90 календарных дней;</li><li>&nbsp;&nbsp;&nbsp;&nbsp;• Задолженность по отгрузкам, в отношении которых был перенесён срок платежа.</li></ul>",
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "actingHaveContract",
-            "equalValue": "yes"
-          }
-        ]
-      },
-      "haveCredit": {
-        "id": "haveCredit",
-        "uiType": "radio",
-        "type": "String",
-        "label": " ",
-        "data": [
-          {
-            "label": "Да",
-            "value": "yes",
-            "key": "haveCredit-yes"
-          },
-          {
-            "label": "Нет",
-            "value": "no",
-            "key": "haveCredit-no"
-          }
-        ],
-        "conditionals": [
-          {
-            "type": "visible",
-            "equalName": "actingHaveContract",
-            "equalValue": "yes"
-          }
-        ],
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      }
-    },
-    "rows": [
-      {
-        "type": "formSeparator",
-        "expansionPanel": {
-          "title": "Информация о Покупателе",
-          "status": "Статус",
-          "expandedByDefault": true,
-          "isDynamicStatus": true,
-          "description": " ",
-          "validateStatus": {
-            "success": "Заполнено",
-            "error": "Ошибка",
-            "default": "Заполните"
-          }
-        }
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customer",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerNotFound",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerAddress",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "customerAddressNotFound",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerOkved",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "customerOkvedNotFound",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerRegCountry",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ,{
-            "id": "countEmployee",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerRegCountryNotFound",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ,{
-            "id": "countEmployeeNotFound",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "customerUrWithExperience-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "customerUrWithExperience-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "haveUrl-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "haveUrl-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "newUrl",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "haveContract-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "haveContract-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "actingHaveContract-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "actingHaveContract-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "id": "haveContractText",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "haveCredit-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "haveCredit-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ,{
-        "columns": [
-          {
-            "id": "haveControl-yes",
-            "gridAttributes": {
-              "lg": 12
-            }
-          },
-          {
-            "id": "haveControl-no",
-            "gridAttributes": {
-              "lg": 12
-            }
-          }
-        ]
-      }
-    ]
-  }
+	"variables": {
+		"exportKind": {
+			"value": null,
+			"type": "String"
+		},
+		"exportDestinationCountry": {
+			"value": null,
+			"type": "String"
+		},
+		"exportItem": {
+			"value": null,
+			"type": "String"
+		},
+
+		"currency": {
+			"value": null,
+			"type": "String"
+		},
+		"annualRevenueCurrency": {
+			"value": null,
+			"type": "String"
+		},
+		"exportPeriodStartDate": {
+			"value": "02.07.2012",
+			"type": "String"
+		},
+		"exportPeriodFinishDate": {
+			"value": "03.07.2012",
+			"type": "String"
+		}
+	},
+	
+	"uiSchema": {
+		"onChangeHandler": "function fn({prevValues, values, fields, errors, getName}) { const newValues = {... values}; const newErrors = {errors}; if (values.insuredCost === undefined) { newValues.annualRevenue = '<укажите страховую стоимость>'; } else { newValues.annualRevenue = (values.insuredCost.replace(',', '.') * 4).toFixed(2).replace(/(\\d)(?=(\\d{3})+(?!\\d))/g, '$1 ').replace('.', ','); } return { updatedValues : newValues, updatedErrors : newErrors } }",
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+		"uiSteps": {
+			"count": 7,
+			"current": 3,
+			"passed": [1,2],
+			"names": [
+				"Информация о вашей Компании",
+				"Информация о Покупателе",
+				"Параметры сделки",
+				"Экспортный контракт",
+				"Иная информация",
+				"Заверения",
+				"Подписание"
+			]
+		},
+		
+	
+		"fields": {
+			"exportKind": {
+				"id": "exportKindId",
+				"uiType": "dropdown",
+				"type": "String",
+				"label": "Вид экспорта (возможен множественный выбор)",
+				"tooltip": "Если больше одного ответа, выбрать несколько вариантов",
+				"multiple": true,
+				"data": [
+					{
+						"key": "exportKindId-1",
+						"value": "Вывоз российских товаров из РФ без обязательства об обратном ввозе"
+					},
+					{
+						"key": "exportKindId-2",
+						"value": "Осуществление российских работ (услуг) для иностранных юридических лиц за пределами РФ"
+					},
+					{
+						"key": "exportKindId-3",
+						"value": "Осуществление российских работ (услуг) для использования результата выполнения работ или оказания услуг за пределами РФ"
+					},
+					{
+						"key": "exportKindId-4",
+						"value": "Предоставление иностранному юридическому лицу прав использования российских результатов интеллектуальной деятельности"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"exportDestinationCountry": {
+				"id": "exportDestinationCountryId",
+				"uiType": "reference",
+				"type": "String",
+				"label": "Страна назначения экспорта",
+				"tooltip": "Страна, куда поставляется товар, или страна, в которой оказываются услуги / выполняются работы, или страна, в которой используются результаты оказания услуг / выполнения работ, или страна, в которой будут использоваться российские результаты интеллектуальной деятельности",
+				"placeholder": "Страна",
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "shortName",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "shortName,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/country/items/search"
+					},
+					"filters": [
+						{
+							"name": "or",
+							"value": [
+								{
+									"name": "caption_like_ci"
+								},
+								{
+									"name": "shortName_like_ci"
+								}
+							]
+						}
+					]
+				},
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+		
+			"exportItem": {
+				"id": "exportItemId",
+				"type": "String",
+				"label": "Предмет экспорта",
+				"tooltip": "Указать товары, работы, услуги, в т.ч. права на результаты интеллектуальной деятельности",
+				"placeholder": "Предмет экспорта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"insuredCost": {
+				"id": "insuredCostId",
+				"type": "String",
+				"label": "Страховая стоимость",
+				"tooltip": "Страховая стоимость может быть установлена в рублях, евро или долларах США, но в любом случае не может превышать 10 000 000,00 рублей по курсу ЦБ РФ на дату оферты (направления ЭКСАР подписанного договора страхования).",
+				"placeholder": "100 000,00",
+				"isNumber": true,
+				"useGrouping": true,
+				"decimal": 2,
+				"serverDelimiter": ".",
+				"frontDelimiter": ",",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"currency": {
+				"id": "currencyId",
+				"uiType": "reference",
+				"label": "Валюта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "ccode",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "ccode,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/currency/items/search"
+					},
+					"filters": [
+						{
+							"name": "ccode_in",
+							"value": [ 
+								"RUB", "USD", "EUR"
+							]
+						}
+					]
+				}
+			},
+			
+			"exportPeriodStartDate": {
+				"id": "exportPeriodStartDateId", 
+				"uiType": "krDate",
+				"type": "String",
+				"label": "Период экспорта",
+				"serverFormat": "YYYY-MM-DD",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"exportPeriodFinishDate": {
+				"id": "exportPeriodFinishDateId", 
+				"uiType": "krDate",
+				"type": "String",
+				"tooltip": "Дата начала периода экспорта: не ранее дня, следующего за датой подписания настоящего Заявления на страхование. Дата окончания периода экспорта: не более одного года с даты начала Периода экспорта",
+				"serverFormat": "YYYY-MM-DD",
+				"minDate": "${exportPeriodStartDate}",
+				"maxDate": {
+					"value": "${exportPeriodStartDate}",
+					"offset": 10
+				},
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextUsd": {
+				"id": "annualRevenueCheckTextUsdId",
+				"uiType": "typography",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} USD",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "USD"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextRub": {
+				"id": "annualRevenueCheckTextRubId",
+				"uiType": "typography",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} RUB",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "RUB"
+					}
+				]
+			},
+			
+			"annualRevenueCheckTextEur": {
+				"id": "annualRevenueCheckTextEurId",
+				"uiType": "typography",
+				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} EUR",
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "currency",
+						"equalValue": "EUR"
+					}
+				]
+			},
+			
+			"annualRevenueCheck": {
+				"id": "annualRevenueCheckId",
+				"uiType": "radio",
+				"type": "String",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "annualRevenueCheckId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "annualRevenueCheckId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalFields": {
+							"comparisonType": "or",
+							"fields": [
+								{
+									"equalName": "currency", 
+									"equalValue": "EUR"
+								},
+								{
+									"equalName": "currency", 
+									"equalValue": "RUB"
+								},
+								{
+									"equalName": "currency", 
+									"equalValue": "USD"
+								}
+							]
+						}
+					}
+				]
+			},
+			
+			"annualRevenueSum": {
+				"id": "annualRevenueSumId",
+				"type": "String",
+				"label": "Укажите сумму годовой выручки",
+				"isNumber": true,
+				"useGrouping": true,
+				"decimal": 2,
+				"serverDelimiter": ".",
+				"frontDelimiter": ",",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "annualRevenueCheck",
+						"equalValue": "no"
+					}
+				]
+			},
+			
+			"annualRevenueCurrency": {
+				"id": "annualRevenueCurrencyId",
+				"uiType": "reference",
+				"label": "Валюта",
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"requestParams": {
+					"resultObjectParams": {
+						"name": "ccode",
+						"key": "uuid"
+					},
+					"params": {
+						"headers": {},
+						"queryParams": {
+							"showRefs": 1,
+							"showDetails": 1,
+							"sort": "ccode,asc"
+						},
+						"relativeUrl": "api/v1/catalogs/currency/items/search"
+					},
+					"filters": [
+						{
+							"name": "ccode_in",
+							"value": [ 
+								"RUB", "USD", "EUR"
+							]
+						}
+					]
+				},
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "annualRevenueCheck",
+						"equalValue": "no"
+					}
+				]
+			},
+			
+			"noSecurityFormCheck": {
+				"id": "noSecurityFormCheckId",
+				"uiType": "radio",
+				"type": "String",
+				"label": "У вашей Компании отсутствуют какие-либо формы обеспечения или договоры страхования в отношении Собственного удержания по Договору страхования",
+				"tooltip": "Собственное удержание - доля от Убытка, которая не подлежит возмещению ЭКСАР при наступлении страхового случая и которую Страхователь обязан нести самостоятельно. Договором ЭКСАР предусмотрено Собственное удержание в размере 30%",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "noSecurityFormCheckId-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "noSecurityFormCheckId-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			}
+		},
+		
+		"rows": [
+			{
+				"type": "formSeparator",
+				"expansionPanel": {
+					"title": "Параметры сделки",
+					"status": "Статус",
+					"expandedByDefault": true,
+					"isDynamicStatus": true,
+					"description": " ",
+					"validateStatus": {
+						"success": "Заполнено",
+						"error": "Ошибка",
+						"default": "Заполните"
+					}
+				}
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportKindId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}      
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportDestinationCountryId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "exportItemId",
+						"gridAttributes": {
+							"lg": 8
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "insuredCostId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "currencyId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "exportPeriodStartDateId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "exportPeriodFinishDateId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"type": "divider"
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextUsdId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextEurId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckTextRubId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckId-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "annualRevenueCheckId-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "annualRevenueSumId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					},
+					{
+						"id": "annualRevenueCurrencyId",
+						"gridAttributes": {
+							"lg": 4
+						}
+					}
+				]
+			},
+			
+			{
+				"columns": [
+					{
+						"id": "noSecurityFormCheckId-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "noSecurityFormCheckId-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+		]
+	}
 }
