@@ -1,0 +1,235 @@
+{
+	"variables": {
+		"showSign": {
+			"value": true,
+			"type": "Boolean"
+		},
+		"generatedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"scannedApp": {
+			"value": null,
+			"type": "String"
+		},
+		"petitonNumber": {
+			"value": "S/2021/37558",
+			"type": "String"
+		}
+	},
+	"uiSchema": {
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"navigationButtons": {
+			"prev": {
+				"hide": false,
+				"label": "Назад"
+			},
+			"finish": {
+				"hide": false,
+				"label": "Отправить"
+			}
+		},
+		"isFormFullScreen": false,
+		"serviceTitle": "Заявление на получение финансирования в рамках кредитного продукта «Гарантия в пользу налоговых органов для некрупных экспортеров» {{petitonNumber.value}}",
+	
+		"uiSteps": {
+			"count": 2,
+			"current": 2,
+			"passed": [1],
+			"names": ["Заполнение заявления",
+					  "Подписание заявления"]
+		},
+		
+		"fields": {
+			"showSign": {
+				"label": "Подписывать УКЭП",
+				"id": "showSignId",
+				"uiType": "checkboxBool",
+				"type": "Boolean"
+			},
+			"generatedApp": {
+				"id": "generatedAppId",
+				"type": "File",
+				"uiType": "documentForSign",
+				"label": "Сформированное заявление",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Заявление.pdf",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": true
+					}
+				]
+			},
+			"scannedApp": {
+				"id": "scannedAppId",
+				"type": "File",
+				"label": "При отсутствии возможности подписать Заявление электронной подписью распечатайте ее по кнопке выше, подпишите и приложите подписанный скан",
+				"multiple": true,
+				"maxMultiple": 4,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				],
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": false
+					}
+				]
+			},
+			
+			"applicationFile": {
+				"id": "applicationFileId",
+				"uiType": "fileLink",
+				"label": "Сформированное заявление",
+				"validateAttach": false,
+				"attachments": [
+					{
+						"fileName": "Заявление.pdf",
+						"fileSize": "200000",
+						"fileUrl": "",
+						"label": "Вы можете загрузить pdf отчет об услуге",
+						"id": "123"
+					}
+				],
+				
+				"conditionals": [
+					{
+						"type": "visible",
+						"equalName": "showSign",
+						"equalValue": false
+					}
+				]
+			},
+			
+			"paymentDoc": {
+				"id": "paymentDocId",
+				"type": "File",
+				"label": "Загрузите платёжное поручение",
+				"multiple": true,
+				"maxMultiple": 400,
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"max": 30000000
+						}
+					}
+				]
+			}
+		},
+		"rows": [
+			{
+				"columns": [
+					{
+						"id": "showSignId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "generatedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "applicationFileId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "scannedAppId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "paymentDocId",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"html": "<h5 text-align = \"justify\">Мы осведомлены о том, что все наши обязательства перед АО РОСЭКСИМБАНК вытекающие из настоящего Заявления действуют до момента получения Вами письменного подтверждения об освобождении от обязательств по выданной Гарантии или истечения срока ее действия в соответствии с законодательством Российской Федерации.</h5>",
+							"variant": "p"
+						},
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"type": "typography",
+						"typographyProps": {
+							"html": "<h5 text-align = \"justify\">Подтверждаем, что все заявления и заверения, изложенные в Статье 7 Соглашения о предоставлении банковской гарантии № 15/68 от 02/ноября/2021 являются точными и верными во всех отношениях, отсутствуют события, способные оказать существенное негативное влияние на финансовое положение компании и его способность исполнять обязательства по настоящему Соглашению.</h5>",
+							"variant": "p"
+						},
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}
+		]
+	}
+}
