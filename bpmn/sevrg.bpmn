@@ -22,7 +22,7 @@
             </camunda:inputParameter>
             <camunda:inputParameter name="transport_type">elk</camunda:inputParameter>
             <camunda:inputParameter name="recipient_org">${client}</camunda:inputParameter>
-            <camunda:inputParameter name="subject">Гарантия. Возврат НДС для МСП по упрощенной процедуре</camunda:inputParameter>
+            <camunda:inputParameter name="subject">${notificationSubject}</camunda:inputParameter>
           </camunda:inputOutput>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_07qp1bm</bpmn:incoming>
@@ -40,7 +40,7 @@
             </camunda:inputParameter>
             <camunda:inputParameter name="transport_type">email</camunda:inputParameter>
             <camunda:inputParameter name="to">${addressees}</camunda:inputParameter>
-            <camunda:inputParameter name="subject">Гарантия. Возврат НДС для МСП по упрощенной процедуре</camunda:inputParameter>
+            <camunda:inputParameter name="subject">${notificationSubject}</camunda:inputParameter>
           </camunda:inputOutput>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0fsnyvz</bpmn:incoming>
@@ -387,8 +387,9 @@ execution.setVariables(
         <bpmn:incoming>Flow_1gm7rto</bpmn:incoming>
         <bpmn:outgoing>Flow_07qp1bm</bpmn:outgoing>
         <bpmn:script>execution.setVariables(
-	"appCreationDate": (new Date()).format("dd.MM.yyyy")
-);</bpmn:script>
+	"appCreationDate": (new Date()).format("dd.MM.yyyy"),
+	"notificationSubject": "Гарантия. Возврат НДС для МСП по упрощенной процедуре. Заявка №" + petitonNumber
+)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_09q1bxl" sourceRef="Gateway_03flpbh" targetRef="Activity_0ta0gly">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NEXT == "NEXT"}</bpmn:conditionExpression>
