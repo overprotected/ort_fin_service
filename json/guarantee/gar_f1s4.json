@@ -75,7 +75,7 @@
 				"label": "Загрузите заполненные по шаблону документы",
 				"multiple": true,
 				"maxMultiple": 400,
-				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt,.zip,.rar,.7s",
 				"constraints": [
 					{
 						"name": "Size",
@@ -95,7 +95,7 @@
 				"label": "Загрузите дополнительные документы",
 				"multiple": true,
 				"maxMultiple": 10,
-				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt",
+				"accept": ".xlsx,.xls,image/png,image/jpg,.doc,.docx,.ppt,.pptx,.txt,.pdf,.txt,.zip,.rar,.7s",
 				"constraints": [
 					{
 						"name": "Size",
