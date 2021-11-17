@@ -1,590 +1,632 @@
 {
-	"variables": {
-		"exportKind": {
-			"value": null,
-			"type": "String"
-		},
-		"exportDestinationCountry": {
-			"value": null,
-			"type": "String"
-		},
-		"exportItem": {
-			"value": null,
-			"type": "String"
-		},
-
-		"currency": {
-			"value": null,
-			"type": "String"
-		},
-		"annualRevenueCurrency": {
-			"value": null,
-			"type": "String"
-		},
-		"exportPeriodStartDate": {
-			"value": "02.07.2012",
-			"type": "String"
-		},
-		"exportPeriodFinishDate": {
-			"value": "03.07.2012",
-			"type": "String"
-		}
-	},
-	
-	"uiSchema": {
-		"onChangeHandler": "function fn({prevValues, values, fields, errors, getName}) { const newValues = {... values}; const newErrors = {errors}; if (values.insuredCost === undefined) { newValues.annualRevenue = '<укажите страховую стоимость>'; } else { newValues.annualRevenue = (values.insuredCost.replace(',', '.') * 4).toFixed(2).replace(/(\\d)(?=(\\d{3})+(?!\\d))/g, '$1 ').replace('.', ','); } return { updatedValues : newValues, updatedErrors : newErrors } }",
-		"uiFormType": {
-			"type": "json",
-			"withSteps": true
-		},
-		"isFormFullScreen": false,
-		"serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
-		"uiSteps": {
-			"count": 8,
+  "variables": {
+    "customerUrWithExperience": ""
+  },
+  "uiSchema": {
+    "uiFormType": {
+      "type": "json",
+      "withSteps": true
+    },
+    "isFormFullScreen": false,
+    "serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
+    "uiSteps": {
+			"count": 7,
 			"current": 4,
-			"passed": [1, 2, 3],
-			"names": [ 
-				"Заверения", 
-				"Информация о вашей Компании", 
+			"passed": [1,2,3],
+			"names": [
+				"Информация о вашей Компании",
 				"Информация о Покупателе",
-				"Параметры сделки", 
-				"Экспортный контракт", 
+				"Параметры сделки",
+				"Экспортный контракт",
 				"Иная информация",
-				"Согласие",
-				"Подписание" 
+				"Заверения",
+				"Подписание"
 			]
-		},
-		
-	
-		"fields": {
-			"exportKind": {
-				"id": "exportKindId",
-				"uiType": "dropdown",
-				"type": "String",
-				"label": "Вид экспорта (возможен множественный выбор)",
-				"tooltip": "Если больше одного ответа, выбрать несколько вариантов",
-				"multiple": true,
-				"data": [
-					{
-						"key": "exportKindId-1",
-						"value": "Вывоз российских товаров из РФ без обязательства об обратном ввозе"
-					},
-					{
-						"key": "exportKindId-2",
-						"value": "Осуществление российских работ (услуг) для иностранных юридических лиц за пределами РФ"
-					},
-					{
-						"key": "exportKindId-3",
-						"value": "Осуществление российских работ (услуг) для использования результата выполнения работ или оказания услуг за пределами РФ"
-					},
-					{
-						"key": "exportKindId-4",
-						"value": "Предоставление иностранному юридическому лицу прав использования российских результатов интеллектуальной деятельности"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			
-			"exportDestinationCountry": {
-				"id": "exportDestinationCountryId",
-				"uiType": "reference",
-				"type": "String",
-				"label": "Страна назначения экспорта",
-				"tooltip": "Страна, куда поставляется товар, или страна, в которой оказываются услуги / выполняются работы, или страна, в которой используются результаты оказания услуг / выполнения работ, или страна, в которой будут использоваться российские результаты интеллектуальной деятельности",
-				"placeholder": "Страна",
-				"requestParams": {
-					"resultObjectParams": {
-						"name": "shortName",
-						"key": "uuid"
-					},
-					"params": {
-						"headers": {},
-						"queryParams": {
-							"showRefs": 1,
-							"showDetails": 1,
-							"sort": "shortName,asc"
-						},
-						"relativeUrl": "api/v1/catalogs/country/items/search"
-					},
-					"filters": [
-						{
-							"name": "or",
-							"value": [
-								{
-									"name": "caption_like_ci"
-								},
-								{
-									"name": "shortName_like_ci"
-								}
-							]
-						}
-					]
-				},
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-		
-			"exportItem": {
-				"id": "exportItemId",
-				"type": "String",
-				"label": "Предмет экспорта",
-				"tooltip": "Указать товары, работы, услуги, в т.ч. права на результаты интеллектуальной деятельности",
-				"placeholder": "Предмет экспорта",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			
-			"insuredCost": {
-				"id": "insuredCostId",
-				"type": "String",
-				"label": "Страховая стоимость",
-				"tooltip": "Страховая стоимость может быть установлена в рублях, евро или долларах США, но в любом случае не может превышать 10 000 000,00 рублей по курсу ЦБ РФ на дату оферты (направления ЭКСАР подписанного договора страхования).",
-				"placeholder": "100 000,00",
-				"isNumber": true,
-				"useGrouping": true,
-				"decimal": 2,
-				"serverDelimiter": ".",
-				"frontDelimiter": ",",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			
-			"currency": {
-				"id": "currencyId",
-				"uiType": "reference",
-				"label": "Валюта",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"requestParams": {
-					"resultObjectParams": {
-						"name": "ccode",
-						"key": "uuid"
-					},
-					"params": {
-						"headers": {},
-						"queryParams": {
-							"showRefs": 1,
-							"showDetails": 1,
-							"sort": "ccode,asc"
-						},
-						"relativeUrl": "api/v1/catalogs/currency/items/search"
-					},
-					"filters": [
-						{
-							"name": "ccode_in",
-							"value": [ 
-								"RUB", "USD", "EUR"
-							]
-						}
-					]
-				}
-			},
-			
-			"exportPeriodStartDate": {
-				"id": "exportPeriodStartDateId", 
-				"uiType": "krDate",
-				"type": "String",
-				"label": "Период экспорта",
-				"serverFormat": "YYYY-MM-DD",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			
-			"exportPeriodFinishDate": {
-				"id": "exportPeriodFinishDateId", 
-				"uiType": "krDate",
-				"type": "String",
-				"tooltip": "Дата начала периода экспорта: не ранее дня, следующего за датой подписания настоящего Заявления на страхование. Дата окончания периода экспорта: не более одного года с даты начала Периода экспорта",
-				"serverFormat": "YYYY-MM-DD",
-				"minDate": "${exportPeriodStartDate}",
-				"maxDate": {
-					"value": "${exportPeriodStartDate}",
-					"offset": 10
-				},
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			},
-			
-			"annualRevenueCheckTextUsd": {
-				"id": "annualRevenueCheckTextUsdId",
-				"uiType": "typography",
-				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} USD",
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalName": "currency",
-						"equalValue": "USD"
-					}
-				]
-			},
-			
-			"annualRevenueCheckTextRub": {
-				"id": "annualRevenueCheckTextRubId",
-				"uiType": "typography",
-				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} RUB",
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalName": "currency",
-						"equalValue": "RUB"
-					}
-				]
-			},
-			
-			"annualRevenueCheckTextEur": {
-				"id": "annualRevenueCheckTextEurId",
-				"uiType": "typography",
-				"text": "Годовая выручка вашей Компании за последний отчетный год больше, чем ${annualRevenue} EUR",
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalName": "currency",
-						"equalValue": "EUR"
-					}
-				]
-			},
-			
-			"annualRevenueCheck": {
-				"id": "annualRevenueCheckId",
-				"uiType": "radio",
-				"type": "String",
-				"data": [
-					{
-						"label": "Да",
-						"value": "yes",
-						"key": "annualRevenueCheckId-yes"
-					},
-					{
-						"label": "Нет",
-						"value": "no",
-						"key": "annualRevenueCheckId-no"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalFields": {
-							"comparisonType": "or",
-							"fields": [
-								{
-									"equalName": "currency", 
-									"equalValue": "EUR"
-								},
-								{
-									"equalName": "currency", 
-									"equalValue": "RUB"
-								},
-								{
-									"equalName": "currency", 
-									"equalValue": "USD"
-								}
-							]
-						}
-					}
-				]
-			},
-			
-			"annualRevenueSum": {
-				"id": "annualRevenueSumId",
-				"type": "String",
-				"label": "Укажите сумму годовой выручки",
-				"isNumber": true,
-				"useGrouping": true,
-				"decimal": 2,
-				"serverDelimiter": ".",
-				"frontDelimiter": ",",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalName": "annualRevenueCheck",
-						"equalValue": "no"
-					}
-				]
-			},
-			
-			"annualRevenueCurrency": {
-				"id": "annualRevenueCurrencyId",
-				"uiType": "reference",
-				"label": "Валюта",
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"requestParams": {
-					"resultObjectParams": {
-						"name": "ccode",
-						"key": "uuid"
-					},
-					"params": {
-						"headers": {},
-						"queryParams": {
-							"showRefs": 1,
-							"showDetails": 1,
-							"sort": "ccode,asc"
-						},
-						"relativeUrl": "api/v1/catalogs/currency/items/search"
-					},
-					"filters": [
-						{
-							"name": "ccode_in",
-							"value": [ 
-								"RUB", "USD", "EUR"
-							]
-						}
-					]
-				},
-				"conditionals": [
-					{
-						"type": "visible",
-						"equalName": "annualRevenueCheck",
-						"equalValue": "no"
-					}
-				]
-			},
-			
-			"noSecurityFormCheck": {
-				"id": "noSecurityFormCheckId",
-				"uiType": "radio",
-				"type": "String",
-				"label": "У вашей Компании отсутствуют какие-либо формы обеспечения или договоры страхования в отношении Собственного удержания по Договору страхования",
-				"tooltip": "Собственное удержание - доля от Убытка, которая не подлежит возмещению ЭКСАР при наступлении страхового случая и которую Страхователь обязан нести самостоятельно. Договором ЭКСАР предусмотрено Собственное удержание в размере 30%",
-				"data": [
-					{
-						"label": "Да",
-						"value": "yes",
-						"key": "noSecurityFormCheckId-yes"
-					},
-					{
-						"label": "Нет",
-						"value": "no",
-						"key": "noSecurityFormCheckId-no"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				]
-			}
-		},
-		
-		"rows": [
-			{
-				"type": "formSeparator",
-				"expansionPanel": {
-					"title": "Параметры сделки",
-					"status": "Статус",
-					"expandedByDefault": true,
-					"isDynamicStatus": true,
-					"description": " ",
-					"validateStatus": {
-						"success": "Заполнено",
-						"error": "Ошибка",
-						"default": "Заполните"
-					}
-				}
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "exportKindId",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}      
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "exportDestinationCountryId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					},
-					{
-						"id": "exportItemId",
-						"gridAttributes": {
-							"lg": 8
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"type": "divider"
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "insuredCostId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					},
-					{
-						"id": "currencyId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "exportPeriodStartDateId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					},
-					{
-						"id": "exportPeriodFinishDateId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"type": "divider"
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "annualRevenueCheckTextUsdId",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "annualRevenueCheckTextEurId",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "annualRevenueCheckTextRubId",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "annualRevenueCheckId-yes",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "annualRevenueCheckId-no",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "annualRevenueSumId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					},
-					{
-						"id": "annualRevenueCurrencyId",
-						"gridAttributes": {
-							"lg": 4
-						}
-					}
-				]
-			},
-			
-			{
-				"columns": [
-					{
-						"id": "noSecurityFormCheckId-yes",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "noSecurityFormCheckId-no",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			}
-		]
-	}
+    },
+    "fields": {
+      "advancePayment": {
+        "id": "advancePayment",
+        "uiType": "radio",
+        "type": "String",
+        "label": "",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "advancePayment-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "advancePayment-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "deferralFromInvoiceDate": {
+        "id": "deferralFromInvoiceDate",
+        "uiType": "radio",
+        "type": "String",
+        "label": "",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "deferralFromInvoiceDate-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "deferralFromInvoiceDate-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "refundAmount": {
+        "id": "refundAmount",
+        "type": "String",
+        "label": "Предусмотрено ли обеспечение возврата суммы Задолженности по заявляемому на страхование экспорту",
+        "description": " ",
+        "uiType": "dropdown",
+        "data": [
+          {"value": "Не предусмотрено","key": "Не предусмотрено"},
+          {"value": "Поручительство","key": "Поручительство"},
+          {"value": "Залог","key": "Залог"},
+          {"value": "Банковская гарантия","key": "Банковская гарантия"},
+          {"value": "Аккредитив","key": "Аккредитив"},
+          {"value": "Иное","key": "Иное"}
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      },
+      "refundType": {
+        "id": "refundType",
+        "type": "String",
+        "description": " ",
+        "placeholder": "Вид залога",
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ],
+        "conditionals": [
+          {
+            "type": "visible",
+            "equalFields": {
+              "comparisonType": "and",
+              "fields": [
+                {
+                  "equalName": "refundAmount",
+                  "equalValue": "Иное"
+                },
+                {
+                  "equalName": "advancePayment",
+                  "equalValue": "yes"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "invoicesIssued": {
+        "id": "invoicesIssued",
+        "uiType": "radio",
+        "type": "String",
+        "label": "",
+        "data": [
+          {
+            "label": "Да",
+            "value": "yes",
+            "key": "invoicesIssued-yes"
+          },
+          {
+            "label": "Нет",
+            "value": "no",
+            "key": "invoicesIssued-no"
+          }
+        ],
+        "constraints": [
+          {
+            "name": "NotNull"
+          }
+        ]
+      }
+    },
+    "rows": [
+      {
+        "type": "formSeparator",
+        "expansionPanel": {
+          "title": "Экспортный контракт",
+          "status": "Статус",
+          "expandedByDefault": true,
+          "isDynamicStatus": true,
+          "description": " ",
+          "validateStatus": {
+            "success": "Заполнено",
+            "error": "Ошибка",
+            "default": "Заполните"
+          }
+        }
+      },
+      {
+        "title": "Здесь и далее под Экспортным контрактом понимаются как уже заключенные на дату настоящего Заявления на страхование экспортные контракты, так и те, которые будут заключены между вашей Компанией и Покупателем, Задолженность по которым заявляется на страхование.\n    "
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "Вы подтверждаете информацию, что:",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 12
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Отсрочка платежа по условиям Экспортного контракта менее (либо равна) 90 календарных дней</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Применимым правом по Экспортному контракту является право Российской Федерации</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Экспортный контракт, на основании которого осуществляется заявляемый на страхование экспорт, является действительным, исполнимым, отсутствуют какие-либо ограничения на взыскание задолженности по такому Экспортному контракту в соответствии с установленным применимым правом порядке</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Споры по Экспортному контракту подлежат разрешению уполномоченным государственным арбитражным судом Российской Федерации либо Международным коммерческим арбитражным судом при Торгово-промышленной палате РФ</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Предмет экспорта - российские товары (работы, услуги в т.ч. результаты интеллектуальной деятельности)</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 10
+            }
+          },
+          {
+            "type": "typography",
+            "typographyProps": {
+              "variant": "p",
+              "text": "",
+              "tooltip": "- под российскими товарами понимаются товары, произведенные на территории Российской Федерации, или товары (их составляющие), ввезенные и переработанные на территории Российской Федерации, в том числе прошедшие монтаж, сборку, обработку, подгонку, ремонт и (или) восстановление;\n- под российскими работами (услугами) понимаются работы (услуги), осуществляемые российским лицом, для иностранных юридических лиц за пределами территории Российской Федерации либо для использования результата выполнения работ или оказания услуг за пределами Российской Федерации;\n- под российскими результатами интеллектуальной деятельности понимаются результаты интеллектуальной деятельности и приравненные к ним средства индивидуализации юридических лиц, товаров, работ, услуг и предприятий, интеллектуальные права на которые, включая исключительное право, принадлежат российским лицам."
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Отсутствует запрет или иные ограничения на переход прав требований по Экспортному контракту к ЭКСАР</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 10
+            }
+          },
+          {
+            "type": "typography",
+            "typographyProps": {
+              "variant": "p",
+              "text": "",
+              "tooltip": "TEXT TOOLTIP"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Обязательства по оплате по Экспортному контракту лежат исключительно на Покупателе, в том числе, не применяется аккредитив в качестве формы оплаты по Экспортному контракту</h4>",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">По Экспортному контракту предусмотрена оплата в денежной форме, не применяется оплата при получении (наложенным платежом или поставки против платежа)</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">По Экспортным контрактам, предусматривающим авансовые платежи, отгрузка товаров, оказание услуг или выполнение работ на условиях \nотсрочки платежа осуществляется только после получения от Покупателя таких платежей</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "advancePayment-yes",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "advancePayment-no",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "refundAmount",
+            "gridAttributes": {
+              "push": {
+                "lg": 1
+              },
+              "lg": 7
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "id": "refundType",
+            "gridAttributes": {
+              "push": {
+                "lg": 1
+              },
+              "lg": 7
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Отсрочка платежа по Экспортным контрактам исчисляется от даты выставления счета\n на оплату</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 10
+            }
+          },
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "tooltip": "TEXT TOOLTIP",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "deferralFromInvoiceDate-yes",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "deferralFromInvoiceDate-no",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "type": "typography",
+            "html": "<h4 align=\"justify\">Счета на оплату по Экспортным контрактам выставляются в течение 15 календарных дней с даты соответствующей отгрузки товара (выполнения работ, оказания услуг)</h4>",
+            "typographyProps": {
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 10
+            }
+          },
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "tooltip": "TEXT TOOLTIP",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "invoicesIssued-yes",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ,{
+        "columns": [
+          {
+            "type": "typography",
+            "typographyProps": {
+              "text": "",
+              "variant": "p"
+            },
+            "gridAttributes": {
+              "lg": 1
+            }
+          },
+          {
+            "id": "invoicesIssued-no",
+            "gridAttributes": {
+              "lg": 11
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

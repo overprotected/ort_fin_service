@@ -1,410 +1,358 @@
 {
-  "variables": {
-    "checkAccount": {
-      "type": "String",
-      "value": "44345345"
-    },
-    "bankBik": {
-      "type": "String",
-      "value": "44345345"
-    },
-    "bankName": {
-      "type": "String",
-      "value": "Сбер"
-    },
-    "corAccount": {
-      "type": "String",
-      "value": "44345345"
-    },
-    "employeeFullName": {
-      "type": "String",
-      "value": "44345345"
-    },
-    "employeePost": {
-      "type": "String",
-      "value": "44345345"
-    },
-    "employeePhone": {
-      "type": "String",
-      "value": "Сбер"
-    },
-    "employeeEmail": {
-      "type": "String",
-      "value": "44345345"
-    }
-  },
-  "uiSchema": {
-    "uiFormType": {
-      "type": "json",
-      "withSteps": true
-    },
-    "isFormFullScreen": false,
-    "serviceTitle": "Заявление на получение услуги «Страхование. Отсрочка платежа для МСП»",
-    "uiSteps": {
-      "count": 8,
-      "current": 6,
-      "passed": [1,2,3,4,5],
-      "names": [
-        "Заверения",
-        "Информация о вашей Компании",
-        "Информация о Покупателе",
-        "Параметры сделки",
-        "Экспортный контракт",
-        "Иная информация",
-        "Согласие",
-        "Подписание"
-      ]
-    },
-    "fields": {
-      "mainBank": {
-        "id": "mainBank",
-        "type": "String",
-        "uiType": "reference",
-        "label": "Основной обслуживающий банк",
-        "tooltip": "Наименование банка, по счетам в котором за последние 6 месяцев прошла самая большая доля оборота",
-        "requestParams": {
-          "resultObjectParams": {
-            "name": "participantName",
-            "key": "uuid"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 1,
-              "showDetails": 1,
-              "sort": "participantName,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/bic/items/search"
-          },
-          "filters": [
-            {
-              "name": "and",
-              "value": [
-                {
-                  "name": "participantName_like_ci"
-                },
-                {
-                  "name": "bicHeadOrg.bic_like_ci"
-                }
-              ]
-            }
-          ]
-        },
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "mainCreditBank": {
-        "id": "mainCreditBank",
-        "type": "String",
-        "uiType": "reference",
-        "label": "Основной кредитующий банк",
-        "tooltip": "Наименование банка, кредит(ы) которого занимают самую большую долю в кредитном портфеле вашей компании на дату заполнении заявления",
-        "requestParams": {
-          "resultObjectParams": {
-            "name": "participantName",
-            "key": "uuid"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 1,
-              "showDetails": 1,
-              "sort": "participantName,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/bic/items/search"
-          },
-          "filters": [
-            {
-              "name": "and",
-              "value": [
-                {
-                  "name": "participantName_like_ci"
-                },
-                {
-                  "name": "bicHeadOrg.bic_like_ci"
-                }
-              ]
-            }
-          ]
-        },
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "checkAccount": {
-        "id": "checkAccount",
-        "type": "String",
-        "label": "Расчётный счёт в рублях",
-        "constraints": [
-          {
-            "name": "NotNull"
-          },
-          {
-            "name": "Pattern",
-            "attributes": {
-              "regexp": "^(\\d{9,9})$",
-              "message": "Маска счета не соответствует"
-            }
-          }
-        ]
-      },
-      "bankBik": {
-        "id": "bankBik",
-        "type": "String",
-        "uiType": "reference",
-        "label": "БИК Банка, в котором открыт расчетный счёт",
-        "requestParams": {
-          "resultObjectParams": {
-            "name": "bic",
-            "key": "uuid"
-          },
-          "additionalFields": {
-            "bankName": "participantName"
-          },
-          "params": {
-            "headers": {},
-            "queryParams": {
-              "showRefs": 1,
-              "showDetails": 1,
-              "sort": "bic,asc"
-            },
-            "relativeUrl": "api/v1/catalogs/bic/items/search"
-          },
-          "filters": [
-            {
-              "name": "and",
-              "value": [
-                {
-                  "name": "bic_like_ci"
-                },
-                {
-                  "name": "bicHeadOrg.bic_like_ci"
-                }
-              ]
-            }
-          ]
-        },
-        "boundFields": {
-          "bankName":"bankName"
-        },
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "bankName": {
-        "id": "bankName",
-        "readonly": true,
-        "type": "String",
-        "label": "Наименование Банка, в котором открыт расчётный счёт",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "corAccount": {
-        "id": "corAccount",
-        "type": "String",
-        "label": "Корр.счёт Банка, в котором открыт расчётный счёт",
-        "constraints": [
-          {
-            "name": "NotNull"
-          },
-          {
-            "name": "Pattern",
-            "attributes": {
-              "regexp": "^(\\d{9,9})$",
-              "message": "Маска счета не соответствует"
-            }
-          }
-        ]
-      },
-      "employeeFullName": {
-        "id": "employeeFullName",
-        "type": "String",
-        "label": "ФИО",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "employeePost": {
-        "id": "employeePost",
-        "type": "String",
-        "label": "Должность",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "employeePhone": {
-        "id": "employeePhone",
-        "type": "String",
-        "label": "Телефон",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      },
-      "employeeEmail": {
-        "id": "employeeEmail",
-        "type": "String",
-        "label": "E-mail",
-        "constraints": [
-          {
-            "name": "NotNull"
-          }
-        ]
-      }
-    },
-    "rows": [
-      {
-        "type": "formSeparator",
-        "expansionPanel": {
-          "title": "Иная информация",
-          "status": "Статус",
-          "expandedByDefault": true,
-          "isDynamicStatus": true,
-          "description": " ",
-          "validateStatus": {
-            "success": "Заполнено",
-            "error": "Ошибка",
-            "default": "Заполните"
-          }
-        }
-      }
-    ,{
-        "columns": [
-          {
-            "id": "mainBank",
-            "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "mainCreditBank",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "type": "divider"
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "type": "typography",
-            "typographyProps": {
-              "text": "Реквизиты вашей Компании",
-              "variant": "p"
-            },
-            "gridAttributes": {
-              "lg": 11
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "id": "bankBik",
-            "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "bankName",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "id": "checkAccount",
-            "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "corAccount",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "type": "divider"
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "type": "typography",
-            "typographyProps": {
-              "text": "Контактное лицо вашей Компании",
-              "variant": "p"
-            },
-            "gridAttributes": {
-              "lg": 11
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "id": "employeeFullName",
-            "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "employeePost",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      },
-      {
-        "columns": [
-          {
-            "id": "employeePhone",
-            "gridAttributes": {
-              "lg": 6
-            }
-          },
-          {
-            "id": "employeeEmail",
-            "gridAttributes": {
-              "lg": 6
-            }
-          }
-        ]
-      }
-    ]
-  }
+	"variables": {
+		"partConfirmed1": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed2": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed3": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed4": {
+			"type": "String",
+			"value": null
+		}
+	},
+	"uiSchema": {
+		"isFormFullScreen": false,
+		"serviceTitle": "Страхование отсрочки платежа для клиента МСП",
+		"uiSteps": {
+			"count": 7,
+			"current": 6,
+			"passed": [1,2,3,4,5],
+			"names": [
+				"Информация о вашей Компании",
+				"Информация о Покупателе",
+				"Параметры сделки",
+				"Экспортный контракт",
+				"Иная информация",
+				"Заверения",
+				"Подписание"
+			]
+		},
+		"uiFormType": {
+			"type": "json",
+			"withSteps": true
+		},
+		"fields": {
+			"title": {
+				"id": "title",
+				"uiType": "typography",
+				"html": "<h4>Заявитель (далее – «Компания») проинформирован о следующем:<h4>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"label1": {
+				"id": "label1",
+				"uiType": "typography",
+				"html": "<b>1. Заверения об обстоятельствах<b>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"labelA": {
+				"id": "labelA",
+				"uiType": "typography",
+				"html": "<div align=\"justify\">Информация, указанная Компанией в заявке, предоставляется для целей заключения и исполнения договора страхования и является заверениями Компании об обстоятельствах, которые являются существенными для АО «ЭКСАР» и на которые АО «ЭКСАР» полагается для целей заключения и исполнения Договора страхования. В случае если предоставленная Компанией информация не соответствует действительности, АО «ЭКСАР» вправе отказаться от Договора страхования в одностороннем порядке.</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed1": {
+				"id": "partConfirmed1",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed1-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
+			"label2": {
+				"id": "label2",
+				"uiType": "typography",
+				"html": "<b>2. Конфиденциальность</b>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"labe2A": {
+				"id": "label2A",
+				"uiType": "typography",
+				"html": "<div align=\"justify\">Компания обязуется соблюдать конфиденциальность в отношении информации, предоставленной АО «ЭКСАР», в том числе, в отношении предлагаемых АО «ЭКСАР» условий страхования и условий, содержащихся в Договоре страхования, который направляется Компании как оферта в целях заключения Договора страхования. Компания не вправе разглашать данную информацию о предлагаемых условиях страхования третьим лицам без предварительного письменного согласия АО «ЭКСАР» (за исключением случаев, оговоренных в Договоре страхования), не зависимо от того, будет или нет заключен с Компанией Договор страхования.</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed2": {
+				"id": "partConfirmed2",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed2-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
+			"label3": {
+				"id": "label3",
+				"uiType": "typography",
+				"html": "<b>3. Персональные данные</b>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"labelE": {
+				"id": "label3A",
+				"uiType": "typography",
+				"html": "<div align=\"justify\">Компания проинформирована и соглашается с тем, что часть запрашиваемых сведений в заявке и Договоре страхования являются персональными данными уполномоченных представителей Компании или его личными персональными данными, и АО «ЭКСАР» будет обрабатывать указанные персональные данные для целей предоставления условий страхования и оказания услуг страхования.</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed3": {
+				"id": "partConfirmed3",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed3-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
+			"label4": {
+				"id": "label4",
+				"uiType": "typography",
+				"html": "<b>4. Внесение изменений в Государственную гарантию</b>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"label4A": {
+				"id": "label4A",
+				"uiType": "typography",
+				"html": "<div align=\"justify\">Министерством Финансов Российской Федерации подготовлены изменения в Государственную гарантию РФ от 27 декабря 2018 г. № 13840083V, обеспечивающую надлежащее исполнение денежных обязательств АО «ЭКСАР» перед страхователями, как бенефициарами по гарантии. В предложенных изменениях появляется возможность выбора бенефициарами по Государственной гарантии, предоставленной в иностранной валюте, российского рубля в качестве валюты исполнения гарантии. Изменения вступят в силу после получения согласий на их принятие от всех действующих бенефициаров. Ознакомиться с изменениями можно в приложенном файле.</div>",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed4": {
+				"id": "partConfirmed4",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed4-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
+			"downloadDocs": {
+				"id": "downloadDocs",
+				"type": "File",
+				"uiType": "fileLink",
+				"label": "",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Согласия.pdf",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				]
+			}						
+		},
+		"rows": [
+			{
+				"columns": [
+					{
+						"id": "title",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label1",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "labelA",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed1-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label2",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label2A",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed2-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label3",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label3A",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed3-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label4",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "label4A",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed4-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "downloadDocs",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}			
+		]
+	}
 }
