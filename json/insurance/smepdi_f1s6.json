@@ -1,5 +1,21 @@
 {
 	"variables": {
+		"partConfirmed1": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed2": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed3": {
+			"type": "String",
+			"value": null
+		},
+		"partConfirmed4": {
+			"type": "String",
+			"value": null
+		}
 	},
 	"uiSchema": {
 		"isFormFullScreen": false,
@@ -44,6 +60,26 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
+			"partConfirmed1": {
+				"id": "partConfirmed1",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed1-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
 			"label2": {
 				"id": "label2",
 				"uiType": "typography",
@@ -57,6 +93,26 @@
 				"html": "<div align=\"justify\">Компания обязуется соблюдать конфиденциальность в отношении информации, предоставленной АО «ЭКСАР», в том числе, в отношении предлагаемых АО «ЭКСАР» условий страхования и условий, содержащихся в Договоре страхования, который направляется Компании как оферта в целях заключения Договора страхования. Компания не вправе разглашать данную информацию о предлагаемых условиях страхования третьим лицам без предварительного письменного согласия АО «ЭКСАР» (за исключением случаев, оговоренных в Договоре страхования), не зависимо от того, будет или нет заключен с Компанией Договор страхования.</div>",
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed2": {
+				"id": "partConfirmed2",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed2-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
 			},
 			"label3": {
 				"id": "label3",
@@ -72,6 +128,26 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
+			"partConfirmed3": {
+				"id": "partConfirmed3",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed3-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
+			},
 			"label4": {
 				"id": "label4",
 				"uiType": "typography",
@@ -85,6 +161,26 @@
 				"html": "<div align=\"justify\">Министерством Финансов Российской Федерации подготовлены изменения в Государственную гарантию РФ от 27 декабря 2018 г. № 13840083V, обеспечивающую надлежащее исполнение денежных обязательств АО «ЭКСАР» перед страхователями, как бенефициарами по гарантии. В предложенных изменениях появляется возможность выбора бенефициарами по Государственной гарантии, предоставленной в иностранной валюте, российского рубля в качестве валюты исполнения гарантии. Изменения вступят в силу после получения согласий на их принятие от всех действующих бенефициаров. Ознакомиться с изменениями можно в приложенном файле.</div>",
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
+			},
+			"partConfirmed4": {
+				"id": "partConfirmed4",
+				"uiType": "checkboxBool",
+				"type": "Boolean",
+				"data": [
+					{
+						"label": "Ознакомлен",
+						"value": "yes",
+						"key": "partConfirmed4-yes"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				],
+				"value": null,
+				"type": "String",
+				"uiType": "checkbox"
 			},
 			"downloadDocs": {
 				"id": "downloadDocs",
@@ -150,6 +246,16 @@
 			{
 				"columns": [
 					{
+						"id": "partConfirmed1-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
 						"id": "label2",
 						"gridAttributes": {
 							"lg": 12
@@ -161,6 +267,16 @@
 				"columns": [
 					{
 						"id": "label2A",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed2-yes",
 						"gridAttributes": {
 							"lg": 12
 						}
@@ -190,6 +306,16 @@
 			{
 				"columns": [
 					{
+						"id": "partConfirmed3-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
 						"id": "label4",
 						"gridAttributes": {
 							"lg": 12
@@ -201,6 +327,16 @@
 				"columns": [
 					{
 						"id": "label4A",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "partConfirmed4-yes",
 						"gridAttributes": {
 							"lg": 12
 						}
