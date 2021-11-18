@@ -1,0 +1,130 @@
+{
+	"variables": {
+		"textConfirmed": {
+			"type": "String",
+			"value": null
+		},
+
+		"organizationFullName": {
+			"value": "Публичное Акционерное Общество \"Красногорский Завод им. С.А. Зверева\"",
+			"type": "String"
+		}		
+},
+	"uiSchema": {
+		"isFormFullScreen": false,
+		"serviceTitle": "Согласование проекта договора",
+		
+		"uiFormType": {
+			"type": "json",
+			"withSteps": false
+		},
+		"navigationButtons": {
+			"finish": {
+				"hide": false,
+				"label": "Отправить"
+			}
+		},
+		
+		"fields": {
+			"downloadDocs": {
+				"id": "downloadDocs",
+				"type": "File",
+				"uiType": "fileLink",
+				"label": "Проект договора",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Проект_договора.pdf",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				]
+			},
+			
+			"confirmation": {
+				"id": "confirmation",
+				"uiType": "radio",
+				"type": "String",
+				"label": "Согласовать проект договора",
+				"data": [
+					{
+						"label": "Да",
+						"value": "yes",
+						"key": "confirmation-yes"
+					},
+					{
+						"label": "Нет",
+						"value": "no",
+						"key": "confirmation-no"
+					}
+				],
+				"constraints": [
+					{
+						"name": "NotNull"
+					}
+				]
+			}						
+		},
+		"rows": [
+			{
+			"columns": [
+				{
+					"type": "typography",
+					"typographyProps": {
+						"html": "<h4 align=\"justify\">Уважаемый Клиент! Ваша заявка одобрена АО \"ЭКСАР\"! Для дальнейшей обработки заявки вам необходимо согласовать проект договора страхования.</h4>",
+						"variant": "p"
+					},
+					"gridAttributes": {
+						"lg": 12
+					}
+				}
+			]
+		},
+			{
+				"columns": [
+					{
+						"id": "downloadDocs",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "confirmation-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "confirmation-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}			
+		]
+	}
+}

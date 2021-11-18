@@ -1,0 +1,104 @@
+{
+	"variables": {
+		"paymentDeadline": {
+			"value": "25 ноября 2021",
+			"type": "String"
+		}
+	},
+	"uiSchema": {
+		"isFormFullScreen": false,
+		"serviceTitle": "Оплата страховой премии",
+		
+		"uiFormType": {
+			"type": "json",
+			"withSteps": false
+		},
+		"navigationButtons": {
+			"finish": {
+				"hide": true
+			}
+		},
+		
+		"fields": {
+			"textBlock": {
+				"id": "textBlock",
+				"uiType": "typography",
+				"text": "Уважаемый Клиент! Договор страхования подписан АО \"ЭКСАР\"! для вступления договора страхования в силу вам необходимо в срок до ${paymentDeadline} оплатить страховую премию в размере 20 000 рублей по реквизитам, указанным в договоре страхования",
+				"size": "medium",
+				"margin": "0px 0px 0px 0px"
+			},
+			
+			"downloadDocs": {
+				"id": "downloadDocs",
+				"type": "File",
+				"uiType": "fileLink",
+				"label": "Договор-оферта",
+				"constraints": [
+					{
+						"name": "Size",
+						"attributes": {
+							"min": 0,
+							"max": 10485760
+						}
+					}
+				],
+				"attachments": [
+					{
+						"fileName": "Договор.pdf",
+						"fileSize": 300000,
+						"fileUrl": "asd",
+						"fileExtension": "pdf",
+						"id": "1",
+						"additionalFields": {
+							"onSign": true,
+							"documentTypeIdentifier": "12312",
+							"ecmUuid": "ecmUuid"
+						}
+					}
+				]
+			}						
+		},
+		"rows": [
+			{
+				"columns": [
+					{
+						"id": "textBlock",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "downloadDocs",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "confirmation-yes",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			},
+			{
+				"columns": [
+					{
+						"id": "confirmation-no",
+						"gridAttributes": {
+							"lg": 12
+						}
+					}
+				]
+			}			
+		]
+	}
+}

@@ -1,22 +1,15 @@
 {
 	"variables": {
-		"partConfirmed1": {
+		"textConfirmed": {
 			"type": "String",
 			"value": null
 		},
-		"partConfirmed2": {
-			"type": "String",
-			"value": null
-		},
-		"partConfirmed3": {
-			"type": "String",
-			"value": null
-		},
-		"partConfirmed4": {
-			"type": "String",
-			"value": null
-		}
-	},
+
+		"organizationFullName": {
+			"value": "Публичное Акционерное Общество \"Красногорский Завод им. С.А. Зверева\"",
+			"type": "String"
+		}		
+},
 	"uiSchema": {
 		"isFormFullScreen": false,
 		"serviceTitle": "Страхование отсрочки платежа для клиента МСП",
@@ -42,7 +35,7 @@
 			"title": {
 				"id": "title",
 				"uiType": "typography",
-				"html": "<h4>Заявитель (далее – «Компания») проинформирован о следующем:<h4>",
+				"text": "${organizationFullName} (далее – «Компания») проинформирован о следующем:",
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
@@ -60,26 +53,6 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
-			"partConfirmed1": {
-				"id": "partConfirmed1",
-				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"data": [
-					{
-						"label": "Ознакомлен",
-						"value": "yes",
-						"key": "partConfirmed1-yes"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"value": null,
-				"type": "String",
-				"uiType": "checkbox"
-			},
 			"label2": {
 				"id": "label2",
 				"uiType": "typography",
@@ -94,26 +67,6 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
-			"partConfirmed2": {
-				"id": "partConfirmed2",
-				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"data": [
-					{
-						"label": "Ознакомлен",
-						"value": "yes",
-						"key": "partConfirmed2-yes"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"value": null,
-				"type": "String",
-				"uiType": "checkbox"
-			},
 			"label3": {
 				"id": "label3",
 				"uiType": "typography",
@@ -121,32 +74,12 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
-			"labelE": {
+			"label3A": {
 				"id": "label3A",
 				"uiType": "typography",
 				"html": "<div align=\"justify\">Компания проинформирована и соглашается с тем, что часть запрашиваемых сведений в заявке и Договоре страхования являются персональными данными уполномоченных представителей Компании или его личными персональными данными, и АО «ЭКСАР» будет обрабатывать указанные персональные данные для целей предоставления условий страхования и оказания услуг страхования.</div>",
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
-			},
-			"partConfirmed3": {
-				"id": "partConfirmed3",
-				"uiType": "checkboxBool",
-				"type": "Boolean",
-				"data": [
-					{
-						"label": "Ознакомлен",
-						"value": "yes",
-						"key": "partConfirmed3-yes"
-					}
-				],
-				"constraints": [
-					{
-						"name": "NotNull"
-					}
-				],
-				"value": null,
-				"type": "String",
-				"uiType": "checkbox"
 			},
 			"label4": {
 				"id": "label4",
@@ -162,15 +95,15 @@
 				"size": "medium",
 				"margin": "0px 0px 0px 0px"
 			},
-			"partConfirmed4": {
-				"id": "partConfirmed4",
+			"textConfirmed": {
+				"id": "textConfirmed",
 				"uiType": "checkboxBool",
 				"type": "Boolean",
 				"data": [
 					{
-						"label": "Ознакомлен",
+						"label": "Ознакомлен и подтверждаю",
 						"value": "yes",
-						"key": "partConfirmed4-yes"
+						"key": "textConfirmed-yes"
 					}
 				],
 				"constraints": [
@@ -246,16 +179,6 @@
 			{
 				"columns": [
 					{
-						"id": "partConfirmed1-yes",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
 						"id": "label2",
 						"gridAttributes": {
 							"lg": 12
@@ -267,16 +190,6 @@
 				"columns": [
 					{
 						"id": "label2A",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
-						"id": "partConfirmed2-yes",
 						"gridAttributes": {
 							"lg": 12
 						}
@@ -306,16 +219,6 @@
 			{
 				"columns": [
 					{
-						"id": "partConfirmed3-yes",
-						"gridAttributes": {
-							"lg": 12
-						}
-					}
-				]
-			},
-			{
-				"columns": [
-					{
 						"id": "label4",
 						"gridAttributes": {
 							"lg": 12
@@ -336,7 +239,7 @@
 			{
 				"columns": [
 					{
-						"id": "partConfirmed4-yes",
+						"id": "downloadDocs",
 						"gridAttributes": {
 							"lg": 12
 						}
@@ -346,7 +249,7 @@
 			{
 				"columns": [
 					{
-						"id": "downloadDocs",
+						"id": "textConfirmed-yes",
 						"gridAttributes": {
 							"lg": 12
 						}
