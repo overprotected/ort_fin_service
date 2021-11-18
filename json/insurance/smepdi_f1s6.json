@@ -239,7 +239,7 @@
 			{
 				"columns": [
 					{
-						"id": "textConfirmed-yes",
+						"id": "downloadDocs",
 						"gridAttributes": {
 							"lg": 12
 						}
@@ -249,7 +249,7 @@
 			{
 				"columns": [
 					{
-						"id": "downloadDocs",
+						"id": "textConfirmed-yes",
 						"gridAttributes": {
 							"lg": 12
 						}
